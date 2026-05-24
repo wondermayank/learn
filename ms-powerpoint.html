@@ -1,0 +1,2837 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PowerPoint Master Academy – Ultimate Interactive Presentation School</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn Microsoft PowerPoint from absolute beginner basics to advanced visual storytelling, slide design, animation sequencing, and VBA automation. Full labs, shortcuts, and quizzes.">
+  <meta name="referrer" content="no-referrer">
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS THEMES (Variables)
+       ========================================================================== */
+    :root {
+      --primary-font: 'Inter', sans-serif;
+      --header-font: 'Fredoka One', 'Inter', sans-serif;
+      
+      /* Fluent Light Mode PowerPoint Palette */
+      --bg-primary: #faf6f4;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #201f1e;
+      --text-muted: #605e5c;
+      --border-color: rgba(216, 59, 1, 0.15);
+      --accent-orange: #d83b01; /* Iconic PowerPoint Orange */
+      --accent-light-orange: #fef0eb;
+      --accent-yellow: #ffb900;
+      --accent-sky: #0078d4;
+      --accent-success: #107c41;
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(255, 255, 255, 0.82);
+      --glass-border: rgba(216, 59, 1, 0.2);
+      --shadow-soft: 0 8px 24px rgba(216, 59, 1, 0.04);
+      --shadow-hover: 0 16px 40px rgba(216, 59, 1, 0.1);
+      
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="dark"] {
+      /* Fluent Dark Mode Palette */
+      --bg-primary: #0f0d0c;
+      --bg-sidebar: #171514;
+      --bg-card: #1e1b1a;
+      --text-main: #f3f2f1;
+      --text-muted: #a19f9d;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-orange: #f76327;
+      --accent-light-orange: rgba(247, 99, 39, 0.15);
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(30, 27, 26, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+      --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ==========================================================================
+       BASE LAYOUT
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--primary-font);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      display: flex;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Grid Backdrop mesh */
+    .glow-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 10% 15%, var(--accent-light-orange) 0%, transparent 60%),
+        radial-gradient(circle at 85% 25%, rgba(216, 59, 1, 0.06) 0%, transparent 50%);
+    }
+
+    /* ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--header-font);
+      font-size: 1.2rem;
+      color: var(--text-main);
+      padding: 8px 12px 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .brand-logo i {
+      font-size: 28px;
+      color: var(--accent-orange);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    .nav-menu::-webkit-scrollbar { width: 4px; }
+    .nav-menu::-webkit-scrollbar-thumb { background: var(--accent-light-orange); border-radius: 4px; }
+
+    .nav-item button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item button i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .nav-item button:hover {
+      background: var(--accent-light-orange);
+      color: var(--accent-orange);
+    }
+
+    .nav-item button:hover i {
+      transform: translateX(3px);
+    }
+
+    .nav-item.active button {
+      background: var(--accent-orange);
+      color: #ffffff !important;
+    }
+
+    /* Mobile Sidebar toggler */
+    .mobile-nav-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      padding: 0 16px;
+      z-index: 99;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-bar button {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== */
+    .main-wrapper {
+      margin-left: 260px;
+      flex: 1;
+      padding: 24px 32px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s;
+    }
+
+    /* ==========================================================================
+       TOP CONFIGURATION BAR
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Gamification meters */
+    .user-stats-widget {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .xp-meter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .xp-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .xp-bar-outer {
+      width: 140px;
+      height: 8px;
+      background: var(--bg-primary);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .xp-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #d83b01, #f76327);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .streak-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #ff7849;
+    }
+
+    .streak-meter i {
+      font-size: 20px;
+      animation: flamePulse 1.2s infinite alternate;
+    }
+
+    @keyframes flamePulse {
+      from { transform: scale(1); filter: drop-shadow(0 0 1px #ff7849); }
+      to { transform: scale(1.15); filter: drop-shadow(0 0 4px #ff3800); }
+    }
+
+    .badges-meter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light-orange);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--accent-orange);
+      cursor: pointer;
+    }
+
+    /* Top Controls Buttons */
+    .controls-panel {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: var(--accent-light-orange);
+      border-color: rgba(216, 59, 1, 0.25);
+    }
+
+    /* ==========================================================================
+       DYNAMIC PAGE SECTIONS
+       ========================================================================== */
+    .portal-section {
+      display: none;
+    }
+
+    .portal-section.active {
+      display: block;
+      animation: sectionSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes sectionSlideUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(216, 59, 1, 0.05) 0%, rgba(216, 59, 1, 0.08) 100%), var(--bg-card);
+      border: 1px solid rgba(216, 59, 1, 0.15);
+      border-left: 6px solid var(--accent-orange);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-details h2 {
+      font-family: var(--header-font);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-details p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      background: var(--accent-orange);
+      border: none;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(216, 59, 1, 0.3);
+      transition: all 0.22s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(216, 59, 1, 0.4);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .lesson-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .lesson-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .lesson-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .lesson-box-header i {
+      font-size: 22px;
+      color: var(--accent-orange);
+    }
+
+    .lesson-box-header h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .lesson-box ul {
+      list-style: none;
+    }
+
+    .lesson-box ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-box ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-orange);
+      font-weight: bold;
+    }
+
+    .tip-banner {
+      background: var(--accent-light-orange);
+      border-left: 4px solid var(--accent-orange);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 1rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: var(--text-main);
+    }
+
+    .tip-banner i {
+      font-size: 24px;
+      color: var(--accent-orange);
+    }
+
+    .tab-bar-wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      padding-bottom: 4px;
+    }
+
+    .bar-tab {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .bar-tab.active {
+      background: var(--accent-orange);
+      color: #ffffff;
+      border-color: var(--accent-orange);
+    }
+
+    .level-content-box {
+      display: none;
+    }
+
+    .level-content-box.active {
+      display: block;
+      animation: sectionSlideUp 0.3s ease forwards;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE POWERPOINT SLIDE SIMULATOR & PLAYGROUND
+       ========================================================================== */
+    .ppt-simulator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .ppt-sim-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 280px;
+      gap: 20px;
+      height: 480px;
+    }
+
+    @media (max-width: 992px) {
+      .ppt-sim-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
+    /* Left thumbnails panel */
+    .ppt-thumbs-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .ppt-thumb-item {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      aspect-ratio: 16 / 9;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 4px;
+      transition: all 0.2s;
+    }
+
+    .ppt-thumb-item.active {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 10px rgba(216, 59, 1, 0.25);
+    }
+
+    .ppt-thumb-item span {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.2;
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .ppt-thumb-num {
+      position: absolute;
+      top: 4px; left: 4px;
+      background: var(--accent-orange);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 800;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .ppt-thumb-delete {
+      position: absolute;
+      top: 4px; right: 4px;
+      color: #ff3b30;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .ppt-thumb-item:hover .ppt-thumb-delete {
+      opacity: 1;
+    }
+
+    /* Central canvas panel */
+    .ppt-canvas-container {
+      background: #111;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .ppt-slide-canvas {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #ffffff;
+      color: #333333;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* Canvas Theme styles */
+    .slide-theme-warm-dark { background: #262423 !important; color: #f5f5f5 !important; }
+    .slide-theme-orange { background: linear-gradient(135deg, #d83b01 0%, #f76327 100%) !important; color: #ffffff !important; }
+    .slide-theme-peach { background: linear-gradient(135deg, #fff0ea 0%, #ffdcd0 100%) !important; color: #4a2e25 !important; }
+    .slide-theme-blue { background: linear-gradient(135deg, #102a43 0%, #243b53 100%) !important; color: #ffffff !important; }
+
+    /* Custom Layout renderers */
+    .slide-layout-title h3 {
+      font-family: var(--header-font);
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .slide-layout-title p {
+      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+      opacity: 0.8;
+    }
+
+    .slide-layout-content {
+      align-items: flex-start;
+      text-align: left;
+      justify-content: flex-start;
+    }
+    .slide-layout-content h3 {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      border-bottom: 2px solid var(--accent-orange);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .slide-layout-content ul {
+      list-style-type: disc;
+      padding-left: 24px;
+      font-size: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slide-layout-comparison {
+      justify-content: flex-start;
+    }
+    .slide-layout-comparison h3 {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+    .slide-comparison-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      text-align: left;
+    }
+    .slide-col-box {
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.06);
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .slide-theme-warm-dark .slide-col-box { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); }
+    .slide-theme-orange .slide-col-box { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+    .slide-theme-blue .slide-col-box { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+    
+    .slide-col-box h4 {
+      font-weight: 800;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: var(--accent-orange);
+    }
+    .slide-theme-orange .slide-col-box h4 { color: #ffffff; text-decoration: underline; }
+
+    /* Live animation previews */
+    .slide-animate-fade { animation: slideFadeIn 0.8s ease forwards; }
+    .slide-animate-fly { animation: slideFlyIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .slide-animate-zoom { animation: slideZoomSpin 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    .slide-animate-bounce { animation: slideBounceDrop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+    @keyframes slideFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideFlyIn { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes slideZoomSpin { from { opacity: 0; transform: scale(0.6) rotate(-8deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+    @keyframes slideBounceDrop { from { opacity: 0; transform: translateY(-60px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Right controls panel */
+    .ppt-controls-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+    }
+
+    .ppt-control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ppt-control-group label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ppt-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .ppt-select {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Simulation Action buttons */
+    .ppt-sim-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+      justify-content: space-between;
+    }
+
+    /* Presentation Show Overlay Viewport */
+    .slideshow-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #000000;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .slideshow-viewport {
+      width: 90vw;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      background: #ffffff;
+      position: relative;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+      overflow: hidden;
+    }
+
+    /* Transition animations */
+    .slideshow-viewport.transition-morph .ppt-slide-canvas {
+      animation: morphZoom 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .slideshow-viewport.transition-fade .ppt-slide-canvas {
+      animation: morphFade 0.6s ease forwards;
+    }
+    .slideshow-viewport.transition-push .ppt-slide-canvas {
+      animation: morphPush 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes morphZoom { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes morphFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes morphPush { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    .slideshow-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: #ffffff;
+      margin-top: 20px;
+      z-index: 1001;
+    }
+
+    .slideshow-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      transition: all 0.2s;
+    }
+
+    .slideshow-btn:hover {
+      background: var(--accent-orange);
+      border-color: var(--accent-orange);
+      transform: scale(1.1);
+    }
+
+    .slideshow-close {
+      position: absolute;
+      top: 24px; right: 24px;
+      color: #ffffff;
+      font-size: 32px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .slideshow-close:hover { opacity: 1; }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY
+       ========================================================================== */
+    .shortcut-search-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .shortcut-search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .shortcut-search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      font-size: 0.92rem;
+      outline: none;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shortcut-search-input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .shortcut-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-height: 450px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .shortcut-card-grid::-webkit-scrollbar { width: 6px; }
+    .shortcut-card-grid::-webkit-scrollbar-thumb { background: var(--accent-light-orange); border-radius: 6px; }
+
+    .shortcut-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s;
+    }
+
+    .shortcut-card-item:hover { transform: translateY(-2px); }
+
+    .shortcut-card-details h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .shortcut-card-details span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .shortcut-kbd {
+      background: var(--bg-primary);
+      border: 1px solid rgba(216, 59, 1, 0.12);
+      border-bottom: 3px solid rgba(216, 59, 1, 0.22);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-orange);
+    }
+
+    /* ==========================================================================
+       QUIZ ENGINE & MCQS
+       ========================================================================== */
+    .quiz-card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-header-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .timer-pill {
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #ff3b30;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quiz-question-container h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-option-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .quiz-option-btn:hover {
+      background: var(--accent-light-orange);
+      border-color: rgba(216, 59, 1, 0.25);
+    }
+
+    .quiz-option-btn.correct {
+      background: #eafcf1 !important;
+      border-color: #107c41 !important;
+      color: #107c41 !important;
+    }
+
+    .quiz-option-btn.incorrect {
+      background: #fff2f2 !important;
+      border-color: #ff3b30 !important;
+      color: #ff3b30 !important;
+    }
+
+    .certificate-panel {
+      display: none;
+      margin-top: 2rem;
+      animation: stampAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes stampAppear {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cert-frame {
+      border: 14px double var(--accent-orange);
+      background: #ffffff;
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(216, 59, 1, 0.15);
+      color: #3b201a;
+      border-radius: 8px;
+    }
+
+    .cert-frame h2 {
+      font-family: var(--header-font);
+      font-size: 2.2rem;
+      color: var(--accent-orange);
+      margin-bottom: 8px;
+    }
+
+    .cert-divider {
+      width: 80px;
+      height: 4px;
+      background: #d83b01;
+      margin: 1.5rem auto;
+      border-radius: 999px;
+    }
+
+    .cert-frame p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #5c4b47;
+    }
+
+    .cert-frame .name-tag {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      color: #0b0f19;
+      margin: 1.5rem 0;
+      border-bottom: 2px dashed #d83b01;
+      display: inline-block;
+      padding: 4px 30px;
+    }
+
+    .cert-stamp {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      width: 95px;
+      height: 95px;
+      background: var(--accent-orange);
+      border-radius: 50%;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(216, 59, 1, 0.35);
+      transform: rotate(-12deg);
+      border: 3px double #ffffff;
+    }
+
+    /* Template Downloads */
+    .template-box-code {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      resize: none;
+      margin-bottom: 12px;
+    }
+
+    /* VBA Macros Highlight Block */
+    .vba-code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 18px;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--accent-orange);
+    }
+
+    /* ==========================================================================
+       APP FOOTER (Consistent Template Links)
+       ========================================================================== */
+    .ts-footer {
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      margin-top: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+    }
+
+    .ts-footer .fl {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+
+    .ts-footer a {
+      color: var(--accent-orange);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--bg-primary);
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .ts-footer a:hover {
+      background: var(--accent-light-orange);
+      transform: translateY(-1px);
+    }
+
+    .ts-footer .fc {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.8;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-270px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-left: 0;
+        padding-top: 80px;
+      }
+      .mobile-nav-bar {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+      .controls-panel {
+        justify-content: space-between;
+      }
+      .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-backdrop"></div>
+
+  <!-- Mobile Top Hamburger Navigation Header -->
+  <div class="mobile-nav-bar">
+    <div class="brand-logo" style="margin:0; border:none; padding:0;">
+      <i class="ti ti-presentation"></i>
+      <span>PPT Academy</span>
+    </div>
+    <button id="mobileMenuBtn" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+
+  <!-- Sidebar Navigation Drawer -->
+  <nav class="sidebar" id="appSidebar">
+    <div class="brand-logo">
+      <i class="ti ti-presentation"></i>
+      <span data-localize="sidebarBrand">PPT Academy</span>
+    </div>
+    
+    <ul class="nav-menu">
+      <li class="nav-item active" data-target="home"><button><i class="ti ti-home"></i> <span data-localize="menuHome">Home Page</span></button></li>
+      <li class="nav-item" data-target="beginner"><button><i class="ti ti-award"></i> <span data-localize="menuBeginner">Beginner Course</span></button></li>
+      <li class="nav-item" data-target="slide-editor"><button><i class="ti ti-device-laptop"></i> <span data-localize="menuSimulator">Slide Simulator</span></button></li>
+      <li class="nav-item" data-target="tabs-guide"><button><i class="ti ti-book-2"></i> <span data-localize="menuTabs">Ribbon Tabs Guide</span></button></li>
+      <li class="nav-item" data-target="design-academy"><button><i class="ti ti-brush"></i> <span data-localize="menuDesign">Slide Design Academy</span></button></li>
+      <li class="nav-item" data-target="animation-mastery"><button><i class="ti ti-transition-left"></i> <span data-localize="menuAnim">Animation Mastery</span></button></li>
+      <li class="nav-item" data-target="shortcuts"><button><i class="ti ti-keyboard"></i> <span data-localize="menuShortcuts">Shortcut Keys</span></button></li>
+      <li class="nav-item" data-target="vba-macros"><button><i class="ti ti-terminal-2"></i> <span data-localize="menuVba">VBA Automation</span></button></li>
+      <li class="nav-item" data-target="templates"><button><i class="ti ti-download"></i> <span data-localize="menuTemplates">Templates Pack</span></button></li>
+      <li class="nav-item" data-target="public-speaking"><button><i class="ti ti-microphone"></i> <span data-localize="menuSpeak">Public Speaking</span></button></li>
+      <li class="nav-item" data-target="errors"><button><i class="ti ti-alert-triangle"></i> <span data-localize="menuErrors">Error Solver</span></button></li>
+      <li class="nav-item" data-target="quiz"><button><i class="ti ti-clipboard-list"></i> <span data-localize="menuQuiz">MCQ &amp; Certificate</span></button></li>
+    </ul>
+  </nav>
+
+  <!-- Main View Container wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Top Bar User progress & options panels -->
+    <header class="top-bar">
+      
+      <!-- Gamified stats meters -->
+      <div class="user-stats-widget">
+        <div class="xp-meter-wrap">
+          <span class="xp-label" data-localize="xpTitle">Presenter Rank Progress</span>
+          <div class="xp-bar-outer">
+            <div class="xp-bar-inner" id="xpBar"></div>
+          </div>
+        </div>
+        <div class="streak-meter">
+          <i class="ti ti-flame"></i>
+          <span id="streakCount">1</span> <span data-localize="streakSuffix">Day Streak</span>
+        </div>
+        <div class="badges-meter">
+          <div class="mini-badge" title="Novice Speaker Unlocked" id="badgeBeg"><i class="ti ti-award"></i></div>
+          <div class="mini-badge" title="Designer Unlocked" id="badgeExp" style="opacity: 0.35;"><i class="ti ti-palette"></i></div>
+          <div class="mini-badge" title="Visual Storyteller Unlocked" id="badgeMaster" style="opacity: 0.35;"><i class="ti ti-crown"></i></div>
+        </div>
+      </div>
+
+      <!-- Theme & Translation controls -->
+      <div class="controls-panel">
+        <button class="control-btn" id="langToggleBtn">
+          <i class="ti ti-language"></i>
+          <span id="langLabel">हिन्दी</span>
+        </button>
+        <button class="control-btn" id="themeToggleBtn">
+          <i class="ti ti-sun"></i>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Dynamic PowerPoint Sections -->
+
+    <!-- =================== 1. HOME PAGE =================== -->
+    <section class="portal-section active" id="sec-home">
+      <div class="hero-banner">
+        <div class="hero-details">
+          <div class="brand-badge" style="margin-bottom: 12px; font-weight: 800; font-size: 0.8rem; background: var(--accent-light-orange); color: var(--accent-orange); padding: 4px 10px; border-radius: 20px; display: inline-block;" data-localize="homeBadge">⚡ Visual Storytelling Blueprint</div>
+          <h2 data-localize="homeHeroTitle">Learn PowerPoint From Beginner to Professional Designer</h2>
+          <p data-localize="homeHeroDesc">Unlock premium transition techniques, kinematic slide animations, visual SmartArt layouts, Slide Masters, and VBA macro scripts. Designed for corporate speakers, teachers, and startup founders.</p>
+          <button class="cta-btn" onclick="navigateToSection('beginner')">
+            <i class="ti ti-rocket"></i> <span data-localize="homeCta">Start Learning</span>
+          </button>
+        </div>
+        <!-- Gorgeous Generated Local Hero Illustration -->
+        <img src="images/ppt_hero.png" alt="PowerPoint Master Slide Design" style="max-width: 300px; border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(216, 59, 1, 0.15); object-fit: cover; height: 160px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+
+      <div class="grid-2">
+        <div class="content-card">
+          <h3 style="margin-bottom: 16px;" data-localize="homeFeaturesTitle">🎭 Kinematic Presentation Platform</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-device-laptop" style="color: var(--accent-orange); font-size: 20px;"></i>
+              <span data-localize="homeFeatSpread">Live Slide Design &amp; Transition Simulator</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-language" style="color: var(--accent-orange); font-size: 20px;"></i>
+              <span data-localize="homeFeatLang">Dual Language Curriculum (Hindi + English Mode)</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-keyboard" style="color: var(--accent-orange); font-size: 20px;"></i>
+              <span data-localize="homeFeatShort">Multi-OS (Windows / Mac) Keyboard Shortcuts Dictionary</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-certificate" style="color: var(--accent-orange); font-size: 20px;"></i>
+              <span data-localize="homeFeatCert">Dynamic Timed Slide Show Quiz Certification Engine</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 style="margin-bottom: 8px;" data-localize="homeProgressTitle">📈 Student presenter Dashboard</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeProgressDesc">Answer questions correctly, practice inside slide canvas sandboxes, and run transitions to earn XP points!</p>
+          </div>
+          <div style="background: var(--bg-primary); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerXP">XP Points Earned</span>
+              <span style="color: var(--accent-orange);" id="totalXpVal">0 XP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerStatus">Active Rank</span>
+              <span style="color: var(--accent-orange);" id="userRankVal">Novice Speaker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Image gallery mapping spreadsheet structures -->
+      <div class="content-card" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-photo" style="color: var(--accent-orange);"></i> <span data-localize="homeVisualTitle">PowerPoint Composition Design Assets</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeVisualDesc">Study spatial alignments, shapes hierarchies, Slide Masters layout structures, and professional templates.</p>
+        
+        <div class="grid-2" style="gap: 24px;">
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/ppt_hero.png" alt="PowerPoint Composition Map 1" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">1. Slides Layouts &amp; Master Composition</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Visualizing grid markers, shapes, absolute padding, and dynamic alignments.</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/ppt_ribbon.png" alt="PowerPoint Composition Map 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">2. Cinematic Transitions &amp; Timing Panels</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">How motion paths, Morphing transformations, and delay cycles create flow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 2. BEGINNER COURSE =================== -->
+    <section class="portal-section" id="sec-beginner">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="begTitle">PowerPoint Absolute Beginner Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="begSubtitle">Understand what presentations are, ribbon basic controls, slide sizes, text box operations, and color contrasts.</p>
+        
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-slideshow"></i><h3 data-localize="begL1Title">1. Workbook Slides &amp; Layouts</h3></div>
+            <ul>
+              <li data-localize="begL1Li1">Slides are standard canvas sheets (standard 16:9 widescreen)</li>
+              <li data-localize="begL1Li2">Each slide uses structured layouts (Title, Content, Blank)</li>
+              <li data-localize="begL1Li3">Slide Master governs absolute fonts and layout themes globally</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-text-rectangle"></i><h3 data-localize="begL2Title">2. Content &amp; Formatting</h3></div>
+            <ul>
+              <li data-localize="begL2Li1">Use Text Boxes instead of writing directly onto background grids</li>
+              <li data-localize="begL2Li2">Maintain strong contrast (light text on dark; dark text on light)</li>
+              <li data-localize="begL2Li3">Keep alignment consistent (Left alignment is standard for bullets)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-layout-grid-add"></i><h3 data-localize="begL3Title">3. Save &amp; Present</h3></div>
+            <ul>
+              <li data-localize="begL3Li1">Save in standard PPTX format or export slides to PDF outlines</li>
+              <li data-localize="begL3Li2">Launch Presentation View using standard F5 button</li>
+              <li data-localize="begL3Li3">Presenter View: Study notes and upcoming slides on split screen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tip-banner">
+          <i class="ti ti-bulb"></i>
+          <p><strong data-localize="begTipLabel">Pro-Tip:</strong> <span data-localize="begTipText">Always check your presentation slide dimensions (Design Tab > Slide Size) before designing. Widescreen 16:9 is standard for modern screens, while Standard 4:3 is for older projectors!</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 3. DYNAMIC SLIDE SIMULATOR =================== -->
+    <section class="portal-section" id="sec-slide-editor">
+      <div class="ppt-simulator-card">
+        <h2 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-device-laptop" style="color: var(--accent-orange);"></i> <span data-localize="simTitle">Interactive Presentation Slide Simulator</span></h2>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="simDesc">Add slides, edit titles, adjust templates, set background themes, choose animations, and preview slides. Then launch the dynamic full-screen slide show player!</p>
+
+        <!-- Main Slide Simulator Grid Layout -->
+        <div class="ppt-sim-layout">
+          
+          <!-- Column 1: Vertical slide strip thumbnail navigator -->
+          <div class="ppt-thumbs-panel" id="pptThumbStrip">
+            <!-- Injected by Javascript -->
+          </div>
+
+          <!-- Column 2: Slide Canvas Area -->
+          <div class="ppt-canvas-container">
+            <div class="ppt-slide-canvas" id="pptCanvasView">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Column 3: Controls Panel -->
+          <div class="ppt-controls-panel">
+            <div class="ppt-control-group">
+              <label data-localize="ctrlTitle">Slide Title</label>
+              <input type="text" class="ppt-input" id="pptSlideTitle" oninput="updateActiveSlideData()" placeholder="Slide Title">
+            </div>
+
+            <div class="ppt-control-group">
+              <label data-localize="ctrlSubtitle">Slide Body/Subtitle</label>
+              <textarea class="ppt-input" id="pptSlideBody" oninput="updateActiveSlideData()" rows="4" placeholder="Slide content / bullet lists..."></textarea>
+            </div>
+
+            <div class="ppt-control-group">
+              <label data-localize="ctrlLayout">Slide Layout</label>
+              <select class="ppt-select" id="pptSlideLayout" onchange="updateActiveSlideData()">
+                <option value="title">Title Slide</option>
+                <option value="content">Title &amp; Content</option>
+                <option value="comparison">Comparison Slide</option>
+              </select>
+            </div>
+
+            <div class="ppt-control-group">
+              <label data-localize="ctrlTheme">Background Theme</label>
+              <select class="ppt-select" id="pptSlideTheme" onchange="updateActiveSlideData()">
+                <option value="light">Standard Light</option>
+                <option value="dark">Warm Dark</option>
+                <option value="orange">PowerPoint Orange</option>
+                <option value="peach">Peach Gradient</option>
+                <option value="blue">Blue Slate</option>
+              </select>
+            </div>
+
+            <div class="ppt-control-group">
+              <label data-localize="ctrlAnimate">Entrance Animation</label>
+              <select class="ppt-select" id="pptSlideAnimate" onchange="updateActiveSlideData()">
+                <option value="none">None</option>
+                <option value="fade">Fade In</option>
+                <option value="fly">Fly In Left</option>
+                <option value="zoom">Zoom Spin</option>
+                <option value="bounce">Bounce Drop</option>
+              </select>
+            </div>
+
+            <div class="ppt-control-group">
+              <label data-localize="ctrlTransition">Slide Transition</label>
+              <select class="ppt-select" id="pptSlideTransition" onchange="updateActiveSlideData()">
+                <option value="fade">Fade Transition</option>
+                <option value="morph">Morph Scale</option>
+                <option value="push">Push Up</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Simulator Bottom controls -->
+        <div class="ppt-sim-actions">
+          <button class="control-btn" onclick="addNewSlide()" style="background: var(--accent-light-orange); border-color: var(--accent-orange); color: var(--accent-orange);">
+            <i class="ti ti-plus"></i> <span data-localize="simAddBtn">Add Slide</span>
+          </button>
+          
+          <button class="cta-btn" onclick="startSlideshow()">
+            <i class="ti ti-player-play"></i> <span data-localize="simPlayBtn">Play Slideshow</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Slideshow Full screen presentation Overlay -->
+    <div class="slideshow-overlay" id="slideshowOverlay">
+      <button class="slideshow-close" onclick="closeSlideshow()">&times;</button>
+      
+      <div class="slideshow-viewport" id="slideshowViewport">
+        <div class="ppt-slide-canvas" id="slideshowCanvas" style="width: 100%; height: 100%; box-shadow: none;">
+          <!-- Active slide showing inside -->
+        </div>
+      </div>
+
+      <div class="slideshow-controls">
+        <button class="slideshow-btn" onclick="prevSlide()"><i class="ti ti-arrow-narrow-left"></i></button>
+        <span id="slideshowIndex">Slide 1 of 3</span>
+        <button class="slideshow-btn" onclick="nextSlide()"><i class="ti ti-arrow-narrow-right"></i></button>
+      </div>
+    </div>
+
+    <!-- =================== 4. RIBBON TABS GUIDE =================== -->
+    <section class="portal-section" id="sec-tabs-guide">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tabsTitle">Full PowerPoint Tabs Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tabsSubtitle">Every command, group, and animation tab in the PowerPoint Ribbon, detailed tab-by-tab.</p>
+
+        <!-- Visual Map at the top of the Ribbon Section -->
+        <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+          <img src="images/ppt_ribbon.png" alt="PowerPoint Ribbon Setup Guide Map" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+          <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-orange); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: PowerPoint ribbon controls, timing tracks, and transition options</p>
+        </div>
+
+        <!-- Sub Tabs Bar -->
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-tabcontent="tab-home">Home Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-insert">Insert Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-design">Design Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-transitions">Transitions Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-animations">Animations Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-slideshow">Slide Show Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-view">View Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-developer">Developer Tab</button>
+        </div>
+
+        <!-- ── Sub Tab Content: HOME ── -->
+        <div class="level-content-box active" id="tab-home">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-layout-grid"></i><h3 data-localize="tabHomeSlidesTitle">Slides &amp; Clipboard</h3></div>
+              <ul>
+                <li data-localize="tabHomeSlides1">New Slide: Choose layout structures (Title, Section, Content)</li>
+                <li data-localize="tabHomeSlides2">Format Painter: Copy colors, fonts, and border styles from one shape to another</li>
+                <li data-localize="tabHomeSlides3">Reuse Slides: Pull slide blocks from other files inside your directory</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-letter-case"></i><h3 data-localize="tabHomeFontTitle">Font &amp; Paragraph</h3></div>
+              <ul>
+                <li data-localize="tabHomeFont1">Change weights, colors, shadow effects, and letter case structures</li>
+                <li data-localize="tabHomeFont2">Character Spacing: Add tracking or loose spacing for title banners</li>
+                <li data-localize="tabHomeFont3">Line Spacing: Adjust distance between rows to avoid squished text</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-shapes"></i><h3 data-localize="tabHomeDrawingTitle">Drawing &amp; Editing</h3></div>
+              <ul>
+                <li data-localize="tabHomeDrawing1">Insert standard shapes (rectangles, callouts, arrows)</li>
+                <li data-localize="tabHomeDrawing2">Shape Fill &amp; Outline: Edit borders and gradient fills</li>
+                <li data-localize="tabHomeDrawing3">Arrange: Send elements backward or bring forward to align layers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: INSERT ── -->
+        <div class="level-content-box" id="tab-insert">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-photo"></i><h3 data-localize="tabInsMediaTitle">Media &amp; Illustrations</h3></div>
+              <ul>
+                <li data-localize="tabInsMedia1">Icons: Insert scalable Fluent vector icons without pixelation</li>
+                <li data-localize="tabInsMedia2">SmartArt: Turn bullet lists into dynamic infographics instantly</li>
+                <li data-localize="tabInsMedia3">Audio/Video: Embed background tracks or sync narrations</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-zoom-in"></i><h3 data-localize="tabInsZoomTitle">Zoom Navigation &amp; Links</h3></div>
+              <ul>
+                <li data-localize="tabInsZoom1">Summary Zoom: Build a beautiful landing index slide to click and zoom</li>
+                <li data-localize="tabInsZoom2">Slide Zoom: Embed interactive mini-slide links inside canvas layouts</li>
+                <li data-localize="tabInsZoom3">Action Wizard: Trigger hyperlinks and slide jumps on click hover</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: DESIGN ── -->
+        <div class="level-content-box" id="tab-design">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-palette"></i><h3 data-localize="tabDesignThemesTitle">Themes &amp; Variants</h3></div>
+              <ul>
+                <li data-localize="tabDesignThemes1">Themes: Apply globally coordinated color schemes and fonts</li>
+                <li data-localize="tabDesignThemes2">Variants: Modify colors and themes without changing layout structures</li>
+                <li data-localize="tabDesignThemes3">Designer: Real-time AI slide composition suggestions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: TRANSITIONS ── -->
+        <div class="level-content-box" id="tab-transitions">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-transition-right"></i><h3 data-localize="tabTransMorphTitle">Morph &amp; Setup</h3></div>
+              <ul>
+                <li data-localize="tabTransMorph1">Morph: Smoothly morph slide elements from slide A to slide B</li>
+                <li data-localize="tabTransMorph2">Effect Options: Choose morphing by character, word, or object</li>
+                <li data-localize="tabTransMorph3">Timing: Adjust transition speeds (1.5s - 2.0s is recommended)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: ANIMATIONS ── -->
+        <div class="level-content-box" id="tab-animations">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-animation"></i><h3 data-localize="tabAnimTracksTitle">Entrance, Exit &amp; Timing</h3></div>
+              <ul>
+                <li data-localize="tabAnimTracks1">Entrance: Make text boxes fly in, fade, or zoom dynamically</li>
+                <li data-localize="tabAnimTracks2">Motion Paths: Program coordinates for shapes to move across layouts</li>
+                <li data-localize="tabAnimTracks3">Animation Pane: Track and re-order animation sequencing paths</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: SLIDE SHOW ── -->
+        <div class="level-content-box" id="tab-slideshow">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-presentation-analytics"></i><h3 data-localize="tabShowPresentTitle">Presenter Tools</h3></div>
+              <ul>
+                <li data-localize="tabShowPresent1">Rehearse Timings: Record presentation practice logs</li>
+                <li data-localize="tabShowPresent2">Record Slide Show: Save narration tracks and webcam clips</li>
+                <li data-localize="tabShowPresent3">Custom Slide Show: Build subsets of slides for different groups</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: VIEW ── -->
+        <div class="level-content-box" id="tab-view">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-eye"></i><h3 data-localize="tabViewMasterTitle">Master Views &amp; Layouts</h3></div>
+              <ul>
+                <li data-localize="tabViewMaster1">Slide Master: Setup global fonts, layouts, headers, and footer blocks</li>
+                <li data-localize="tabViewMaster2">Slide Sorter: Rearrange large decks dynamically in dashboard layouts</li>
+                <li data-localize="tabViewMaster3">Guides &amp; Rulers: Lock grids to keep shapes strictly aligned</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: DEVELOPER ── -->
+        <div class="level-content-box" id="tab-developer">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-terminal-2"></i><h3 data-localize="tabDevAutomationTitle">Macros &amp; Active controls</h3></div>
+              <ul>
+                <li data-localize="tabDevAutomation1">Visual Basic: Code advanced deck automation workflows</li>
+                <li data-localize="tabDevAutomation2">Macros: Record sequences to compile slide formatting</li>
+                <li data-localize="tabDevAutomation3">ActiveX Controls: Embed checklists, drop-down menus, and text fields</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 5. SLIDE DESIGN ACADEMY =================== -->
+    <section class="portal-section" id="sec-design-academy">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="desTitle">Slide Design Academy Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="desSubtitle">Visual hierarchy rules, white spaces, typography configurations, and spatial layout alignments.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-layout-sidebar-left"></i><h3 data-localize="desL1Title">1. Visual Hierarchy &amp; Composition</h3></div>
+            <ul>
+              <li data-localize="desL1Li1">Keep main title size at least double the size of body paragraphs</li>
+              <li data-localize="desL1Li2">Use strong spatial positioning to drive user gaze (left-to-right)</li>
+              <li data-localize="desL1Li3">Limit slide colors to 3 variants maximum (60-30-10 color rule)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-border-all"></i><h3 data-localize="desL2Title">2. Minimalist Grid Layouts</h3></div>
+            <ul>
+              <li data-localize="desL2Li1">Leave at least 30% of slide area as empty whitespace</li>
+              <li data-localize="desL2Li2">Align shapes strictly along invisible vertical grid lines</li>
+              <li data-localize="desL2Li3">Avoid heavy walls of text; convert lists into styled icon panels</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 6. ANIMATION MASTERY =================== -->
+    <section class="portal-section" id="sec-animation-mastery">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="animTitle">PowerPoint Animation Mastery</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="animSubtitle">Cinematic transition effects, motion pathways, Trigger triggers, and Apple-style slide animations.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-transition-left"></i><h3 data-localize="animL1Title">1. The Morph Magic</h3></div>
+            <ul>
+              <li data-localize="animL1Li1">Duplicate a slide block, move or scale shapes in slide 2, apply Morph</li>
+              <li data-localize="animL1Li2">Use "Double Exclamation" shape naming (!!shapeName) to Morph different shapes</li>
+              <li data-localize="animL1Li3">Use Morph by Character to create beautiful shifting letter grids</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-clock"></i><h3 data-localize="animL2Title">2. Sequential Timing &amp; Panes</h3></div>
+            <ul>
+              <li data-localize="animL2Li1">Use Animation Pane to coordinate delays and tracks</li>
+              <li data-localize="animL2Li2">Always start animations "With Previous" or "After Previous" for fluid shows</li>
+              <li data-localize="animL2Li3">Apply Smooth End and Smooth Start on motion pathways (0.5s default)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 7. SHORTCUT KEYS DATABASE =================== -->
+    <section class="portal-section" id="sec-shortcuts">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="keysTitle">Keyboard Shortcuts database Console</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="keysSubtitle">Filter PowerPoint shortcuts instantly using the live search engine bar below.</p>
+
+        <!-- Shortcuts Settings Console -->
+        <div class="shortcut-search-container">
+          <div class="shortcut-search-input-wrap">
+            <i class="ti ti-search"></i>
+            <input type="text" id="shortcutSearch" placeholder="Search shortcuts (e.g., Save, Present, Animation, Morph)...">
+          </div>
+          <button class="control-btn" id="osToggleBtn" style="border-radius: var(--radius-sm);">
+            <i class="ti ti-brand-windows"></i>
+            <span id="osLabel">Windows Keys</span>
+          </button>
+        </div>
+
+        <!-- Filter Subcategory bar -->
+        <div class="tab-bar-wrap" style="margin-bottom: 1.5rem;" id="shortcutCats">
+          <button class="bar-tab active" data-cat="all">All Shortcuts</button>
+          <button class="bar-tab" data-cat="File">File &amp; Grid</button>
+          <button class="bar-tab" data-cat="Edit">Editing</button>
+          <button class="bar-tab" data-cat="Animation">Animations</button>
+          <button class="bar-tab" data-cat="Presentation">Presentation</button>
+          <button class="bar-tab" data-cat="VBA">VBA</button>
+        </div>
+
+        <!-- Shortcuts Render Grid -->
+        <div class="shortcut-card-grid" id="shortcutsGrid">
+          <!-- Rendered in JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="no-shortcuts-found" id="noShortcuts" style="display:none; text-align:center; padding: 2rem; color:var(--text-muted);">
+          <i class="ti ti-keyboard-off" style="font-size:32px;"></i>
+          <p data-localize="keysEmpty" style="margin-top:8px;">No matching shortcuts found. Try another keyword.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 8. VBA & AUTOMATION =================== -->
+    <section class="portal-section" id="sec-vba-macros">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="vbaTitle">PowerPoint VBA &amp; Automation Developer</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="vbaSubtitle">Unlock PowerPoint developer tools. Write scripts to generate slide decks dynamically with one click.</p>
+
+        <div class="lesson-box" style="margin-bottom: 2rem;">
+          <div class="lesson-box-header"><i class="ti ti-code"></i><h3 data-localize="vbaProjTitle">Automated Project: Dynamic Pitch Slide Compiler</h3></div>
+          <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:1rem;" data-localize="vbaProjDesc">Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro instantly generates standard slide sets with aligned shapes and invoice figures!</p>
+          
+          <pre class="vba-code-block">
+Sub GeneratePitchSlides()
+    Dim pptPres As Presentation
+    Dim pptSlide As Slide
+    Dim shapeBox As Shape
+    
+    Set pptPres = ActivePresentation
+    
+    ' Add Title Slide
+    Set pptSlide = pptPres.Slides.Add(1, ppLayoutBlank)
+    pptSlide.Background.Fill.Solid
+    pptSlide.Background.Fill.ForeColor.RGB = RGB(216, 59, 1)
+    
+    ' Add Title shape box
+    Set shapeBox = pptSlide.Shapes.AddTextbox(msoOrientationHorizontal, 100, 200, 800, 100)
+    shapeBox.TextFrame.TextRange.Text = "DYNAMIC PITCH DECK"
+    shapeBox.TextFrame.TextRange.Font.Bold = True
+    shapeBox.TextFrame.TextRange.Font.Size = 44
+    shapeBox.TextFrame.TextRange.Font.Color.RGB = RGB(255, 255, 255)
+    
+    MsgBox "Pitch presentation slides generated successfully!", vbInformation, "PPT Academy"
+End Sub
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 9. TEMPLATES PACK =================== -->
+    <section class="portal-section" id="sec-templates">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tempTitle">Presentation Professional Templates Pack</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tempSubtitle">Download templates with complete composition, structured fonts, and animation sequences.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-rocket" style="color: var(--accent-orange);"></i> <span data-localize="tempInvTitle">Startup Pitch Deck Template</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+STARTUP PITCH DECK OUTLINE
+Slide 1: Hero Cover ("DISRUPTING THE INDUSTRY")
+Slide 2: Problem Frame (Iconic styled double-box)
+Slide 3: Our Solution (3-column layout)
+Slide 4: Financial Metrics (Bar charts visual)
+--------------------------------------------------
+THEME COLOR: Orange & Warm Grey (#d83b01)
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-orange); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Template Pack</span>
+            </button>
+          </div>
+
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-businessplan" style="color: var(--accent-orange);"></i> <span data-localize="tempResTitle">Corporate Quarterly Business Report</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+CORPORATE QBR PRESENTATION
+Slide 1: Title Layout ("Q2 REVENUES & ANALYSIS")
+Slide 2: Executive Summary (Highlights layout)
+Slide 3: Slicers & KPI Dashboards (SmartArt timeline)
+Slide 4: Strategic Pathways (Chevron flows diagram)
+--------------------------------------------------
+THEME COLOR: Minimal Widescreen Blue (#102a43)
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-orange); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Template Pack</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 10. PUBLIC SPEAKING =================== -->
+    <section class="portal-section" id="sec-public-speaking">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="speakTitle">Public Speaking &amp; Presentation Skills</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="speakSubtitle">Master stage presence, body language rules, vocal controls, and slide pacing strategies.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-microphone"></i><h3 data-localize="speakL1Title">1. Vocal Pacing &amp; Pauses</h3></div>
+            <ul>
+              <li data-localize="speakL1Li1">Never read slide text blocks aloud; let visual grids tell the story</li>
+              <li data-localize="speakL1Li2">Add 3-second strategic pauses before explaining big financial slides</li>
+              <li data-localize="speakL1Li3">Maintain conversational flow (120-140 words per minute pacing)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-users"></i><h3 data-localize="speakL2Title">2. Audience Engagement Rules</h3></div>
+            <ul>
+              <li data-localize="speakL2Li1">Use the 10-20-30 PowerPoint rule: 10 slides, 20 minutes, 30pt font minimum</li>
+              <li data-localize="speakL2Li2">Ask audience questions every 5 minutes to spark interaction</li>
+              <li data-localize="speakL2Li3">Keep eye contact locked on individual faces for 5-second cycles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 11. ERRORS & SOLVER =================== -->
+    <section class="portal-section" id="sec-errors">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="errTitle">PowerPoint Troubleshooting &amp; Warning Fixes</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="errSubtitle">Quick resolutions for slide show errors, warnings, playback freezes, and mismatched font layers.</p>
+
+        <div class="grid-3">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-alert-circle"></i><h3>Fonts Mismatch</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errValueText">Occurs when presentation decks open on laptops missing your installed fonts. Solve by navigating to File > Options > Save > check 'Embed Fonts'!</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-video-off"></i><h3>Video Playback Freeze</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errNameText">Embed videos in MP4 format with AAC sound compression. Optimize media compatibility inside File > Info tab options.</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-clock-pause"></i><h3>Animation Lag</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errRefText">Too many motion pathways and large PNG textures will cause presentation lags. Compress graphics (Picture Format > Compress Pictures) to resolve.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 12. QUIZ & CERTIFICATION =================== -->
+    <section class="portal-section" id="sec-quiz">
+      <div class="content-card quiz-card">
+        <h2 style="margin-bottom: 8px; text-align: center;" data-localize="quizTitle">Timed Presenter Quiz &amp; Certificate</h2>
+        <p style="color: var(--text-muted); text-align: center; margin-bottom: 2rem;" data-localize="quizSubtitle">Answer all exam questions correctly to earn presenter XP points and unlock your verified completion certificate!</p>
+
+        <!-- Quiz Playground -->
+        <div class="lesson-box" id="quizPlayground">
+          <div class="quiz-header-status">
+            <span style="font-weight: 700;" id="quizProgressLabel">Question 1 of 5</span>
+            <div class="timer-pill">
+              <i class="ti ti-alarm"></i>
+              <span id="quizTimer">20s</span>
+            </div>
+          </div>
+
+          <div class="quiz-question-container">
+            <h3 id="quizQuestionText">Which tab contains Slide Master, Slide Sorter, and Rulers?</h3>
+            <div class="quiz-options-list" id="quizOptionsContainer">
+              <!-- JS options -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Certificate Panel -->
+        <div class="certificate-panel" id="certificateBox">
+          <div class="cert-frame">
+            <h2 data-localize="certHeader">CERTIFICATE OF COMPLETION</h2>
+            <div class="cert-divider"></div>
+            <p data-localize="certVerify">This is to certify that</p>
+            <div class="name-tag" id="certUserName">Your Name Here</div>
+            <p data-localize="certBody">has successfully completed all presentation levels, design labs, and kinematic animation examinations to become a verified</p>
+            <h3 style="font-family: var(--header-font); font-size: 1.6rem; color: var(--accent-orange); margin-bottom: 2rem;">MICROSOFT POWERPOINT MASTER</h3>
+            <div class="cert-stamp">Verified Pro</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- App Footer consistent Template anchors -->
+    <footer class="ts-footer">
+      <div class="fl">
+        <a href="https://wondermayank.github.io/" target="_blank">
+          <i class="ti ti-home" style="font-size:13px;margin-right:6px"></i>WonderMayank
+        </a>
+        <a href="https://commercesehoga.github.io/dashboard" target="_blank">
+          <i class="ti ti-device-desktop" style="font-size:13px;margin-right:6px"></i>CBT Mock Platform
+        </a>
+        <a href="https://wondermayank.github.io/terms" target="_blank">Terms</a>
+        <a href="https://wondermayank.github.io/privacy" target="_blank">Privacy</a>
+        <a href="https://wondermayank.github.io/disclaimer" target="_blank">Disclaimer</a>
+        <a href="https://wondermayank.github.io/contact" target="_blank">
+          <i class="ti ti-mail" style="font-size:13px;margin-right:6px"></i>Contact Owner
+        </a>
+        <a href="https://commercesehoga.github.io/help" target="_blank">
+          <i class="ti ti-heart" style="font-size:13px;margin-right:6px"></i>Donation / Support
+        </a>
+      </div>
+      <div class="fc">© 2026 ThunderStudy · Made with ❤️ by WonderMayank · PowerPoint University blueprint portal</div>
+    </footer>
+
+  </div>
+
+  <!-- Dynamic Application Logic scripts -->
+  <script>
+    /* ==========================================================================
+       DUAL LOCALIZATION DICTIONARY (HINDI / ENGLISH)
+       ========================================================================== */
+    const dictionary = {
+      en: {
+        sidebarBrand: "PPT Academy",
+        menuHome: "Home Page",
+        menuBeginner: "Beginner Course",
+        menuSimulator: "Slide Simulator",
+        menuTabs: "Ribbon Tabs Guide",
+        menuDesign: "Slide Design Academy",
+        menuAnim: "Animation Mastery",
+        menuShortcuts: "Shortcut Keys",
+        menuVba: "VBA Automation",
+        menuTemplates: "Templates Pack",
+        menuSpeak: "Public Speaking",
+        menuErrors: "Error Solver",
+        menuQuiz: "MCQ & Certificate",
+        
+        xpTitle: "Presenter Rank Progress",
+        streakSuffix: "Day Streak",
+        
+        homeBadge: "⚡ Visual Storytelling Blueprint",
+        homeHeroTitle: "Learn PowerPoint From Beginner to Professional Designer",
+        homeHeroDesc: "Unlock premium transition techniques, kinematic slide animations, visual SmartArt layouts, Slide Masters, and VBA macro scripts. Designed for corporate speakers, teachers, and startup founders.",
+        homeCta: "Start Learning",
+        homeFeaturesTitle: "🎭 Kinematic Presentation Platform",
+        homeFeatSpread: "Live Slide Design & Transition Simulator",
+        homeFeatLang: "Dual Language Curriculum (Hindi + English Mode)",
+        homeFeatShort: "Multi-OS (Windows / Mac) Keyboard Shortcuts Dictionary",
+        homeFeatCert: "Dynamic Timed Slide Show Quiz Certification Engine",
+        homeProgressTitle: "📈 Student presenter Dashboard",
+        homeProgressDesc: "Answer questions correctly, practice inside slide canvas sandboxes, and run transitions to earn XP points!",
+        homeTrackerXP: "XP Points Earned",
+        homeTrackerStatus: "Active Rank",
+        homeVisualTitle: "PowerPoint Composition Design Assets",
+        homeVisualDesc: "Study spatial alignments, shapes hierarchies, Slide Masters layout structures, and professional templates.",
+        
+        begTitle: "PowerPoint Absolute Beginner Blueprint",
+        begSubtitle: "Understand what presentations are, ribbon basic controls, slide sizes, text box operations, and color contrasts.",
+        begL1Title: "1. Workbook Slides & Layouts",
+        begL1Li1: "Slides are standard canvas sheets (standard 16:9 widescreen)",
+        begL1Li2: "Each slide uses structured layouts (Title, Content, Blank)",
+        begL1Li3: "Slide Master governs absolute fonts and layout themes globally",
+        begL2Title: "2. Content & Formatting",
+        begL2Li1: "Use Text Boxes instead of writing directly onto background grids",
+        begL2Li2: "Maintain strong contrast (light text on dark; dark text on light)",
+        begL2Li3: "Keep alignment consistent (Left alignment is standard for bullets)",
+        begL3Title: "3. Save & Present",
+        begL3Li1: "Save in standard PPTX format or export slides to PDF outlines",
+        begL3Li2: "Launch Presentation View using standard F5 button",
+        begL3Li3: "Presenter View: Study notes and upcoming slides on split screen",
+        begTipLabel: "Pro-Tip:",
+        begTipText: "Always check your presentation slide dimensions (Design Tab > Slide Size) before designing. Widescreen 16:9 is standard for modern screens, while Standard 4:3 is for older projectors!",
+        
+        simTitle: "Interactive Presentation Slide Simulator",
+        simDesc: "Add slides, edit titles, adjust templates, set background themes, choose animations, and preview slides. Then launch the dynamic full-screen slide show player!",
+        simAddBtn: "Add Slide",
+        simPlayBtn: "Play Slideshow",
+        
+        ctrlTitle: "Slide Title",
+        ctrlSubtitle: "Slide Body/Subtitle",
+        ctrlLayout: "Slide Layout",
+        ctrlTheme: "Background Theme",
+        ctrlAnimate: "Entrance Animation",
+        ctrlTransition: "Slide Transition",
+        
+        tabsTitle: "Full PowerPoint Tabs Blueprint",
+        tabsSubtitle: "Every command, group, and animation tab in the PowerPoint Ribbon, detailed tab-by-tab.",
+        
+        desTitle: "Slide Design Academy Blueprint",
+        desSubtitle: "Visual hierarchy rules, white spaces, typography configurations, and spatial layout alignments.",
+        
+        animTitle: "PowerPoint Animation Mastery",
+        animSubtitle: "Cinematic transition effects, motion pathways, Trigger triggers, and Apple-style slide animations.",
+        
+        keysTitle: "Keyboard Shortcuts database Console",
+        keysSubtitle: "Filter PowerPoint shortcuts instantly using the live search engine bar below.",
+        keysEmpty: "No matching shortcuts found. Try another keyword.",
+        
+        vbaTitle: "PowerPoint VBA & Automation Developer",
+        vbaSubtitle: "Unlock PowerPoint developer tools. Write scripts to generate slide decks dynamically with one click.",
+        vbaProjTitle: "Automated Project: Dynamic Pitch Slide Compiler",
+        vbaProjDesc: "Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro instantly generates standard slide sets with aligned shapes and invoice figures!",
+        
+        tempTitle: "Presentation Professional Templates Pack",
+        tempSubtitle: "Download templates with complete composition, structured fonts, and animation sequences.",
+        tempCopyBtn: "Copy Template Pack",
+        tempInvTitle: "Startup Pitch Deck Template",
+        tempResTitle: "Corporate Quarterly Business Report",
+        
+        speakTitle: "Public Speaking & Presentation Skills",
+        speakSubtitle: "Master stage presence, body language rules, vocal controls, and slide pacing strategies.",
+        
+        errTitle: "PowerPoint Troubleshooting & Warning Fixes",
+        errSubtitle: "Quick resolutions for slide show errors, warnings, playback freezes, and mismatched font layers.",
+        
+        quizTitle: "Timed Presenter Quiz & Certificate",
+        quizSubtitle: "Answer all exam questions correctly to earn presenter XP points and unlock your verified completion certificate!",
+        certHeader: "CERTIFICATE OF COMPLETION",
+        certVerify: "This is to certify that",
+        certBody: "has successfully completed all presentation levels, design labs, and kinematic animation examinations to become a verified"
+      },
+      hi: {
+        sidebarBrand: "पीपीटी अकादमी",
+        menuHome: "मुख्य पृष्ठ",
+        menuBeginner: "शुरुआती कोर्स",
+        menuSimulator: "स्लाइड सिम्युलेटर",
+        menuTabs: "रिबन टैब गाइड",
+        menuDesign: "डिजाइन अकादमी",
+        menuAnim: "एनिमेशन मास्टरी",
+        menuShortcuts: "शॉर्टकट कुंजी",
+        menuVba: "VBA ऑटोमेशन",
+        menuTemplates: "टेम्पलेट पैक",
+        menuSpeak: "सार्वजनिक भाषण",
+        menuErrors: "त्रुटि निवारण",
+        menuQuiz: "MCQ और प्रमाणपत्र",
+        
+        xpTitle: "प्रस्तुतकर्ता प्रगति मीटर",
+        streakSuffix: "दिन की निरंतरता",
+        
+        homeBadge: "⚡ विजुअल स्टोरीटेलिंग ब्लूप्रिंट",
+        homeHeroTitle: "PowerPoint को बेसिक से प्रोफेशनल स्तर तक सीखें",
+        homeHeroDesc: "प्रीमियम ट्रांज़िशन तकनीक, स्लाइड एनिमेशन, विजुअल स्मार्टआर्ट लेआउट, स्लाइड मास्टर्स और VBA मैक्रो स्क्रिप्ट सीखें। वक्ताओं और छात्रों के लिए विशेष।",
+        homeCta: "सीखना शुरू करें",
+        homeFeaturesTitle: "🎭 गतिशील विजुअल प्लेटफ़ॉर्म",
+        homeFeatSpread: "वास्तविक समय में स्लाइड डिजाइन और ट्रांजिशन सिम्युलेटर",
+        homeFeatLang: "दोहरी भाषा पाठ्यक्रम (हिंदी + अंग्रेजी मोड)",
+        homeFeatShort: "मल्टी-ओएस (विंडोज / मैक) कीबोर्ड शॉर्टकट निर्देशिका",
+        homeFeatCert: "समयबद्ध एमसीक्यू स्लाइड शो परीक्षा इंजन",
+        homeProgressTitle: "📈 प्रस्तुतकर्ता डैशबोर्ड",
+        homeProgressDesc: "सवालों के सही उत्तर दें, स्लाइड में अभ्यास करें और प्रस्तुतकर्ता XP अंक अर्जित करें!",
+        homeTrackerXP: "कुल अर्जित XP",
+        homeTrackerStatus: "सक्रिय रैंक",
+        homeVisualTitle: "पावरपॉइंट स्लाइड संरचना और घटक",
+        homeVisualDesc: "सटीक रेखांकन, लेआउट और प्रस्तुति घटकों का दृश्य रूप से अध्ययन करें।",
+        
+        begTitle: "पावरपॉइंट बिगिनर ब्लूप्रिंट",
+        begSubtitle: "प्रस्तुति क्या है, बुनियादी नियंत्रण, स्लाइड आकार, टेक्स्ट बॉक्स और रंग विरोधाभास को समझें।",
+        begL1Title: "1. स्लाइड और लेआउट",
+        begL1Li1: "स्लाइड्स मुख्य विजुअल शीट हैं (मानक 16:9 अनुपात)",
+        begL1Li2: "प्रत्येक स्लाइड में विशिष्ट लेआउट (शीर्षक, सामग्री, रिक्त) होते हैं",
+        begL1Li3: "स्लाइड मास्टर वैश्विक फोंट और डिजाइन को नियंत्रित करता है",
+        begL2Title: "2. सामग्री और स्वरूपण",
+        begL2Li1: "सीधे लिखने के बजाय हमेशा टेक्स्ट बॉक्स का उपयोग करें",
+        begL2Li2: "रंगों में मजबूत कंट्रास्ट बनाए रखें (गहरे पृष्ठभूमि पर हल्का पाठ)",
+        begL2Li3: "लेआउट को साफ और सुव्यवस्थित रखें (बाईं ओर संरेखण मानक है)",
+        begL3Title: "3. सुरक्षित करें और प्रस्तुत करें",
+        begL3Li1: "मानक PPTX प्रारूप में सहेजें या PDF में निर्यात करें",
+        begL3Li2: "F5 दबाकर प्रस्तुति (Slide Show) मोड चालू करें",
+        begL3Li3: "प्रस्तुतकर्ता दृश्य (Presenter View) में अपनी टिप्पणियाँ और अगली स्लाइड्स देखें",
+        begTipLabel: "महत्वपूर्ण सुझाव:",
+        begTipText: "हमेशा डिजाइन शुरू करने से पहले स्लाइड का आकार (Design Tab > Slide Size) जांचें। आधुनिक स्क्रीन के लिए 16:9 और पुराने प्रोजेक्टर के लिए 4:3 उपयुक्त है!",
+        
+        simTitle: "इंटरैक्टिव पावरपॉइंट स्लाइड सिम्युलेटर",
+        simDesc: "स्लाइड जोड़ें, शीर्षक संपादित करें, टेम्पलेट बदलें, रंग थीम चुनें, एनिमेशन लागू करें और प्रस्तुति चलाएं!",
+        simAddBtn: "स्लाइड जोड़ें",
+        simPlayBtn: "प्रस्तुति चलाएं",
+        
+        ctrlTitle: "स्लाइड शीर्षक",
+        ctrlSubtitle: "स्लाइड सामग्री/उपशीर्षक",
+        ctrlLayout: "स्लाइड लेआउट",
+        ctrlTheme: "पृष्ठभूमि थीम",
+        ctrlAnimate: "प्रवेश एनिमेशन",
+        ctrlTransition: "स्लाइड ट्रांजिशन",
+        
+        tabsTitle: "संपूर्ण पावरपॉइंट रिबन गाइड",
+        tabsSubtitle: "पावरपॉइंट रिबन मेनू का एक-एक कमांड और पैनल, टैब-दर-टैब वर्गीकृत।",
+        
+        desTitle: "स्लाइड डिजाइन अकादमी गाइड",
+        desSubtitle: "विजुअल पदानुक्रम, खाली स्थान, टाइपोग्राफी और संरेखण नियम।",
+        
+        animTitle: "पावरपॉइंट एनिमेशन मास्टरी",
+        animSubtitle: "गतिशील ट्रांजिशन प्रभाव, मोशन पाथ, ट्रिगर प्रणाली और एप्पल-शैली एनिमेशन।",
+        
+        keysTitle: "कीबोर्ड शॉर्टकट कंसोल",
+        keysSubtitle: "नीचे दिए गए सर्च बार का उपयोग करके कीबोर्ड शॉर्टकट खोजें।",
+        keysEmpty: "कोई मेल खाता शॉर्टकट नहीं मिला। दूसरा शब्द खोजें।",
+        
+        vbaTitle: "VBA और ऑटोमेशन गाइड",
+        vbaSubtitle: "डेवलपर टूल्स अनलॉक करें। एक क्लिक में पूरी स्लाइड प्रस्तुति बनाने के लिए VBA स्क्रिप्ट लिखें।",
+        vbaProjTitle: "स्वचालित प्रोजेक्ट: डायनामिक स्लाइड कंपाइलर",
+        vbaProjDesc: "नीचे दी गई VBA स्क्रिप्ट को कॉपी करें, VBA संपादक (Alt + F11) खोलें, नया मॉड्यूल डालें और पेस्ट करें। इसे रन करते ही स्लाइड्स बन जाएँगी!",
+        
+        tempTitle: "प्रस्तुति व्यावसायिक टेम्पलेट पैक",
+        tempSubtitle: "पूर्ण स्वरूपण, फोंट और एनिमेशन के साथ तैयार टेम्पलेट डाउनलोड करें।",
+        tempCopyBtn: "टेम्पलेट कॉपी करें",
+        tempInvTitle: "स्टार्टअप पिच डेक टेम्पलेट",
+        tempResTitle: "तिमाही व्यापार रिपोर्ट टेम्पलेट",
+        
+        speakTitle: "सार्वजनिक भाषण और प्रस्तुतकर्ता कौशल",
+        speakSubtitle: "मंच पर उपस्थिति, शारीरिक भाषा, आवाज नियंत्रण और स्लाइड गति को नियंत्रित करना सीखें।",
+        
+        errTitle: "त्रुटि निवारण और समाधान",
+        errSubtitle: "स्लाइड शो प्लेबैक फ्रीज, फोंट बेमेल और एनीमेशन लैग जैसी समस्याओं के त्वरित समाधान।",
+        
+        quizTitle: "समयबद्ध प्रस्तुतकर्ता क्विज़ और प्रमाणपत्र",
+        quizSubtitle: "प्रमाणपत्र अनलॉक करने और अपने प्रस्तुतकर्ता XP अंक बढ़ाने के लिए सभी प्रश्नों के सही उत्तर दें!",
+        certHeader: "प्रमाणपत्र",
+        certVerify: "यह प्रमाणित किया जाता है कि",
+        certBody: "ने व्यावहारिक प्रस्तुति पाठ्यक्रम के सभी स्तरों को सफलतापूर्वक पूरा किया है और प्रमाणन परीक्षा उत्तीर्ण की है।"
+      }
+    };
+
+    /* ==========================================================================
+       SHORTCUTS DATABASE
+       ========================================================================== */
+    const shortcutsData = [
+      { category: "File", win: ["Ctrl", "N"], mac: ["Cmd", "N"], desc: "Create a new presentation slide deck" },
+      { category: "File", win: ["Ctrl", "M"], mac: ["Cmd", "M"], desc: "Insert a new blank slide into the deck" },
+      { category: "File", win: ["Ctrl", "S"], mac: ["Cmd", "S"], desc: "Save the current presentation file" },
+      { category: "Edit", win: ["Ctrl", "Z"], mac: ["Cmd", "Z"], desc: "Undo the last text or object modification" },
+      { category: "Edit", win: ["Ctrl", "Y"], mac: ["Cmd", "Y"], desc: "Redo the last undone presentation step" },
+      { category: "Edit", win: ["Ctrl", "D"], mac: ["Cmd", "D"], desc: "Duplicate the selected shape or active slide" },
+      { category: "Edit", win: ["Ctrl", "G"], mac: ["Cmd", "Option", "G"], desc: "Group selected slide elements together" },
+      { category: "Animation", win: ["Alt", "Shift", "C"], mac: ["Option", "Shift", "C"], desc: "Copy animation sequences (Animation Painter)" },
+      { category: "Presentation", win: ["F5"], mac: ["Cmd", "Shift", "Enter"], desc: "Start slideshow from the very first slide" },
+      { category: "Presentation", win: ["Shift", "F5"], mac: ["Cmd", "Enter"], desc: "Start slideshow from the active slide" },
+      { category: "Presentation", win: ["Esc"], mac: ["Esc"], desc: "Terminate the active fullscreen slideshow" },
+      { category: "VBA", win: ["Alt", "F11"], mac: ["Fn", "Option", "F11"], desc: "Launch Visual Basic VBA script editor" }
+    ];
+
+    /* ==========================================================================
+       QUIZ CONFIGURATIONS & QUESTIONS
+       ========================================================================== */
+    const quizQuestions = [
+      {
+        q: "Which transition smoothly animates elements shifting between slide A and slide B?",
+        o: ["Fade", "Morph", "Push", "Split"],
+        a: 1
+      },
+      {
+        q: "What is the industry-standard keyboard shortcut to start slideshow from the active slide?",
+        o: ["F5", "Shift + F5", "Ctrl + M", "Alt + F11"],
+        a: 1
+      },
+      {
+        q: "Which tab houses Slide Master and layout guidelines in PowerPoint?",
+        o: ["Design Tab", "Transitions Tab", "View Tab", "Insert Tab"],
+        a: 2
+      },
+      {
+        q: "What is the recommended rule for slide pacing (10 slides, 20 minutes, 30pt font)?",
+        o: ["5-15-25 Rule", "10-20-30 Rule", "8-18-28 Rule", "12-22-32 Rule"],
+        a: 1
+      },
+      {
+        q: "Which tool copies animation properties from one object to another?",
+        o: ["Format Painter", "Animation Painter", "Slide Master", "Reuse Slides"],
+        a: 1
+      }
+    ];
+
+    /* ==========================================================================
+       APPLICATION CORE STATE & DYNAMIC SIMULATOR
+       ========================================================================== */
+    let currentLanguage = 'en';
+    let currentTheme = 'light';
+    let currentOS = 'win';
+    let activeShortcutCategory = 'all';
+
+    // Interactive Slide Simulator Deck State
+    let slideDeck = [
+      {
+        title: "WELCOME TO PPT UNIVERSITY",
+        body: "• Learn slide layouts and templates\n• Build cinematic animations\n• Master visual storytelling",
+        layout: "title",
+        theme: "orange",
+        animate: "zoom",
+        transition: "fade"
+      },
+      {
+        title: "SLIDE DESIGN GUIDELINES",
+        body: "• 60-30-10 Color contrast rules\n• White spaces hierarchy composition\n• Clean sans-serif modern typography",
+        layout: "content",
+        theme: "dark",
+        animate: "fly",
+        transition: "morph"
+      },
+      {
+        title: "COMPARISON REPORT",
+        col1Title: "Aesthetic Layouts",
+        col1Text: "Clean shapes, 30pt font minimums, spacious columns, and balanced whitespace.",
+        col2Title: "Walls of Text",
+        col2Text: "Mismatched alignments, tiny sizes, crowded shapes, and no hierarchy.",
+        layout: "comparison",
+        theme: "blue",
+        animate: "bounce",
+        transition: "push"
+      }
+    ];
+
+    let activeSlideIndex = 0;
+    let slideshowActiveIndex = 0;
+
+    // Stats variables
+    let userXP = parseInt(localStorage.getItem('pptXP')) || 0;
+    let userStreak = parseInt(localStorage.getItem('pptStreak')) || 1;
+    let lastVisitDate = localStorage.getItem('pptLastVisit') || '';
+
+    // Quiz Engine state
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let quizActive = true;
+    let questionTimer = 20;
+    let timerInterval = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Config
+      initTheme();
+      initLocalization();
+      initStats();
+      initSidebar();
+      initCurriculumTabs();
+      initSlideSimulator();
+      renderShortcuts();
+      initQuiz();
+
+      // Bind input events
+      document.getElementById('shortcutSearch').addEventListener('input', e => {
+        renderShortcuts(e.target.value);
+      });
+
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
+      document.getElementById('osToggleBtn').addEventListener('click', toggleOSKeys);
+
+      // Mobile Menu binding
+      const sidebar = document.getElementById('appSidebar');
+      document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+
+      // Bind keyboard events for slideshow
+      document.addEventListener('keydown', (e) => {
+        const overlay = document.getElementById('slideshowOverlay');
+        if (overlay.style.display === 'flex') {
+          if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+          if (e.key === 'ArrowLeft') prevSlide();
+          if (e.key === 'Escape') closeSlideshow();
+        }
+      });
+    });
+
+    /* ==========================================================================
+       THEME & LOCALIZATION CONTROLLERS
+       ========================================================================== */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('pptTheme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pptTheme', theme);
+      
+      const themeLabel = document.getElementById('themeLabel');
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (theme === 'dark') {
+        themeLabel.textContent = "Light Mode";
+        themeBtn.querySelector('i').className = 'ti ti-sun';
+      } else {
+        themeLabel.textContent = "Dark Mode";
+        themeBtn.querySelector('i').className = 'ti ti-moon';
+      }
+    }
+
+    function toggleTheme() {
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+      initLocalization();
+      
+      const langLabel = document.getElementById('langLabel');
+      langLabel.textContent = currentLanguage === 'en' ? 'हिन्दी' : 'English';
+      
+      renderShortcuts();
+    }
+
+    function initLocalization() {
+      const dict = dictionary[currentLanguage];
+      document.querySelectorAll('[data-localize]').forEach(el => {
+        const key = el.getAttribute('data-localize');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    /* ==========================================================================
+       PROGRESS SAVES ENGINE
+       ========================================================================== */
+    function initStats() {
+      const today = new Date().toDateString();
+      if (lastVisitDate && lastVisitDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastVisitDate === yesterday.toDateString()) {
+          userStreak += 1;
+        } else {
+          userStreak = 1;
+        }
+        localStorage.setItem('pptStreak', userStreak);
+      }
+      localStorage.setItem('pptLastVisit', today);
+      updateStatDisplays();
+    }
+
+    function updateStatDisplays() {
+      document.getElementById('streakCount').textContent = userStreak;
+      document.getElementById('totalXpVal').textContent = `${userXP} XP`;
+      
+      const progressPercent = Math.min(100, (userXP % 100));
+      document.getElementById('xpBar').style.width = `${progressPercent}%`;
+      
+      if (userXP >= 30) {
+        document.getElementById('badgeExp').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Slide Designer";
+      }
+      if (userXP >= 100) {
+        document.getElementById('badgeMaster').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Visual Storyteller";
+      }
+    }
+
+    function earnXP(amount) {
+      userXP += amount;
+      localStorage.setItem('pptXP', userXP);
+      updateStatDisplays();
+    }
+
+    /* ==========================================================================
+       SIDEBAR & CLIENT ROUTER
+       ========================================================================== */
+    function initSidebar() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sidebar = document.getElementById('appSidebar');
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          const target = item.getAttribute('data-target');
+          navigateToSection(target);
+          sidebar.classList.remove('open');
+        });
+      });
+    }
+
+    function navigateToSection(targetId) {
+      const sections = document.querySelectorAll('.portal-section');
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+        if (sec.id === `sec-${targetId}`) {
+          sec.classList.add('active');
+        }
+      });
+
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === targetId) {
+          item.classList.add('active');
+        }
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function initCurriculumTabs() {
+      const tabs = document.querySelectorAll('.bar-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const parent = tab.parentElement;
+          parent.querySelectorAll('.bar-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          if (tab.dataset.tabcontent) {
+            const container = parent.parentElement;
+            container.querySelectorAll('.level-content-box').forEach(box => {
+              box.classList.remove('active');
+              if (box.id === tab.dataset.tabcontent) {
+                box.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       INTERACTIVE PRESENTATION SIMULATOR
+       ========================================================================== */
+    function initSlideSimulator() {
+      renderThumbStrip();
+      selectSlide(0);
+    }
+
+    function renderThumbStrip() {
+      const strip = document.getElementById('pptThumbStrip');
+      strip.innerHTML = '';
+
+      slideDeck.forEach((slide, idx) => {
+        const item = document.createElement('div');
+        item.className = `ppt-thumb-item ${idx === activeSlideIndex ? 'active' : ''}`;
+        item.onclick = () => selectSlide(idx);
+
+        // Thumbnail header
+        const num = document.createElement('div');
+        num.className = 'ppt-thumb-num';
+        num.textContent = idx + 1;
+        item.appendChild(num);
+
+        // Delete button
+        if (slideDeck.length > 1) {
+          const del = document.createElement('i');
+          del.className = 'ti ti-trash ppt-thumb-delete';
+          del.onclick = (e) => {
+            e.stopPropagation();
+            deleteSlide(idx);
+          };
+          item.appendChild(del);
+        }
+
+        // Inner title text
+        const titleSpan = document.createElement('span');
+        titleSpan.textContent = slide.title || `Slide ${idx + 1}`;
+        item.appendChild(titleSpan);
+
+        strip.appendChild(item);
+      });
+    }
+
+    function selectSlide(idx) {
+      activeSlideIndex = idx;
+      renderThumbStrip();
+
+      const slide = slideDeck[idx];
+
+      // Update control fields
+      document.getElementById('pptSlideTitle').value = slide.title || '';
+      document.getElementById('pptSlideBody').value = slide.body || '';
+      document.getElementById('pptSlideLayout').value = slide.layout || 'title';
+      document.getElementById('pptSlideTheme').value = slide.theme || 'light';
+      document.getElementById('pptSlideAnimate').value = slide.animate || 'none';
+      document.getElementById('pptSlideTransition').value = slide.transition || 'fade';
+
+      renderSlideCanvas('pptCanvasView', slide);
+    }
+
+    function renderSlideCanvas(canvasId, slide) {
+      const canvas = document.getElementById(canvasId);
+      canvas.className = `ppt-slide-canvas slide-theme-${slide.theme}`;
+      canvas.innerHTML = '';
+
+      // Create slide container for animations
+      const inner = document.createElement('div');
+      inner.style.width = '100%';
+      inner.style.height = '100%';
+      inner.style.display = 'flex';
+      inner.style.flexDirection = 'column';
+      inner.style.justifyContent = 'center';
+      inner.style.alignItems = canvasId === 'pptCanvasView' ? 'center' : 'inherit';
+      
+      if (slide.animate && slide.animate !== 'none') {
+        inner.className = `slide-animate-${slide.animate}`;
+      }
+
+      if (slide.layout === 'title') {
+        inner.innerHTML = `
+          <h3 style="font-family:var(--header-font); font-size:2.4rem; font-weight:800; margin-bottom:8px;">${slide.title || 'Click to edit title'}</h3>
+          <p style="font-size:1.1rem; opacity:0.85; white-space:pre-wrap;">${slide.body || 'Slide Subtitle content'}</p>
+        `;
+      } else if (slide.layout === 'content') {
+        canvas.className += ' slide-layout-content';
+        const bullets = (slide.body || '').split('\n').map(b => b.trim()).filter(Boolean);
+        let bulletsHtml = bullets.map(b => `<li>${b}</li>`).join('');
+        if (!bulletsHtml) bulletsHtml = '<li>Bullet content entry</li>';
+        inner.innerHTML = `
+          <h3 style="font-family:var(--header-font); font-size:1.8rem; font-weight:800; margin-bottom:16px;">${slide.title || 'Slide Title'}</h3>
+          <ul style="list-style-type:disc; padding-left:24px; font-size:1.1rem; line-height:1.6; display:flex; flex-direction:column; gap:8px;">${bulletsHtml}</ul>
+        `;
+      } else if (slide.layout === 'comparison') {
+        canvas.className += ' slide-layout-comparison';
+        inner.innerHTML = `
+          <h3 style="font-family:var(--header-font); font-size:1.8rem; font-weight:800; text-align:center; margin-bottom:16px; width:100%;">${slide.title || 'Comparison Title'}</h3>
+          <div class="slide-comparison-columns">
+            <div class="slide-col-box">
+              <h4>${slide.col1Title || 'Standard A'}</h4>
+              <p style="font-size:0.9rem; line-height:1.4; opacity:0.85;">${slide.col1Text || 'Description of standard layout details'}</p>
+            </div>
+            <div class="slide-col-box">
+              <h4>${slide.col2Title || 'Standard B'}</h4>
+              <p style="font-size:0.9rem; line-height:1.4; opacity:0.85;">${slide.col2Text || 'Mismatched design structure outcomes'}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      canvas.appendChild(inner);
+    }
+
+    function updateActiveSlideData() {
+      const slide = slideDeck[activeSlideIndex];
+      slide.title = document.getElementById('pptSlideTitle').value;
+      slide.body = document.getElementById('pptSlideBody').value;
+      slide.layout = document.getElementById('pptSlideLayout').value;
+      slide.theme = document.getElementById('pptSlideTheme').value;
+      slide.animate = document.getElementById('pptSlideAnimate').value;
+      slide.transition = document.getElementById('pptSlideTransition').value;
+
+      renderSlideCanvas('pptCanvasView', slide);
+      
+      // Update Title in thumbnail
+      const thumbSpans = document.querySelectorAll('.ppt-thumb-item span');
+      if (thumbSpans[activeSlideIndex]) {
+        thumbSpans[activeSlideIndex].textContent = slide.title || `Slide ${activeSlideIndex + 1}`;
+      }
+      
+      earnXP(1); // Earn 1 XP for formatting slides!
+    }
+
+    function addNewSlide() {
+      slideDeck.push({
+        title: "NEW SLIDE TITLE",
+        body: "• Add details here\n• Insert illustrations\n• Set visual cues",
+        layout: "content",
+        theme: "light",
+        animate: "fade",
+        transition: "fade"
+      });
+      activeSlideIndex = slideDeck.length - 1;
+      initSlideSimulator();
+      earnXP(10);
+    }
+
+    function deleteSlide(idx) {
+      slideDeck.splice(idx, 1);
+      if (activeSlideIndex >= slideDeck.length) {
+        activeSlideIndex = slideDeck.length - 1;
+      }
+      initSlideSimulator();
+    }
+
+    /* Slideshow player overlay controls */
+    function startSlideshow() {
+      slideshowActiveIndex = 0;
+      document.getElementById('slideshowOverlay').style.display = 'flex';
+      renderSlideshowSlide();
+      earnXP(15);
+    }
+
+    function renderSlideshowSlide() {
+      const slide = slideDeck[slideshowActiveIndex];
+      const viewport = document.getElementById('slideshowViewport');
+      
+      // Apply transitions
+      viewport.className = `slideshow-viewport transition-${slide.transition}`;
+      
+      renderSlideCanvas('slideshowCanvas', slide);
+      document.getElementById('slideshowIndex').textContent = `Slide ${slideshowActiveIndex + 1} of ${slideDeck.length}`;
+    }
+
+    function nextSlide() {
+      if (slideshowActiveIndex < slideDeck.length - 1) {
+        slideshowActiveIndex += 1;
+        renderSlideshowSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (slideshowActiveIndex > 0) {
+        slideshowActiveIndex -= 1;
+        renderSlideshowSlide();
+      }
+    }
+
+    function closeSlideshow() {
+      document.getElementById('slideshowOverlay').style.display = 'none';
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY ENGINE
+       ========================================================================== */
+    function renderShortcuts(filterText = '') {
+      const grid = document.getElementById('shortcutsGrid');
+      const empty = document.getElementById('noShortcuts');
+      const query = filterText.toLowerCase().trim();
+
+      grid.innerHTML = '';
+
+      const filtered = shortcutsData.filter(s => {
+        const matchCat = activeShortcutCategory === 'all' || s.category === activeShortcutCategory;
+        const matchText = !query ||
+          s.desc.toLowerCase().includes(query) ||
+          s.category.toLowerCase().includes(query) ||
+          s.win.some(k => k.toLowerCase().includes(query)) ||
+          s.mac.some(k => k.toLowerCase().includes(query));
+        return matchCat && matchText;
+      });
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        filtered.forEach(s => {
+          const item = document.createElement('div');
+          item.className = 'shortcut-card-item';
+
+          const keys = currentOS === 'win' ? s.win : s.mac;
+          let keysHtml = keys.map(k => `<kbd class="shortcut-kbd">${k}</kbd>`).join(' + ');
+
+          item.innerHTML = `
+            <div class="shortcut-card-details">
+              <h4>${s.desc}</h4>
+              <span>${s.category}</span>
+            </div>
+            <div class="shortcut-card-keys">
+              ${keysHtml}
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      }
+    }
+
+    function toggleOSKeys() {
+      currentOS = currentOS === 'win' ? 'mac' : 'win';
+      const btn = document.getElementById('osToggleBtn');
+      const label = document.getElementById('osLabel');
+
+      if (currentOS === 'win') {
+        label.textContent = "Windows Keys";
+        btn.querySelector('i').className = 'ti ti-brand-windows';
+      } else {
+        label.textContent = "Mac Keys";
+        btn.querySelector('i').className = 'ti ti-brand-apple';
+      }
+      renderShortcuts(document.getElementById('shortcutSearch').value);
+    }
+
+    // Shortcut category pill filter binding
+    document.querySelectorAll('#shortcutCats button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#shortcutCats button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeShortcutCategory = btn.dataset.cat;
+        renderShortcuts(document.getElementById('shortcutSearch').value);
+      });
+    });
+
+    /* ==========================================================================
+       QUIZ ENGINE & TIMED MCQ TEST
+       ========================================================================== */
+    function initQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      quizActive = true;
+      document.getElementById('quizPlayground').style.display = 'block';
+      document.getElementById('certificateBox').style.display = 'none';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      clearInterval(timerInterval);
+      if (currentQuestionIdx >= quizQuestions.length) {
+        completeQuiz();
+        return;
+      }
+
+      const qData = quizQuestions[currentQuestionIdx];
+      document.getElementById('quizProgressLabel').textContent = `Question ${currentQuestionIdx + 1} of ${quizQuestions.length}`;
+      document.getElementById('quizQuestionText').textContent = qData.q;
+
+      const container = document.getElementById('quizOptionsContainer');
+      container.innerHTML = '';
+
+      qData.o.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleOptionClick(btn, idx, qData.a));
+        container.appendChild(btn);
+      });
+
+      // Reset question timer
+      questionTimer = 20;
+      document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+      timerInterval = setInterval(() => {
+        questionTimer -= 1;
+        document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+        if (questionTimer <= 0) {
+          clearInterval(timerInterval);
+          moveToNextQuestion();
+        }
+      }, 1000);
+    }
+
+    function handleOptionClick(selectedBtn, selectedIdx, correctIdx) {
+      clearInterval(timerInterval);
+      
+      const options = document.querySelectorAll('.quiz-option-btn');
+      options.forEach(opt => opt.disabled = true);
+
+      if (selectedIdx === correctIdx) {
+        selectedBtn.classList.add('correct');
+        quizScore += 1;
+        earnXP(20);
+      } else {
+        selectedBtn.classList.add('incorrect');
+        options[correctIdx].classList.add('correct');
+      }
+
+      setTimeout(moveToNextQuestion, 1200);
+    }
+
+    function moveToNextQuestion() {
+      currentQuestionIdx += 1;
+      loadQuestion();
+    }
+
+    function completeQuiz() {
+      document.getElementById('quizPlayground').style.display = 'none';
+      
+      const certBox = document.getElementById('certificateBox');
+      certBox.style.display = 'block';
+
+      const userName = prompt("Congratulations on passing the presentation exam! Enter your full name for the certificate:") || "PowerPoint Student";
+      document.getElementById('certUserName').textContent = userName;
+      
+      earnXP(50);
+    }
+
+    /* Helper: Copy Templates */
+    function copyTemplateCode(btn) {
+      const code = btn.previousElementSibling.value;
+      navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
