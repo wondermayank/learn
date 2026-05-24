@@ -1,0 +1,2680 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel Master Academy – Ultimate Interactive Learning Portal</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn Microsoft Excel from absolute beginner basics to advanced programming, data modeling, and automation mastery. Fully interactive labs, shortcuts database, and quizzes.">
+  <meta name="referrer" content="no-referrer">
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS THEMES (Variables)
+       ========================================================================== */
+    :root {
+      --primary-font: 'Inter', sans-serif;
+      --header-font: 'Fredoka One', 'Inter', sans-serif;
+      
+      /* Fluent Light Mode Palette */
+      --bg-primary: #f0f4f8;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: rgba(200, 225, 210, 0.4);
+      --accent-green: #107c41; /* Iconic Excel Green */
+      --accent-light-green: #e2f0d9;
+      --accent-sky: #0f86b8;
+      --accent-light-sky: #e1f5fe;
+      --accent-success: #107c41;
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(255, 255, 255, 0.78);
+      --glass-border: rgba(200, 225, 210, 0.5);
+      --shadow-soft: 0 8px 24px rgba(16, 124, 65, 0.04);
+      --shadow-hover: 0 16px 40px rgba(16, 124, 65, 0.1);
+      
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="dark"] {
+      /* Fluent Dark Mode Palette */
+      --bg-primary: #0a0e17;
+      --bg-sidebar: #101622;
+      --bg-card: #151f30;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-green: #15a858;
+      --accent-light-green: rgba(21, 168, 88, 0.15);
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(21, 31, 48, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.25);
+      --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ==========================================================================
+       BASE LAYOUT
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--primary-font);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      display: flex;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Grid Backdrop mesh */
+    .glow-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 10% 15%, var(--accent-light-green) 0%, transparent 60%),
+        radial-gradient(circle at 85% 25%, rgba(16, 124, 65, 0.06) 0%, transparent 50%);
+    }
+
+    /* ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--header-font);
+      font-size: 1.25rem;
+      color: var(--text-main);
+      padding: 8px 12px 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .brand-logo i {
+      font-size: 28px;
+      color: var(--accent-green);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    .nav-menu::-webkit-scrollbar { width: 4px; }
+    .nav-menu::-webkit-scrollbar-thumb { background: var(--accent-light-green); border-radius: 4px; }
+
+    .nav-item button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item button i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .nav-item button:hover {
+      background: var(--accent-light-green);
+      color: var(--accent-green);
+    }
+
+    .nav-item button:hover i {
+      transform: translateX(3px);
+    }
+
+    .nav-item.active button {
+      background: var(--accent-green);
+      color: #ffffff !important;
+    }
+
+    /* Mobile Sidebar toggler */
+    .mobile-nav-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      padding: 0 16px;
+      z-index: 99;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-bar button {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== */
+    .main-wrapper {
+      margin-left: 260px;
+      flex: 1;
+      padding: 24px 32px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s;
+    }
+
+    /* ==========================================================================
+       TOP CONFIGURATION BAR
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Gamification meters */
+    .user-stats-widget {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .xp-meter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .xp-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .xp-bar-outer {
+      width: 140px;
+      height: 8px;
+      background: var(--bg-primary);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .xp-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #107c41, #15a858);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .streak-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #ff7849;
+    }
+
+    .streak-meter i {
+      font-size: 20px;
+      animation: flamePulse 1.2s infinite alternate;
+    }
+
+    @keyframes flamePulse {
+      from { transform: scale(1); filter: drop-shadow(0 0 1px #ff7849); }
+      to { transform: scale(1.15); filter: drop-shadow(0 0 4px #ff3800); }
+    }
+
+    .badges-meter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light-green);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--accent-green);
+      cursor: pointer;
+    }
+
+    /* Top Controls Buttons */
+    .controls-panel {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: var(--accent-light-green);
+      border-color: rgba(16, 124, 65, 0.25);
+    }
+
+    /* ==========================================================================
+       DYNAMIC PAGE SECTIONS
+       ========================================================================== */
+    .portal-section {
+      display: none;
+    }
+
+    .portal-section.active {
+      display: block;
+      animation: sectionSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes sectionSlideUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(16, 124, 65, 0.05) 0%, rgba(16, 124, 65, 0.08) 100%), var(--bg-card);
+      border: 1px solid rgba(16, 124, 65, 0.15);
+      border-left: 6px solid var(--accent-green);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-details h2 {
+      font-family: var(--header-font);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-details p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      background: var(--accent-green);
+      border: none;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(16, 124, 65, 0.3);
+      transition: all 0.22s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 124, 65, 0.4);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .lesson-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .lesson-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .lesson-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .lesson-box-header i {
+      font-size: 22px;
+      color: var(--accent-green);
+    }
+
+    .lesson-box-header h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .lesson-box ul {
+      list-style: none;
+    }
+
+    .lesson-box ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-box ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-green);
+      font-weight: bold;
+    }
+
+    .tip-banner {
+      background: var(--accent-light-green);
+      border-left: 4px solid var(--accent-green);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 1rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: var(--text-main);
+    }
+
+    .tip-banner i {
+      font-size: 24px;
+      color: var(--accent-green);
+    }
+
+    .tab-bar-wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      padding-bottom: 4px;
+    }
+
+    .bar-tab {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .bar-tab.active {
+      background: var(--accent-green);
+      color: #ffffff;
+      border-color: var(--accent-green);
+    }
+
+    .level-content-box {
+      display: none;
+    }
+
+    .level-content-box.active {
+      display: block;
+      animation: sectionSlideUp 0.3s ease forwards;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE SPREADSHEET SIMULATOR & PLAYGROUND
+       ========================================================================== */
+    .excel-simulator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .excel-formula-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+    }
+
+    .formula-fx-label {
+      font-family: 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      user-select: none;
+    }
+
+    .formula-input-box {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .excel-grid-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .excel-grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 13px;
+      background: #ffffff;
+      color: #333333;
+    }
+
+    .excel-grid-table th, .excel-grid-table td {
+      border: 1px solid #d2d2d2;
+      padding: 6px 8px;
+      min-width: 80px;
+      height: 28px;
+      text-align: left;
+    }
+
+    .excel-grid-table th {
+      background: #f3f3f3;
+      text-align: center;
+      font-weight: 600;
+      color: #555555;
+      user-select: none;
+    }
+
+    .excel-grid-table th.col-header {
+      width: 120px;
+    }
+
+    .excel-grid-table td.row-num-header {
+      background: #f3f3f3;
+      text-align: center;
+      font-weight: 600;
+      color: #555555;
+      width: 40px;
+      min-width: 40px;
+      user-select: none;
+    }
+
+    .excel-cell-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    .excel-grid-table td.selected-cell {
+      outline: 2px solid var(--accent-green);
+      outline-offset: -2px;
+      background: rgba(16, 124, 65, 0.05) !important;
+    }
+
+    /* Interactive Formula Academy Box */
+    .formula-sandbox-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .formula-sandbox-details {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .formula-helper-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY
+       ========================================================================== */
+    .shortcut-search-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .shortcut-search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .shortcut-search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      font-size: 0.92rem;
+      outline: none;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shortcut-search-input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .shortcut-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-height: 450px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .shortcut-card-grid::-webkit-scrollbar { width: 6px; }
+    .shortcut-card-grid::-webkit-scrollbar-thumb { background: var(--accent-light-green); border-radius: 6px; }
+
+    .shortcut-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s;
+    }
+
+    .shortcut-card-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .shortcut-card-details h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .shortcut-card-details span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .shortcut-kbd {
+      background: var(--bg-primary);
+      border: 1px solid rgba(16, 124, 65, 0.12);
+      border-bottom: 3px solid rgba(16, 124, 65, 0.22);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    /* ==========================================================================
+       QUIZ ENGINE & MCQS
+       ========================================================================== */
+    .quiz-card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-header-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .timer-pill {
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #ff3b30;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quiz-question-container h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-option-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .quiz-option-btn:hover {
+      background: var(--accent-light-green);
+      border-color: rgba(16, 124, 65, 0.25);
+    }
+
+    .quiz-option-btn.correct {
+      background: #eafcf1 !important;
+      border-color: #107c41 !important;
+      color: #107c41 !important;
+    }
+
+    .quiz-option-btn.incorrect {
+      background: #fff2f2 !important;
+      border-color: #ff3b30 !important;
+      color: #ff3b30 !important;
+    }
+
+    .certificate-panel {
+      display: none;
+      margin-top: 2rem;
+      animation: stampAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes stampAppear {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cert-frame {
+      border: 14px double var(--accent-green);
+      background: #ffffff;
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(16, 124, 65, 0.15);
+      color: #1d3326;
+      border-radius: 8px;
+    }
+
+    .cert-frame h2 {
+      font-family: var(--header-font);
+      font-size: 2.2rem;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
+    .cert-divider {
+      width: 80px;
+      height: 4px;
+      background: #25a05b;
+      margin: 1.5rem auto;
+      border-radius: 999px;
+    }
+
+    .cert-frame p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #4b584f;
+    }
+
+    .cert-frame .name-tag {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      color: #0b0f19;
+      margin: 1.5rem 0;
+      border-bottom: 2px dashed #25a05b;
+      display: inline-block;
+      padding: 4px 30px;
+    }
+
+    .cert-stamp {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      width: 95px;
+      height: 95px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(16, 124, 65, 0.35);
+      transform: rotate(-12deg);
+      border: 3px double #ffffff;
+    }
+
+    /* Template Downloads */
+    .template-box-code {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      resize: none;
+      margin-bottom: 12px;
+    }
+
+    /* VBA Macros Highlight Block */
+    .vba-code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 18px;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--accent-green);
+    }
+
+    /* Visual Charts Mockup */
+    .mock-chart-container {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: 1.5rem;
+    }
+
+    .mock-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      height: 160px;
+      width: 100%;
+      max-width: 320px;
+      border-left: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      padding: 10px;
+    }
+
+    .mock-chart-bar {
+      flex: 1;
+      background: linear-gradient(0deg, var(--accent-green), #25a05b);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .mock-chart-bar::after {
+      content: attr(data-value);
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       APP FOOTER (Consistent Template Links)
+       ========================================================================== */
+    .ts-footer {
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      margin-top: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+    }
+
+    .ts-footer .fl {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+
+    .ts-footer a {
+      color: var(--accent-green);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--bg-primary);
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .ts-footer a:hover {
+      background: var(--accent-light-green);
+      transform: translateY(-1px);
+    }
+
+    .ts-footer .fc {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.8;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-270px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-left: 0;
+        padding-top: 80px;
+      }
+      .mobile-nav-bar {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+      .controls-panel {
+        justify-content: space-between;
+      }
+      .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-backdrop"></div>
+
+  <!-- Mobile Top Hamburger Navigation Header -->
+  <div class="mobile-nav-bar">
+    <div class="brand-logo" style="margin:0; border:none; padding:0;">
+      <i class="ti ti-table"></i>
+      <span>Excel Academy</span>
+    </div>
+    <button id="mobileMenuBtn" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+
+  <!-- Sidebar Navigation Drawer -->
+  <nav class="sidebar" id="appSidebar">
+    <div class="brand-logo">
+      <i class="ti ti-table"></i>
+      <span data-localize="sidebarBrand">Excel Academy</span>
+    </div>
+    
+    <ul class="nav-menu">
+      <li class="nav-item active" data-target="home"><button><i class="ti ti-home"></i> <span data-localize="menuHome">Home Page</span></button></li>
+      <li class="nav-item" data-target="beginner"><button><i class="ti ti-award"></i> <span data-localize="menuBeginner">Beginner Course</span></button></li>
+      <li class="nav-item" data-target="tabs-guide"><button><i class="ti ti-book-2"></i> <span data-localize="menuTabs">Ribbon Tabs Guide</span></button></li>
+      <li class="nav-item" data-target="formula-playground"><button><i class="ti ti-math-function"></i> <span data-localize="menuFormula">Formula Playground</span></button></li>
+      <li class="nav-item" data-target="pivot-table"><button><i class="ti ti-filter"></i> <span data-localize="menuPivot">Pivot &amp; BI Mastery</span></button></li>
+      <li class="nav-item" data-target="shortcuts"><button><i class="ti ti-keyboard"></i> <span data-localize="menuShortcuts">Shortcut Keys</span></button></li>
+      <li class="nav-item" data-target="vba-macros"><button><i class="ti ti-terminal-2"></i> <span data-localize="menuVba">VBA &amp; Automation</span></button></li>
+      <li class="nav-item" data-target="templates"><button><i class="ti ti-download"></i> <span data-localize="menuTemplates">Templates Pack</span></button></li>
+      <li class="nav-item" data-target="errors"><button><i class="ti ti-alert-triangle"></i> <span data-localize="menuErrors">Error Solver</span></button></li>
+      <li class="nav-item" data-target="ai-excel"><button><i class="ti ti-stars"></i> <span data-localize="menuAI">AI + Excel Copilot</span></button></li>
+      <li class="nav-item" data-target="quiz"><button><i class="ti ti-clipboard-list"></i> <span data-localize="menuQuiz">MCQ &amp; Certificate</span></button></li>
+    </ul>
+  </nav>
+
+  <!-- Main View Container wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Top Bar User progress & options panels -->
+    <header class="top-bar">
+      
+      <!-- Gamified stats meters -->
+      <div class="user-stats-widget">
+        <div class="xp-meter-wrap">
+          <span class="xp-label" data-localize="xpTitle">Skill Rank Progress</span>
+          <div class="xp-bar-outer">
+            <div class="xp-bar-inner" id="xpBar"></div>
+          </div>
+        </div>
+        <div class="streak-meter">
+          <i class="ti ti-flame"></i>
+          <span id="streakCount">1</span> <span data-localize="streakSuffix">Day Streak</span>
+        </div>
+        <div class="badges-meter">
+          <div class="mini-badge" title="Beginner Unlocked" id="badgeBeg"><i class="ti ti-award"></i></div>
+          <div class="mini-badge" title="Data Analyst Unlocked" id="badgeExp" style="opacity: 0.35;"><i class="ti ti-database"></i></div>
+          <div class="mini-badge" title="Excel Master Unlocked" id="badgeMaster" style="opacity: 0.35;"><i class="ti ti-crown"></i></div>
+        </div>
+      </div>
+
+      <!-- Theme & Translation controls -->
+      <div class="controls-panel">
+        <button class="control-btn" id="langToggleBtn">
+          <i class="ti ti-language"></i>
+          <span id="langLabel">हिन्दी</span>
+        </button>
+        <button class="control-btn" id="themeToggleBtn">
+          <i class="ti ti-sun"></i>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Portal Client-Side Dynamic Contents Pages -->
+
+    <!-- =================== 1. HOME PAGE =================== -->
+    <section class="portal-section active" id="sec-home">
+      <div class="hero-banner">
+        <div class="hero-details">
+          <div class="brand-badge" style="margin-bottom: 12px; font-weight: 800; font-size: 0.8rem; background: var(--accent-light-green); color: var(--accent-green); padding: 4px 10px; border-radius: 20px; display: inline-block;" data-localize="homeBadge">⚡ Excel University Blueprint</div>
+          <h2 data-localize="homeHeroTitle">Learn Excel From Absolute Beginner to Expert</h2>
+          <p data-localize="homeHeroDesc">Unlock dynamic array formulas, Pivot dashboards, Power Query data cleaning pipelines, and VBA macro scripts. Designed for corporate analysts and students.</p>
+          <button class="cta-btn" onclick="navigateToSection('beginner')">
+            <i class="ti ti-rocket"></i> <span data-localize="homeCta">Start Learning</span>
+          </button>
+        </div>
+        <img src="images/excel_dashboard.png" alt="Excel Master Hero Map" style="max-width: 300px; border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(16, 124, 65, 0.15); object-fit: cover; height: 160px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+
+      <div class="grid-2">
+        <div class="content-card">
+          <h3 style="margin-bottom: 16px;" data-localize="homeFeaturesTitle">📊 Dynamic Interactive Platform</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-calculator" style="color: var(--accent-green); font-size: 20px;"></i>
+              <span data-localize="homeFeatSpread">Interactive Live-Evaluating Spreadsheet Simulator</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-language" style="color: var(--accent-green); font-size: 20px;"></i>
+              <span data-localize="homeFeatLang">Dual Language Content (Hindi + English Mode)</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-keyboard" style="color: var(--accent-green); font-size: 20px;"></i>
+              <span data-localize="homeFeatShort">Windows / Mac Multi-OS Keyboard Shortcuts</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-certificate" style="color: var(--accent-green); font-size: 20px;"></i>
+              <span data-localize="homeFeatCert">Dynamic Timed MCQ Quiz Certification Engine</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 style="margin-bottom: 8px;" data-localize="homeProgressTitle">📈 Student Dashboard</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeProgressDesc">Answer questions correctly, practice inside cell sandboxes, and compile formulas to earn XP points!</p>
+          </div>
+          <div style="background: var(--bg-primary); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerXP">XP Points Earned</span>
+              <span style="color: var(--accent-green);" id="totalXpVal">0 XP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerStatus">Active Rank</span>
+              <span style="color: var(--accent-green);" id="userRankVal">Beginner Cell-Mate</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Image gallery mapping spreadsheet structures -->
+      <div class="content-card" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-photo" style="color: var(--accent-green);"></i> <span data-localize="homeVisualTitle">Workbook Structure Mapping Directory</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeVisualDesc">Visualizing sheets, absolute column cells, active ranges, and reference boxes for data entry processes.</p>
+        
+        <div class="grid-2" style="gap: 24px;">
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/excel_grid_map.png" alt="Excel Core Visual Mapping 1" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">1. Cells Grids &amp; Address Ranges</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Visualizing rows, columns, name box, and grid address points (e.g. C4).</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/excel_dashboard.png" alt="Excel Core Visual Mapping 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">2. Interactive Charts &amp; Visual Metrics</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Data modeling transforms column inputs into beautiful clean layouts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 2. BEGINNER COURSE =================== -->
+    <section class="portal-section" id="sec-beginner">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="begTitle">Excel absolute Beginner Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="begSubtitle">Understand what spreadsheets are, basic typing guidelines, file formats, and freeze panes.</p>
+        
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-layout-grid"></i><h3 data-localize="begL1Title">1. Workbook vs Worksheet</h3></div>
+            <ul>
+              <li data-localize="begL1Li1">Workbook is the whole Excel file (.xlsx)</li>
+              <li data-localize="begL1Li2">Worksheets are tabs inside the workbook</li>
+              <li data-localize="begL1Li3">Each sheet contains 1,048,576 rows &amp; 16,384 columns</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-input-search"></i><h3 data-localize="begL2Title">2. Cell Ranges &amp; References</h3></div>
+            <ul>
+              <li data-localize="begL2Li1">A Cell is the intersection of a row &amp; column</li>
+              <li data-localize="begL2Li2">Cell reference uses column letter first (A1, B5)</li>
+              <li data-localize="begL2Li3">Ranges represent a block of cells (A1:B4)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-edit"></i><h3 data-localize="begL3Title">3. Flash Fill &amp; Autofill</h3></div>
+            <ul>
+              <li data-localize="begL3Li1">Autofill: Drag corner box to fill repeating dates/numbers</li>
+              <li data-localize="begL3Li2">Flash Fill: (Ctrl+E) Auto-detects data split patterns</li>
+              <li data-localize="begL3Li3">Freeze Panes: Keep headers visible when scrolling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tip-banner">
+          <i class="ti ti-bulb"></i>
+          <p><strong data-localize="begTipLabel">Pro-Tip:</strong> <span data-localize="begTipText">Freeze Panes by navigating to View Tab &gt; Freeze Panes &gt; Freeze Top Row to make large accounting ledgers easy to navigate!</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 3. RIBBON TABS GUIDE =================== -->
+    <section class="portal-section" id="sec-tabs-guide">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tabsTitle">Full Excel Tabs Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tabsSubtitle">Every command, group, and tool in the Excel Ribbon menu structure, mapped tab-by-tab.</p>
+
+        <!-- Visual Map at the top of the Ribbon Section -->
+        <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+          <img src="images/excel_grid_map.png" alt="Excel Ribbon Setup Guide Map" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+          <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-green); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: MS Excel Ribbon interface grids, cells reference name box, and formula FX bar</p>
+        </div>
+
+        <!-- Sub Tabs Bar -->
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-tabcontent="tab-home">Home Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-insert">Insert Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-layout">Page Layout Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-formulas">Formulas Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-data">Data Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-review">Review Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-view">View Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-developer">Developer Tab</button>
+        </div>
+
+        <!-- ── Sub Tab Content: HOME ── -->
+        <div class="level-content-box active" id="tab-home">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-paint"></i><h3 data-localize="tabHomeFontTitle">Font &amp; Alignment</h3></div>
+              <ul>
+                <li data-localize="tabHomeFont1">Apply classic cell borders, fills, and text weights</li>
+                <li data-localize="tabHomeFont2">Wrap Text: Push long text strings onto multiple rows inside a cell</li>
+                <li data-localize="tabHomeFont3">Merge &amp; Center: Combine selected cells into one single title cell</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-hash"></i><h3 data-localize="tabHomeNumTitle">Number Format Group</h3></div>
+              <ul>
+                <li data-localize="tabHomeNum1">Format cell numbers as Currency, Percentages, Decimals, or Dates</li>
+                <li data-localize="tabHomeNum2">Use Accounting style to align dollar values neatly</li>
+                <li data-localize="tabHomeNum3">Increase/Decrease decimal places with simple buttons</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-brush"></i><h3 data-localize="tabHomeStylesTitle">Styles (Conditional Formatting)</h3></div>
+              <ul>
+                <li data-localize="tabHomeStyles1">Highlight cell ranges based on dynamic rules (e.g. > 100)</li>
+                <li data-localize="tabHomeStyles2">Apply color scales, data bars, and warning indicators</li>
+                <li data-localize="tabHomeStyles3">Format cell selection blocks as beautiful interactive Tables</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-columns"></i><h3 data-localize="tabHomeCellsTitle">Cells &amp; Editing</h3></div>
+              <ul>
+                <li data-localize="tabHomeCells1">Insert/Delete worksheet columns, rows, or specific cell blocks</li>
+                <li data-localize="tabHomeCells2">Autosum (Alt+=) instantly adds values in adjoining rows</li>
+                <li data-localize="tabHomeCells3">Find, Replace, and Sort filters to manage raw ledger items</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: INSERT ── -->
+        <div class="level-content-box" id="tab-insert">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-filter"></i><h3 data-localize="tabInsPivotTitle">PivotTables &amp; Tables</h3></div>
+              <ul>
+                <li data-localize="tabInsPivot1">PivotTable: Summarize, analyze, and pivot massive ledgers instantly</li>
+                <li data-localize="tabInsPivot2">Recommended PivotTables based on data shapes</li>
+                <li data-localize="tabInsPivot3">Insert standard Excel Tables with zebra designs</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-chart-bar"></i><h3 data-localize="tabInsChartsTitle">Charts &amp; Visualizations</h3></div>
+              <ul>
+                <li data-localize="tabInsCharts1">Insert Column, Bar, Line, Pie, and Scatter charts</li>
+                <li data-localize="tabInsCharts2">Sparklines: Mini cell-sized charts showing raw value trends</li>
+                <li data-localize="tabInsCharts3">Filters: Insert Slicers and Timelines for interactive charting</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: PAGE LAYOUT ── -->
+        <div class="level-content-box" id="tab-layout">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-file-text"></i><h3 data-localize="tabLayoutSetupTitle">Page Setup Group</h3></div>
+              <ul>
+                <li data-localize="tabLayoutSetup1">Configure Margins (Normal, Narrow, Wide) for printable documents</li>
+                <li data-localize="tabLayoutSetup2">Change Orientation between Portrait &amp; Landscape view</li>
+                <li data-localize="tabLayoutSetup3">Print Area: Select specific cell blocks to print, ignoring blank columns</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: FORMULAS ── -->
+        <div class="level-content-box" id="tab-formulas">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-math-symbols"></i><h3 data-localize="tabFormAuditTitle">Name Manager &amp; Auditing</h3></div>
+              <ul>
+                <li data-localize="tabFormAudit1">Name Manager: Assign custom names to ranges (e.g. TaxRate = 0.18)</li>
+                <li data-localize="tabFormAudit2">Formula Auditing: Trace Precedents/Dependents to see how cells link</li>
+                <li data-localize="tabFormAudit3">Evaluate Formula: Step-by-step math solver tool</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: DATA ── -->
+        <div class="level-content-box" id="tab-data">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-database-import"></i><h3 data-localize="tabDataImportTitle">Get &amp; Transform (Power Query)</h3></div>
+              <ul>
+                <li data-localize="tabDataImport1">Import data from TXT, CSV, SQL, Web pages, or folder files</li>
+                <li data-localize="tabDataImport2">Power Query: Extract, transform, clean, and load databases</li>
+                <li data-localize="tabDataImport3">Merge tables &amp; append mismatched database lists</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-checkbox"></i><h3 data-localize="tabDataToolsTitle">Data Tools &amp; Forecasts</h3></div>
+              <ul>
+                <li data-localize="tabDataTools1">Text to Columns: Split first/last names using comma delimiters</li>
+                <li data-localize="tabDataTools2">Remove Duplicates: Erase repeating rows instantly</li>
+                <li data-localize="tabDataTools3">Data Validation: Restrict cell entries to dropdown choices</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: REVIEW ── -->
+        <div class="level-content-box" id="tab-review">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-lock"></i><h3 data-localize="tabReviewProtectTitle">Worksheet Protection</h3></div>
+              <ul>
+                <li data-localize="tabReviewProtect1">Protect Sheet: Prevent editing of formatted formula cells</li>
+                <li data-localize="tabReviewProtect2">Protect Workbook: Block users from adding/deleting worksheet tabs</li>
+                <li data-localize="tabReviewProtect3">Insert editable ranges for specific employees with custom codes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: VIEW ── -->
+        <div class="level-content-box" id="tab-view">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-eye"></i><h3 data-localize="tabViewWindowTitle">Window Layout Controls</h3></div>
+              <ul>
+                <li data-localize="tabViewWindow1">Freeze Panes: Lock row 1 or column A in place when scrolling</li>
+                <li data-localize="tabViewWindow2">Gridlines &amp; Formula Bar: Toggle sheet grid visibility</li>
+                <li data-localize="tabViewWindow3">Split active window into independent vertical panels</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: DEVELOPER ── -->
+        <div class="level-content-box" id="tab-developer">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-terminal-2"></i><h3 data-localize="tabDevVbaTitle">VBA Macros &amp; Forms</h3></div>
+              <ul>
+                <li data-localize="tabDevVba1">Record Macro: Save repeating accounting tasks as hotkey macros</li>
+                <li data-localize="tabDevVba2">Visual Basic Editor: Program complex automation workflows</li>
+                <li data-localize="tabDevVba3">Insert Form Controls: Checkboxes, dropdowns, and execution buttons</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 4. FORMULA PLAYGROUND =================== -->
+    <section class="portal-section" id="sec-formula-playground">
+      <!-- Live Evaluating Spreadsheet Simulator -->
+      <div class="excel-simulator-card">
+        <h2 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-calculator" style="color: var(--accent-green);"></i> <span data-localize="simTitle">Interactive Excel Spreadsheet Simulator</span></h2>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="simDesc">Enter numbers inside cell blocks. Type active math functions inside the FX bar below to calculate ranges instantly!</p>
+
+        <!-- Dynamic Formula Bar -->
+        <div class="excel-formula-bar">
+          <span class="formula-fx-label">fx</span>
+          <input type="text" class="formula-input-box" id="excelFormulaInput" placeholder="Click a cell or enter formula (e.g. =SUM(A1:A4), =AVERAGE(B1:B3), =COUNT(A1:B4))" onkeydown="handleFormulaEnter(event)">
+        </div>
+
+        <!-- 5x6 Cell Grid table -->
+        <div class="excel-grid-container">
+          <table class="excel-grid-table" id="excelSpreadsheetGrid">
+            <thead>
+              <tr>
+                <th style="width:40px;"></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Injected by Javascript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Advanced Formulas Encyclopedia & Playground -->
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="fLibTitle">Excel Formulas &amp; Functions Library</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;" data-localize="fLibSubtitle">Select a logical or lookup function below to study syntax, common errors, and real use cases.</p>
+
+        <div class="tab-bar-wrap" id="formulaTabs">
+          <button class="bar-tab active" data-func="sum">SUM &amp; AVERAGE</button>
+          <button class="bar-tab" data-func="if">IF &amp; IFS</button>
+          <button class="bar-tab" data-func="xlookup">XLOOKUP &amp; VLOOKUP</button>
+          <button class="bar-tab" data-func="index">INDEX &amp; MATCH</button>
+          <button class="bar-tab" data-func="let">LET &amp; LAMBDA</button>
+        </div>
+
+        <div class="formula-sandbox-details">
+          <div class="formula-helper-panel" id="formulaDetailsBox">
+            <!-- Dynamically populated -->
+            <h3 id="funcName">SUM / AVERAGE</h3>
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--text-muted);" id="funcCategory">Math &amp; Statistical</span>
+            <div style="margin: 12px 0; background: var(--bg-card); padding: 12px; border-radius: 4px; font-family: monospace; font-size: 0.85rem;" id="funcSyntax">
+              =SUM(number1, [number2], ...)
+            </div>
+            <p style="font-size:0.9rem; line-height:1.5; color: var(--text-muted);" id="funcDescription">Adds all the numbers in a range of cells. Average calculates the arithmetic mean.</p>
+          </div>
+
+          <div class="formula-helper-panel">
+            <h4 style="margin-bottom: 8px; font-weight:800; font-size: 0.85rem; text-transform:uppercase; color:var(--text-muted);">Step-by-Step Instructions:</h4>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;" id="funcInstructions">
+              <li>Click inside a blank cell (e.g. C5).</li>
+              <li>Type =SUM( and highlight cell range (e.g. C1:C4).</li>
+              <li>Press Enter to dynamically calculate totals!</li>
+            </ul>
+            <div class="tip-banner" style="margin-top: 1.5rem;">
+              <i class="ti ti-alert-circle"></i>
+              <p><strong data-localize="funcMistakeLabel">Common Mistake:</strong> <span id="funcMistakeText">Double-check that you aren't referencing the result cell itself, causing a Circular Reference error!</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 5. PIVOT TABLE & BI =================== -->
+    <section class="portal-section" id="sec-pivot-table">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="pivTitle">PivotTable Mastery &amp; BI Modeling</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="pivSubtitle">Master Calculated Fields, timelines, Power Query transforms, and DAX modeling for interactive dashboards.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-chart-pie"></i><h3 data-localize="pivL1Title">1. Build PivotTables</h3></div>
+            <ul>
+              <li data-localize="pivL1Li1">Select ledger range &gt; Insert Tab &gt; PivotTable</li>
+              <li data-localize="pivL1Li2">Drag fields into Filters, Columns, Rows, and Values</li>
+              <li data-localize="pivL1Li3">Use 'Show Values As' to calculate percentage of columns</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-filter"></i><h3 data-localize="pivL2Title">2. Slicers &amp; Calculated Fields</h3></div>
+            <ul>
+              <li data-localize="pivL2Li1">Insert Slicers: Filter multi-table grids visual-style</li>
+              <li data-localize="pivL2Li2">Calculated Fields: Build custom formulas directly inside pivots</li>
+              <li data-localize="pivL2Li3">Connect Slicers to 3 different Pivot charts for dynamic updates</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-database"></i><h3 data-localize="pivL3Title">3. Power Query Transformation</h3></div>
+            <ul>
+              <li data-localize="pivL3Li1">Merge Queries: Match SQL keys or sheets cleanly</li>
+              <li data-localize="pivL3Li2">Unpivot Columns: Shift short wide tables to long lean layouts</li>
+              <li data-localize="pivL3Li3">M Language: Power Query scripting engine</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-stars"></i><h3 data-localize="pivL4Title">4. Power Pivot &amp; DAX</h3></div>
+            <ul>
+              <li data-localize="pivL4Li1">Data Modeling: Create relationships between sheets</li>
+              <li data-localize="pivL4Li2">DAX: Write powerful formulas like CALCULATE() and DIVIDE()</li>
+              <li data-localize="pivL4Li3">Establish high-level business KPI metrics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 6. SHORTCUT KEYS DATABASE =================== -->
+    <section class="portal-section" id="sec-shortcuts">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="keysTitle">Keyboard Shortcuts database Console</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="keysSubtitle">Filter Excel shortcuts instantly using the live search engine bar below.</p>
+
+        <!-- Shortcuts Settings Console -->
+        <div class="shortcut-search-container">
+          <div class="shortcut-search-input-wrap">
+            <i class="ti ti-search"></i>
+            <input type="text" id="shortcutSearch" placeholder="Search shortcuts (e.g., Save, Autosum, Pivot, VBA)...">
+          </div>
+          <button class="control-btn" id="osToggleBtn" style="border-radius: var(--radius-sm);">
+            <i class="ti ti-brand-windows"></i>
+            <span id="osLabel">Windows Keys</span>
+          </button>
+        </div>
+
+        <!-- Filter Subcategory bar -->
+        <div class="tab-bar-wrap" style="margin-bottom: 1.5rem;" id="shortcutCats">
+          <button class="bar-tab active" data-cat="all">All Shortcuts</button>
+          <button class="bar-tab" data-cat="File">File &amp; Grid</button>
+          <button class="bar-tab" data-cat="Edit">Editing</button>
+          <button class="bar-tab" data-cat="Formula">Formulas</button>
+          <button class="bar-tab" data-cat="Navigation">Navigation</button>
+          <button class="bar-tab" data-cat="VBA">VBA</button>
+        </div>
+
+        <!-- Shortcuts Render Grid -->
+        <div class="shortcut-card-grid" id="shortcutsGrid">
+          <!-- Rendered in JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="no-shortcuts-found" id="noShortcuts" style="display:none; text-align:center; padding: 2rem; color:var(--text-muted);">
+          <i class="ti ti-keyboard-off" style="font-size:32px;"></i>
+          <p data-localize="keysEmpty" style="margin-top:8px;">No matching shortcuts found. Try another keyword.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 7. VBA & AUTOMATION =================== -->
+    <section class="portal-section" id="sec-vba-macros">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="vbaTitle">VBA Macros &amp; Developer Guide</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="vbaSubtitle">Unlock Excel automation. Write clean Visual Basic scripts and generate invoices with single clicks.</p>
+
+        <div class="lesson-box" style="margin-bottom: 2rem;">
+          <div class="lesson-box-header"><i class="ti ti-file-text"></i><h3 data-localize="vbaProjTitle">Automated Project: Dynamic Invoice Generator</h3></div>
+          <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:1rem;" data-localize="vbaProjDesc">Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro instantly compiles billing invoice calculations in your active sheet!</p>
+          
+          <pre class="vba-code-block">
+Sub GenerateInvoice()
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    
+    ' Set up standard invoice header
+    ws.Range("A1").Value = "INVOICE RECORD"
+    ws.Range("A1").Font.Bold = True
+    ws.Range("A1").Font.Size = 16
+    ws.Range("A1").Font.Color = RGB(16, 124, 65)
+    
+    ' Setup Columns
+    ws.Range("A3").Value = "Product Description"
+    ws.Range("B3").Value = "Unit Price"
+    ws.Range("C3").Value = "Quantity"
+    ws.Range("D3").Value = "Line Total"
+    ws.Range("A3:D3").Font.Bold = True
+    ws.Range("A3:D3").Interior.Color = RGB(226, 240, 217)
+    
+    ' Insert Mock billing data
+    ws.Range("A4").Value = "Premium Excel Analytics Training"
+    ws.Range("B4").Value = 150
+    ws.Range("C4").Value = 3
+    ws.Range("D4").Formula = "=B4*C4"
+    
+    ' Autofit Columns
+    ws.Columns("A:D").AutoFit
+    MsgBox "Invoice created successfully!", vbInformation, "Excel Master Academy"
+End Sub
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 8. TEMPLATES PACK =================== -->
+    <section class="portal-section" id="sec-templates">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tempTitle">Excel Professional Templates Pack</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tempSubtitle">Download templates with complete styling guides and layout blocks.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-receipt" style="color: var(--accent-green);"></i> <span data-localize="tempInvTitle">Corporate Billing Invoice</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+EXCEL ACADEMY BILLING INVOICE
+Invoice #: INV-2026-109
+Date: 2026-05-24
+--------------------------------------------------
+ITEMS LIST:
+1. Advanced BI Dashboard Consulting .... $1,200.00
+2. Custom VBA Macro Script Deployment ... $650.00
+--------------------------------------------------
+TOTAL OUTSTANDING DUE: $1,850.00
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-green); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Code</span>
+            </button>
+          </div>
+
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-wallet" style="color: var(--accent-green);"></i> <span data-localize="tempResTitle">Personal Budget Planner</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+MONTHLY INCOME & OUTFLOW PLANNERS
+Estimated Salary: $4,500.00
+--------------------------------------------------
+DEPARTMENTS:
+- Housing Rent: $1,500.00 (33.3%)
+- Investments: $1,000.00 (22.2%)
+- Food & Utilities: $600.00 (13.3%)
+--------------------------------------------------
+SAVINGS POOL: $1,400.00 (31.1%)
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-green); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Code</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 9. ERRORS & SOLVER =================== -->
+    <section class="portal-section" id="sec-errors">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="errTitle">Excel Troubleshooting &amp; Error Solver</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="errSubtitle">Quick resolutions for common MS Excel spreadsheet errors and warnings.</p>
+
+        <div class="grid-3">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-alert-triangle"></i><h3>#VALUE!</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errValueText">Occurs when you add text values inside a normal mathematical sum. Use SUM function instead of '+' since SUM ignores text cells!</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-alert-triangle"></i><h3>#NAME?</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errNameText">Occurs when a formula name is misspelled (e.g. =VLOOKP instead of =VLOOKUP) or text strings are entered without wrapping quotes.</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-alert-triangle"></i><h3>#REF!</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errRefText">Occurs when a cell referenced in your formula is deleted. Fix by undoing deletion or re-establishing active formulas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 10. AI + EXCEL =================== -->
+    <section class="portal-section" id="sec-ai-excel">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="aiTitle">AI Copilot &amp; ChatGPT in Excel</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="aiSubtitle">Learn how to write advanced formulas, clean data, and script VBA macros using AI prompting.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-stars"></i><h3 data-localize="aiL1Title">1. Microsoft Copilot</h3></div>
+            <ul>
+              <li data-localize="aiL1Li1">Highlight ranges &gt; ask Copilot to auto-format as table</li>
+              <li data-localize="aiL1Li2">Prompt AI to identify key outliers in profit columns</li>
+              <li data-localize="aiL1Li3">Ask Copilot to instantly generate custom KPI charts</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-message-code"></i><h3 data-localize="aiL2Title">2. ChatGPT Prompts</h3></div>
+            <ul>
+              <li data-localize="aiL2Li1">Use ChatGPT to generate nested IF formulas from plain English</li>
+              <li data-localize="aiL2Li2">Ask AI to write macro routines for repeating cleanups</li>
+              <li data-localize="aiL2Li3">Provide data columns to outline visual forecast projections</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 11. QUIZ & CERTIFICATION =================== -->
+    <section class="portal-section" id="sec-quiz">
+      <div class="content-card quiz-card">
+        <h2 style="margin-bottom: 8px; text-align: center;" data-localize="quizTitle">Timed MCQ Quiz &amp; Certification</h2>
+        <p style="color: var(--text-muted); text-align: center; margin-bottom: 2rem;" data-localize="quizSubtitle">Answer all questions correctly to test your skills and unlock your completion certificate!</p>
+
+        <!-- Quiz Playground -->
+        <div class="lesson-box" id="quizPlayground">
+          <div class="quiz-header-status">
+            <span style="font-weight: 700;" id="quizProgressLabel">Question 1 of 5</span>
+            <div class="timer-pill">
+              <i class="ti ti-alarm"></i>
+              <span id="quizTimer">20s</span>
+            </div>
+          </div>
+
+          <div class="quiz-question-container">
+            <h3 id="quizQuestionText">Which function is used to lookup values horizontally?</h3>
+            <div class="quiz-options-list" id="quizOptionsContainer">
+              <!-- JS rendered options -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Certificate Panel -->
+        <div class="certificate-panel" id="certificateBox">
+          <div class="cert-frame">
+            <h2 data-localize="certHeader">CERTIFICATE OF COMPLETION</h2>
+            <div class="cert-divider"></div>
+            <p data-localize="certVerify">This is to certify that</p>
+            <div class="name-tag" id="certUserName">Your Name Here</div>
+            <p data-localize="certBody">has successfully completed all levels of the practical curriculum and passed the examination to become an official</p>
+            <h3 style="font-family: var(--header-font); font-size: 1.6rem; color: var(--accent-green); margin-bottom: 2rem;">MICROSOFT EXCEL MASTER</h3>
+            <div class="cert-stamp">Verified Pro</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- App Footer consistent Template anchors -->
+    <footer class="ts-footer">
+      <div class="fl">
+        <a href="https://wondermayank.github.io/" target="_blank">
+          <i class="ti ti-home" style="font-size:13px;margin-right:6px"></i>WonderMayank
+        </a>
+        <a href="https://commercesehoga.github.io/dashboard" target="_blank">
+          <i class="ti ti-device-desktop" style="font-size:13px;margin-right:6px"></i>CBT Mock Platform
+        </a>
+        <a href="https://wondermayank.github.io/terms" target="_blank">Terms</a>
+        <a href="https://wondermayank.github.io/privacy" target="_blank">Privacy</a>
+        <a href="https://wondermayank.github.io/disclaimer" target="_blank">Disclaimer</a>
+        <a href="https://wondermayank.github.io/contact" target="_blank">
+          <i class="ti ti-mail" style="font-size:13px;margin-right:6px"></i>Contact Owner
+        </a>
+        <a href="https://commercesehoga.github.io/help" target="_blank">
+          <i class="ti ti-heart" style="font-size:13px;margin-right:6px"></i>Donation / Support
+        </a>
+      </div>
+      <div class="fc">© 2026 ThunderStudy · Made with ❤️ by WonderMayank · All Excel University topics free to learn</div>
+    </footer>
+
+  </div>
+
+  <!-- Dynamic Application Logic scripts -->
+  <script>
+    /* ==========================================================================
+       DUAL LOCALIZATION DICTIONARY (HINDI / ENGLISH)
+       ========================================================================== */
+    const dictionary = {
+      en: {
+        sidebarBrand: "Excel Academy",
+        menuHome: "Home Page",
+        menuBeginner: "Beginner Course",
+        menuTabs: "Ribbon Tabs Guide",
+        menuFormula: "Formula Playground",
+        menuPivot: "Pivot & BI Mastery",
+        menuShortcuts: "Shortcut Keys",
+        menuVba: "VBA & Automation",
+        menuTemplates: "Templates Pack",
+        menuErrors: "Error Solver",
+        menuAI: "AI + Excel Copilot",
+        menuQuiz: "MCQ & Certificate",
+        
+        xpTitle: "Skill Rank Progress",
+        streakSuffix: "Day Streak",
+        
+        homeBadge: "⚡ Excel University Blueprint",
+        homeHeroTitle: "Learn Excel From Absolute Beginner to Expert",
+        homeHeroDesc: "Unlock dynamic array formulas, Pivot dashboards, Power Query data cleaning pipelines, and VBA macro scripts. Designed for corporate analysts and students.",
+        homeCta: "Start Learning",
+        homeFeaturesTitle: "📊 Dynamic Interactive Platform",
+        homeFeatSpread: "Interactive Live-Evaluating Spreadsheet Simulator",
+        homeFeatLang: "Dual Language Content (Hindi + English Mode)",
+        homeFeatShort: "Windows / Mac Multi-OS Keyboard Shortcuts",
+        homeFeatCert: "Dynamic Timed MCQ Quiz Certification Engine",
+        homeProgressTitle: "📈 Student Dashboard",
+        homeProgressDesc: "Answer questions correctly, practice inside cell sandboxes, and compile formulas to earn XP points!",
+        homeTrackerXP: "XP Points Earned",
+        homeTrackerStatus: "Active Rank",
+        homeVisualTitle: "Workbook Structure Mapping Directory",
+        homeVisualDesc: "Visualizing sheets, absolute column cells, active ranges, and reference boxes for data entry processes.",
+        
+        begTitle: "Excel absolute Beginner Blueprint",
+        begSubtitle: "Understand what spreadsheets are, basic typing guidelines, file formats, and freeze panes.",
+        begL1Title: "1. Workbook vs Worksheet",
+        begL1Li1: "Workbook is the whole Excel file (.xlsx)",
+        begL1Li2: "Worksheets are tabs inside the workbook",
+        begL1Li3: "Each sheet contains 1,048,576 rows & 16,384 columns",
+        begL2Title: "2. Cell Ranges & References",
+        begL2Li1: "A Cell is the intersection of a row & column",
+        begL2Li2: "Cell reference uses column letter first (A1, B5)",
+        begL2Li3: "Ranges represent a block of cells (A1:B4)",
+        begL3Title: "3. Flash Fill & Autofill",
+        begL3Li1: "Autofill: Drag corner box to fill repeating dates/numbers",
+        begL3Li2: "Flash Fill: (Ctrl+E) Auto-detects data split patterns",
+        begL3Li3: "Freeze Panes: Keep headers visible when scrolling",
+        begTipLabel: "Pro-Tip:",
+        begTipText: "Freeze Panes by navigating to View Tab > Freeze Panes > Freeze Top Row to make large accounting ledgers easy to navigate!",
+        
+        tabsTitle: "Full Excel Tabs Blueprint",
+        tabsSubtitle: "Every command, group, and tool in the Excel Ribbon menu structure, mapped tab-by-tab.",
+        
+        simTitle: "Interactive Excel Spreadsheet Simulator",
+        simDesc: "Enter numbers inside cell blocks. Type active math functions inside the FX bar below to calculate ranges instantly!",
+        
+        fLibTitle: "Excel Formulas & Functions Library",
+        fLibSubtitle: "Select a logical or lookup function below to study syntax, common errors, and real use cases.",
+        funcMistakeLabel: "Common Mistake:",
+        
+        pivTitle: "PivotTable Mastery & BI Modeling",
+        pivSubtitle: "Master Calculated Fields, timelines, Power Query transforms, and DAX modeling for interactive dashboards.",
+        
+        keysTitle: "Keyboard Shortcuts database Console",
+        keysSubtitle: "Filter Excel shortcuts instantly using the live search engine bar below.",
+        keysEmpty: "No matching shortcuts found. Try another keyword.",
+        
+        vbaTitle: "VBA Macros & Developer Guide",
+        vbaSubtitle: "Unlock Excel automation. Write clean Visual Basic scripts and generate invoices with single clicks.",
+        vbaProjTitle: "Automated Project: Dynamic Invoice Generator",
+        vbaProjDesc: "Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro instantly compiles billing invoice calculations in your active sheet!",
+        
+        tempTitle: "Excel Professional Templates Pack",
+        tempSubtitle: "Download templates with complete styling guides and layout blocks.",
+        tempCopyBtn: "Copy Code",
+        tempInvTitle: "Corporate Billing Invoice",
+        tempResTitle: "Personal Budget Planner",
+        
+        errTitle: "Excel Troubleshooting & Error Solver",
+        errSubtitle: "Quick solutions for common MS Excel spreadsheet errors and warnings.",
+        
+        aiTitle: "AI Copilot & ChatGPT in Excel",
+        aiSubtitle: "Learn how to write advanced formulas, clean data, and script VBA macros using AI prompting.",
+        
+        quizTitle: "Timed MCQ Quiz & Certification",
+        quizSubtitle: "Answer all questions correctly to test your skills and unlock your completion certificate!",
+        certHeader: "CERTIFICATE OF COMPLETION",
+        certVerify: "This is to certify that",
+        certBody: "has successfully completed all levels of the practical curriculum and passed the examination to become an official"
+      },
+      hi: {
+        sidebarBrand: "एक्सेल अकादमी",
+        menuHome: "मुख्य पृष्ठ",
+        menuBeginner: "शुरुआती कोर्स",
+        menuTabs: "रिबन टैब गाइड",
+        menuFormula: "फ़ॉर्मूला प्लेग्राउंड",
+        menuPivot: "पिवट और BI मास्टरी",
+        menuShortcuts: "शॉर्टकट कुंजी",
+        menuVba: "VBA और ऑटोमेशन",
+        menuTemplates: "टेम्पलेट पैक",
+        menuErrors: "त्रुटि निवारण",
+        menuAI: "AI + एक्सेल कोपायलट",
+        menuQuiz: "MCQ और प्रमाणपत्र",
+        
+        xpTitle: "कौशल प्रगति मीटर",
+        streakSuffix: "दिन की निरंतरता",
+        
+        homeBadge: "⚡ एक्सेल यूनिवर्सिटी ब्लूप्रिंट",
+        homeHeroTitle: "MS Excel को बेसिक से प्रोफेशनल स्तर तक सीखें",
+        homeHeroDesc: "डायनामिक एरे फ़ॉर्मूले, पिवट डैशबोर्ड, पॉवर क्वेरी डेटा क्लीनिंग पाइपलाइन और VBA मैक्रो स्क्रिप्ट्स सीखें। छात्रों और डेटा विश्लेषकों के लिए विशेष।",
+        homeCta: "सीखना शुरू करें",
+        homeFeaturesTitle: "📊 गतिशील इंटरैक्टिव प्लेटफ़ॉर्म",
+        homeFeatSpread: "वास्तविक समय में गणना करने वाला लाइव स्प्रेडशीट सिम्युलेटर",
+        homeFeatLang: "दोहरी भाषा सामग्री (हिंदी + अंग्रेजी मोड)",
+        homeFeatShort: "विंडोज / मैक मल्टी-ओएस कीबोर्ड शॉर्टकट",
+        homeFeatCert: "समयबद्ध MCQ परीक्षा प्रमाणन इंजन",
+        homeProgressTitle: "📈 छात्र डैशबोर्ड",
+        homeProgressDesc: "सवालों के सही उत्तर दें, सेल में अभ्यास करें और XP अंक अर्जित करें!",
+        homeTrackerXP: "कुल अर्जित XP",
+        homeTrackerStatus: "सक्रिय रैंक",
+        homeVisualTitle: "वर्कबुक संरचना मानचित्रण निर्देशिका",
+        homeVisualDesc: "डेटा प्रविष्टि प्रक्रियाओं के लिए शीट, सेल, सक्रिय रेंज और नेम बॉक्स का दृश्य रूप से अध्ययन करें।",
+        
+        begTitle: "एक्सेल बिगिनर ब्लूप्रिंट",
+        begSubtitle: "स्प्रेडशीट क्या है, बुनियादी टाइपिंग नियम, फ़ाइल स्वरूप और फ़्रीज़ पेन को समझें।",
+        begL1Title: "1. वर्कबुक बनाम वर्कशीट",
+        begL1Li1: "वर्कबुक पूरी एक्सेल फ़ाइल है (.xlsx)",
+        begL1Li2: "वर्कशीट वर्कबुक के अंदर के टैब (शीट्स) हैं",
+        begL1Li3: "प्रत्येक शीट में 1,048,576 पंक्तियाँ और 16,384 कॉलम होते हैं",
+        begL2Title: "2. सेल रेंज और संदर्भ",
+        begL2Li1: "एक पंक्ति और कॉलम के कटान बिंदु को सेल कहते हैं",
+        begL2Li2: "सेल संदर्भ में कॉलम अक्षर पहले आता है (A1, B5)",
+        begL2Li3: "रेंज सेल्स के एक पूरे समूह को दर्शाती है (A1:B4)",
+        begL3Title: "3. फ़्लैश फ़िल और ऑटोफ़िल",
+        begL3Li1: "ऑटोफ़िल: तिथियों/संख्याओं को दोहराने के लिए कोने के बॉक्स को खींचें",
+        begL3Li2: "फ़्लैश फ़िल: (Ctrl+E) डेटा विभाजन पैटर्न का स्वतः पता लगाता है",
+        begL3Li3: "फ़्रीज़ पेन: स्क्रॉल करते समय शीर्ष हेडर को दृश्यमान रखें",
+        begTipLabel: "महत्वपूर्ण सुझाव:",
+        begTipText: "बड़ी लेखा बहियों को आसानी से नेविगेट करने के लिए View Tab > Freeze Panes > Freeze Top Row पर जाकर फ़्रीज़ करें!",
+        
+        tabsTitle: "संपूर्ण एक्सेल रिबन गाइड",
+        tabsSubtitle: "एक्सेल रिबन मेनू का एक-एक कमांड और पैनल, टैब-दर-टैब वर्गीकृत।",
+        
+        simTitle: "इंटरैक्टिव एक्सेल स्प्रेडशीट सिम्युलेटर",
+        simDesc: "सेल ब्लॉक के अंदर नंबर दर्ज करें। श्रेणियों की तुरंत गणना करने के लिए नीचे दिए गए FX बार में गणितीय सूत्र टाइप करें!",
+        
+        fLibTitle: "एक्सेल फॉर्मूला और फंक्शन लाइब्रेरी",
+        fLibSubtitle: "सिंटैक्स, आम त्रुटियों और वास्तविक उपयोग के मामलों का अध्ययन करने के लिए नीचे दिए गए फंक्शन पर क्लिक करें।",
+        funcMistakeLabel: "सामान्य गलती:",
+        
+        pivTitle: "पिवट टेबल और BI मॉडलिंग",
+        pivSubtitle: "इंटरैक्टिव डैशबोर्ड के लिए परिकलित फ़ील्ड, टाइमलाइन, पावर क्वेरी ट्रांसफ़ॉर्म और DAX मॉडलिंग सीखें।",
+        
+        keysTitle: "कीबोर्ड शॉर्टकट कंसोल",
+        keysSubtitle: "नीचे दिए गए सर्च बार का उपयोग करके कीबोर्ड शॉर्टकट खोजें।",
+        keysEmpty: "कोई मेल खाता शॉर्टकट नहीं मिला। दूसरा शब्द खोजें।",
+        
+        vbaTitle: "VBA मैक्रोज़ और डेवलपर गाइड",
+        vbaSubtitle: "एक्सेल ऑटोमेशन अनलॉक करें। वीबीए स्क्रिप्ट लिखें और एक क्लिक में चालान बनाएं।",
+        vbaProjTitle: "स्वचालित प्रोजेक्ट: डायनामिक इनवॉइस जनरेटर",
+        vbaProjDesc: "नीचे दी गई VBA स्क्रिप्ट को कॉपी करें, VBA संपादक (Alt + F11) लॉन्च करें, एक नया मॉड्यूल डालें, और इसे पेस्ट करें। इसे रन करते ही आपकी शीट में गणना स्वतः पूरी हो जाएगी!",
+        
+        tempTitle: "एक्सेल प्रोफेशनल टेम्पलेट पैक",
+        tempSubtitle: "पूर्ण फ़ॉर्मेटिंग गाइड और लेआउट ब्लॉक के साथ टेम्प्लेट डाउनलोड करें।",
+        tempCopyBtn: "कोड कॉपी करें",
+        tempInvTitle: "कॉर्पोरेट बिलिंग इनवॉइस",
+        tempResTitle: "व्यक्तिगत बजट योजनाकार",
+        
+        errTitle: "एक्सेल त्रुटि निवारण गाइड",
+        errSubtitle: "आम एक्सेल स्प्रेडशीट समस्याओं और त्रुटियों के त्वरित समाधान।",
+        
+        aiTitle: "AI कोपायलट और चैटजीपीटी",
+        aiSubtitle: "AI प्रॉम्प्टिंग का उपयोग करके उन्नत फ़ॉर्मूले लिखना, डेटा साफ़ करना और VBA मैक्रोज़ बनाना सीखें।",
+        
+        quizTitle: "समयबद्ध MCQ क्विज़ और प्रमाणन",
+        quizSubtitle: "प्रमाणपत्र अनलॉक करने के लिए सभी प्रश्नों के सही उत्तर दें और अपना स्कोर बढ़ाएं!",
+        certHeader: "प्रमाणपत्र",
+        certVerify: "यह प्रमाणित किया जाता है कि",
+        certBody: "ने व्यावहारिक पाठ्यक्रम के सभी स्तरों को सफलतापूर्वक पूरा किया है और परीक्षा उत्तीर्ण की है।"
+      }
+    };
+
+    /* ==========================================================================
+       SHORTCUTS DATABASE
+       ========================================================================== */
+    const shortcutsData = [
+      { category: "File", desc: "Create a new workbook", win: ["Ctrl", "N"], mac: ["Cmd", "N"] },
+      { category: "File", desc: "Save current workbook", win: ["Ctrl", "S"], mac: ["Cmd", "S"] },
+      { category: "File", desc: "Open existing file", win: ["Ctrl", "O"], mac: ["Cmd", "O"] },
+      { category: "Edit", desc: "Undo last cell change", win: ["Ctrl", "Z"], mac: ["Cmd", "Z"] },
+      { category: "Edit", desc: "Redo action", win: ["Ctrl", "Y"], mac: ["Cmd", "Y"] },
+      { category: "Edit", desc: "Copy active cell range", win: ["Ctrl", "C"], mac: ["Cmd", "C"] },
+      { category: "Edit", desc: "Cut active cell range", win: ["Ctrl", "X"], mac: ["Cmd", "X"] },
+      { category: "Edit", desc: "Paste cell formatting / data", win: ["Ctrl", "V"], mac: ["Cmd", "V"] },
+      { category: "Formula", desc: "Autosum adjacent cells", win: ["Alt", "="], mac: ["Cmd", "Shift", "T"] },
+      { category: "Formula", desc: "Toggle absolute referencing ($A$1)", win: ["F4"], mac: ["Cmd", "T"] },
+      { category: "Formula", desc: "Insert dynamic function wizard", win: ["Shift", "F3"], mac: ["Shift", "F3"] },
+      { category: "Navigation", desc: "Move to edge of cell region", win: ["Ctrl", "Arrow"], mac: ["Cmd", "Arrow"] },
+      { category: "Navigation", desc: "Select entire column", win: ["Ctrl", "Space"], mac: ["Ctrl", "Space"] },
+      { category: "Navigation", desc: "Select entire row", win: ["Shift", "Space"], mac: ["Shift", "Space"] },
+      { category: "VBA", desc: "Open Visual Basic Editor", win: ["Alt", "F11"], mac: ["Fn", "Option", "F11"] },
+      { category: "VBA", desc: "Run Macro dialog box", win: ["Alt", "F8"], mac: ["Option", "F8"] }
+    ];
+
+    /* ==========================================================================
+       QUIZ CONFIGURATIONS & QUESTIONS
+       ========================================================================== */
+    const quizQuestions = [
+      {
+        q: "Which function evaluates a range horizontally and searches row values?",
+        o: ["VLOOKUP", "HLOOKUP", "XLOOKUP", "INDEX"],
+        a: 1
+      },
+      {
+        q: "What error appears when you divide a cell value by zero in Excel?",
+        o: ["#VALUE!", "#REF!", "#DIV/0!", "#NAME?"],
+        a: 2
+      },
+      {
+        q: "What keyboard shortcut activates Autosum in adjacent cells?",
+        o: ["Ctrl + S", "Alt + =", "F4", "Shift + F3"],
+        a: 1
+      },
+      {
+        q: "Which tool in the Data tab splits a text column using comma delimiters?",
+        o: ["Data Validation", "Text to Columns", "Flash Fill", "Consolidate"],
+        a: 1
+      },
+      {
+        q: "How do you establish absolute references in Excel formulas?",
+        o: ["Using brackets []", "Using dollar signs ($)", "Using percentage signs (%)", "Using double quotes"],
+        a: 1
+      }
+    ];
+
+    /* ==========================================================================
+       FORMULA ACADEMY FUNCTIONS DICTIONARY
+       ========================================================================== */
+    const formulasAcademyDb = {
+      sum: {
+        title: "SUM & AVERAGE",
+        cat: "Math & Statistical",
+        syntax: "=SUM(range) | =AVERAGE(range)",
+        desc: "SUM adds all the numeric values in the selected cell block. AVERAGE calculates the arithmetic mean.",
+        steps: [
+          "Click inside a blank cell (e.g. C5).",
+          "Type =SUM( and highlight cell range (e.g. A1:A4).",
+          "Press Enter to calculate the total sum!"
+        ],
+        mistake: "Do not include the target cell itself in the SUM range, which triggers a Circular Reference error."
+      },
+      if: {
+        title: "IF & IFS",
+        cat: "Logical Formulas",
+        syntax: "=IF(logical_test, value_if_true, value_if_false)",
+        desc: "IF checks whether a condition is met, returning one value if True, and another value if False. IFS supports nested logic.",
+        steps: [
+          "Type =IF( in your target cell.",
+          "Insert logical comparison: e.g. B2 >= 50.",
+          "Add results: e.g. =IF(B2>=50, 'Pass', 'Fail')."
+        ],
+        mistake: "Make sure all text outputs in IF statements are wrapped in double quotes ('Pass'), otherwise you get a #NAME? error."
+      },
+      xlookup: {
+        title: "XLOOKUP & VLOOKUP",
+        cat: "Lookup & References",
+        syntax: "=XLOOKUP(lookup_value, lookup_array, return_array)",
+        desc: "XLOOKUP is the modern, flexible replacement for VLOOKUP. It searches a column for a match and returns the corresponding value in another column.",
+        steps: [
+          "Type =XLOOKUP( in your active cell.",
+          "Click the cell value to search for (e.g. E1).",
+          "Highlight lookup column & return column (e.g. =XLOOKUP(E1, A1:A4, B1:B4))."
+        ],
+        mistake: "VLOOKUP fails if your lookup column is not to the left of your return values. XLOOKUP has no such limitation!"
+      },
+      index: {
+        title: "INDEX & MATCH",
+        cat: "Advanced Lookups",
+        syntax: "=INDEX(array, row_num, [column_num])",
+        desc: "Combines INDEX and MATCH to create a dynamic, resource-efficient vertical lookup that supports bidirectional searches.",
+        steps: [
+          "Type =INDEX( followed by the target return array.",
+          "Use MATCH() to search row indices dynamically.",
+          "Syntax: =INDEX(B1:B4, MATCH(E1, A1:A4, 0))."
+        ],
+        mistake: "Always use 0 inside the MATCH function to ensure an exact match search."
+      },
+      let: {
+        title: "LET & LAMBDA",
+        cat: "Advanced Programming",
+        syntax: "=LET(name1, value1, calculation)",
+        desc: "LET assigns names to calculation results, letting you store intermediate formulas to improve computation speed and readability.",
+        steps: [
+          "Type =LET( in the active formula bar.",
+          "Define variables: e.g. x, 10, y, 20.",
+          "Complete calculations: =LET(x, 10, y, 20, x * y) returns 200."
+        ],
+        mistake: "Keep variable names short and do not conflict with active function names like SUM or AVERAGE."
+      }
+    };
+
+    /* ==========================================================================
+       APPLICATION CORE STATE & INTERACTIVE SPREADSHEET ENGINE
+       ========================================================================== */
+    let currentLanguage = 'en';
+    let currentTheme = 'light';
+    let currentOS = 'win';
+    let activeShortcutCategory = 'all';
+
+    // Simulated 5x6 Cell Grid Matrix data
+    // Columns: A, B, C, D, E
+    // Rows: 1, 2, 3, 4, 5, 6
+    const gridCols = ['A', 'B', 'C', 'D', 'E'];
+    const gridRows = [1, 2, 3, 4, 5, 6];
+    
+    // Holds actual user inputs (value can be raw number or a formula like "=SUM(A1:A4)")
+    let cellData = {
+      'A1': 100, 'A2': 250, 'A3': 150, 'A4': 200, 'A5': '',
+      'B1': 50,  'B2': 75,  'B3': 90,  'B4': '',  'B5': '',
+      'C1': '',  'C2': '',  'C3': '',  'C4': '',  'C5': '',
+      'D1': '',  'D2': '',  'D3': '',  'D4': '',  'D5': '',
+      'E1': '',  'E2': '',  'E3': '',  'E4': '',  'E5': ''
+    };
+    
+    // Holds computed results displayed to users
+    let evaluatedData = {};
+    let selectedCell = 'A5';
+
+    // User progress stats (Saved in localStorage)
+    let userXP = parseInt(localStorage.getItem('excelXP')) || 0;
+    let userStreak = parseInt(localStorage.getItem('excelStreak')) || 1;
+    let lastVisitDate = localStorage.getItem('excelLastVisit') || '';
+
+    // Quiz Engine state
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let quizActive = true;
+    let questionTimer = 20;
+    let timerInterval = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Config
+      initTheme();
+      initLocalization();
+      initStats();
+      initSidebar();
+      initCurriculumTabs();
+      initSpreadsheetGrid();
+      initFormulaAcademy();
+      renderShortcuts();
+      initQuiz();
+
+      // Bind input events
+      document.getElementById('shortcutSearch').addEventListener('input', e => {
+        renderShortcuts(e.target.value);
+      });
+
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
+      document.getElementById('osToggleBtn').addEventListener('click', toggleOSKeys);
+
+      // Mobile Menu binding
+      const sidebar = document.getElementById('appSidebar');
+      document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    });
+
+    /* ==========================================================================
+       THEME & LOCALIZATION CONTROLLERS
+       ========================================================================== */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('excelTheme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('excelTheme', theme);
+      
+      const themeLabel = document.getElementById('themeLabel');
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (theme === 'dark') {
+        themeLabel.textContent = "Light Mode";
+        themeBtn.querySelector('i').className = 'ti ti-sun';
+      } else {
+        themeLabel.textContent = "Dark Mode";
+        themeBtn.querySelector('i').className = 'ti ti-moon';
+      }
+    }
+
+    function toggleTheme() {
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+      initLocalization();
+      
+      const langLabel = document.getElementById('langLabel');
+      langLabel.textContent = currentLanguage === 'en' ? 'हिन्दी' : 'English';
+      
+      renderShortcuts();
+    }
+
+    function initLocalization() {
+      const dict = dictionary[currentLanguage];
+      document.querySelectorAll('[data-localize]').forEach(el => {
+        const key = el.getAttribute('data-localize');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    /* ==========================================================================
+       PROGRESS SAVES ENGINE
+       ========================================================================== */
+    function initStats() {
+      const today = new Date().toDateString();
+      if (lastVisitDate && lastVisitDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastVisitDate === yesterday.toDateString()) {
+          userStreak += 1;
+        } else {
+          userStreak = 1;
+        }
+        localStorage.setItem('excelStreak', userStreak);
+      }
+      localStorage.setItem('excelLastVisit', today);
+      updateStatDisplays();
+    }
+
+    function updateStatDisplays() {
+      document.getElementById('streakCount').textContent = userStreak;
+      document.getElementById('totalXpVal').textContent = `${userXP} XP`;
+      
+      const progressPercent = Math.min(100, (userXP % 100));
+      document.getElementById('xpBar').style.width = `${progressPercent}%`;
+      
+      if (userXP >= 30) {
+        document.getElementById('badgeExp').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Data Analyst";
+      }
+      if (userXP >= 100) {
+        document.getElementById('badgeMaster').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Excel Master";
+      }
+    }
+
+    function earnXP(amount) {
+      userXP += amount;
+      localStorage.setItem('excelXP', userXP);
+      updateStatDisplays();
+    }
+
+    /* ==========================================================================
+       SIDEBAR & CLIENT ROUTER
+       ========================================================================== */
+    function initSidebar() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sidebar = document.getElementById('appSidebar');
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          const target = item.getAttribute('data-target');
+          navigateToSection(target);
+          sidebar.classList.remove('open');
+        });
+      });
+    }
+
+    function navigateToSection(targetId) {
+      const sections = document.querySelectorAll('.portal-section');
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+        if (sec.id === `sec-${targetId}`) {
+          sec.classList.add('active');
+        }
+      });
+
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === targetId) {
+          item.classList.add('active');
+        }
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function initCurriculumTabs() {
+      const tabs = document.querySelectorAll('.bar-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const parent = tab.parentElement;
+          parent.querySelectorAll('.bar-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          if (tab.dataset.tabcontent) {
+            const container = parent.parentElement;
+            container.querySelectorAll('.level-content-box').forEach(box => {
+              box.classList.remove('active');
+              if (box.id === tab.dataset.tabcontent) {
+                box.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       INTERACTIVE CELL SPREADSHEET EVALUATION ENGINE
+       ========================================================================== */
+    function initSpreadsheetGrid() {
+      const tbody = document.querySelector('#excelSpreadsheetGrid tbody');
+      tbody.innerHTML = '';
+
+      gridRows.forEach(row => {
+        const tr = document.createElement('tr');
+        
+        // Row number header
+        const tdRowHeader = document.createElement('td');
+        tdRowHeader.className = 'row-num-header';
+        tdRowHeader.textContent = row;
+        tr.appendChild(tdRowHeader);
+
+        // A-E Cells
+        gridCols.forEach(col => {
+          const cellId = `${col}${row}`;
+          const td = document.createElement('td');
+          td.id = `cell-${cellId}`;
+          
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'excel-cell-input';
+          input.id = `input-${cellId}`;
+          input.value = cellData[cellId] || '';
+          
+          input.addEventListener('focus', () => selectSpreadsheetCell(cellId));
+          input.addEventListener('change', (e) => updateCellVal(cellId, e.target.value));
+
+          td.appendChild(input);
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      evaluateAllCells();
+      selectSpreadsheetCell('A5');
+    }
+
+    function selectSpreadsheetCell(cellId) {
+      selectedCell = cellId;
+      document.querySelectorAll('#excelSpreadsheetGrid td').forEach(td => {
+        td.classList.remove('selected-cell');
+      });
+      
+      const td = document.getElementById(`cell-${cellId}`);
+      if (td) td.classList.add('selected-cell');
+
+      // Update Formula Bar text
+      const formulaBar = document.getElementById('excelFormulaInput');
+      formulaBar.value = cellData[cellId] || '';
+    }
+
+    function updateCellVal(cellId, newVal) {
+      cellData[cellId] = newVal;
+      evaluateAllCells();
+      earnXP(2); // Earn 2 XP for formatting spreadsheets!
+    }
+
+    // Handles entering formula via Formula Bar
+    function handleFormulaEnter(event) {
+      if (event.key === 'Enter') {
+        const formulaBar = document.getElementById('excelFormulaInput');
+        updateCellVal(selectedCell, formulaBar.value);
+        formulaBar.blur();
+      }
+    }
+
+    // Reactive computation loops
+    function evaluateAllCells() {
+      // 1. Clear previous computed cache
+      evaluatedData = {};
+
+      // 2. Loop and resolve cell values or dynamic array ranges
+      for (const cellId in cellData) {
+        evaluatedData[cellId] = evaluateCellFormula(cellData[cellId]);
+      }
+
+      // 3. Render evaluated metrics back onto cell inputs
+      for (const cellId in cellData) {
+        const input = document.getElementById(`input-${cellId}`);
+        if (input) {
+          // If active cell is currently selected, show the formula string; otherwise, show evaluated result
+          if (cellId === selectedCell) {
+            input.value = cellData[cellId];
+          } else {
+            input.value = evaluatedData[cellId];
+          }
+        }
+      }
+    }
+
+    // Custom Lightweight Excel Expression Evaluator Parser
+    function evaluateCellFormula(val) {
+      if (val === undefined || val === null) return '';
+      const strVal = String(val).trim();
+      if (!strVal.startsWith('=')) return strVal;
+
+      try {
+        const formula = strVal.substring(1).toUpperCase();
+        
+        // Match SUM(Range) e.g. SUM(A1:A4)
+        if (formula.startsWith('SUM(')) {
+          const range = formula.substring(4, formula.length - 1);
+          const vals = getRangeValues(range);
+          return vals.reduce((a, b) => a + b, 0);
+        }
+        
+        // Match AVERAGE(Range)
+        if (formula.startsWith('AVERAGE(')) {
+          const range = formula.substring(8, formula.length - 1);
+          const vals = getRangeValues(range);
+          if (vals.length === 0) return 0;
+          return vals.reduce((a, b) => a + b, 0) / vals.length;
+        }
+
+        // Match COUNT(Range)
+        if (formula.startsWith('COUNT(')) {
+          const range = formula.substring(6, formula.length - 1);
+          const vals = getRangeValues(range);
+          return vals.length;
+        }
+
+        // Match MAX(Range)
+        if (formula.startsWith('MAX(')) {
+          const range = formula.substring(4, formula.length - 1);
+          const vals = getRangeValues(range);
+          return vals.length > 0 ? Math.max(...vals) : 0;
+        }
+
+        // Match MIN(Range)
+        if (formula.startsWith('MIN(')) {
+          const range = formula.substring(4, formula.length - 1);
+          const vals = getRangeValues(range);
+          return vals.length > 0 ? Math.min(...vals) : 0;
+        }
+
+        return "#NAME?";
+      } catch (err) {
+        return "#VALUE!";
+      }
+    }
+
+    // Resolves range ranges (e.g. A1:B3) into numeric arrays
+    function getRangeValues(rangeStr) {
+      const parts = rangeStr.split(':');
+      if (parts.length === 1) {
+        return [parseFloat(cellData[parts[0]]) || 0];
+      }
+      
+      const startCell = parts[0];
+      const endCell = parts[1];
+      
+      const startCol = startCell.charCodeAt(0);
+      const startRow = parseInt(startCell.substring(1));
+      const endCol = endCell.charCodeAt(0);
+      const endRow = parseInt(endCell.substring(1));
+
+      const vals = [];
+      for (let col = Math.min(startCol, endCol); col <= Math.max(startCol, endCol); col++) {
+        for (let row = Math.min(startRow, endRow); row <= Math.max(startRow, endRow); row++) {
+          const cellId = `${String.fromCharCode(col)}${row}`;
+          const numVal = parseFloat(cellData[cellId]);
+          if (!isNaN(numVal)) {
+            vals.push(numVal);
+          }
+        }
+      }
+      return vals;
+    }
+
+    /* Formula Academy Tabs Click binding */
+    function initFormulaAcademy() {
+      const tabs = document.querySelectorAll('#formulaTabs button');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('#formulaTabs button').forEach(b => b.classList.remove('active'));
+          tab.classList.add('active');
+
+          const funcKey = tab.dataset.func;
+          const data = formulasAcademyDb[funcKey];
+          if (!data) return;
+
+          document.getElementById('funcName').textContent = data.title;
+          document.getElementById('funcCategory').textContent = data.cat;
+          document.getElementById('funcSyntax').textContent = data.syntax;
+          document.getElementById('funcDescription').textContent = data.desc;
+          document.getElementById('funcMistakeText').textContent = data.mistake;
+
+          const stepList = document.getElementById('funcInstructions');
+          stepList.innerHTML = '';
+          data.steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step;
+            stepList.appendChild(li);
+          });
+        });
+      });
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY ENGINE
+       ========================================================================== */
+    function renderShortcuts(filterText = '') {
+      const grid = document.getElementById('shortcutsGrid');
+      const empty = document.getElementById('noShortcuts');
+      const query = filterText.toLowerCase().trim();
+
+      grid.innerHTML = '';
+
+      const filtered = shortcutsData.filter(s => {
+        const matchCat = activeShortcutCategory === 'all' || s.category === activeShortcutCategory;
+        const matchText = !query ||
+          s.desc.toLowerCase().includes(query) ||
+          s.category.toLowerCase().includes(query) ||
+          s.win.some(k => k.toLowerCase().includes(query)) ||
+          s.mac.some(k => k.toLowerCase().includes(query));
+        return matchCat && matchText;
+      });
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        filtered.forEach(s => {
+          const item = document.createElement('div');
+          item.className = 'shortcut-card-item';
+
+          const keys = currentOS === 'win' ? s.win : s.mac;
+          let keysHtml = keys.map(k => `<kbd class="shortcut-kbd">${k}</kbd>`).join(' + ');
+
+          item.innerHTML = `
+            <div class="shortcut-card-details">
+              <h4>${s.desc}</h4>
+              <span>${s.category}</span>
+            </div>
+            <div class="shortcut-card-keys">
+              ${keysHtml}
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      }
+    }
+
+    function toggleOSKeys() {
+      currentOS = currentOS === 'win' ? 'mac' : 'win';
+      const btn = document.getElementById('osToggleBtn');
+      const label = document.getElementById('osLabel');
+
+      if (currentOS === 'win') {
+        label.textContent = "Windows Keys";
+        btn.querySelector('i').className = 'ti ti-brand-windows';
+      } else {
+        label.textContent = "Mac Keys";
+        btn.querySelector('i').className = 'ti ti-brand-apple';
+      }
+      renderShortcuts(document.getElementById('shortcutSearch').value);
+    }
+
+    // Shortcut category pill filter binding
+    document.querySelectorAll('#shortcutCats button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#shortcutCats button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeShortcutCategory = btn.dataset.cat;
+        renderShortcuts(document.getElementById('shortcutSearch').value);
+      });
+    });
+
+    /* ==========================================================================
+       QUIZ ENGINE & TIMED MCQ TEST
+       ========================================================================== */
+    function initQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      quizActive = true;
+      document.getElementById('quizPlayground').style.display = 'block';
+      document.getElementById('certificateBox').style.display = 'none';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      clearInterval(timerInterval);
+      if (currentQuestionIdx >= quizQuestions.length) {
+        completeQuiz();
+        return;
+      }
+
+      const qData = quizQuestions[currentQuestionIdx];
+      document.getElementById('quizProgressLabel').textContent = `Question ${currentQuestionIdx + 1} of ${quizQuestions.length}`;
+      document.getElementById('quizQuestionText').textContent = qData.q;
+
+      const container = document.getElementById('quizOptionsContainer');
+      container.innerHTML = '';
+
+      qData.o.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleOptionClick(btn, idx, qData.a));
+        container.appendChild(btn);
+      });
+
+      // Reset question timer
+      questionTimer = 20;
+      document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+      timerInterval = setInterval(() => {
+        questionTimer -= 1;
+        document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+        if (questionTimer <= 0) {
+          clearInterval(timerInterval);
+          moveToNextQuestion();
+        }
+      }, 1000);
+    }
+
+    function handleOptionClick(selectedBtn, selectedIdx, correctIdx) {
+      clearInterval(timerInterval);
+      
+      const options = document.querySelectorAll('.quiz-option-btn');
+      options.forEach(opt => opt.disabled = true);
+
+      if (selectedIdx === correctIdx) {
+        selectedBtn.classList.add('correct');
+        quizScore += 1;
+        earnXP(20);
+      } else {
+        selectedBtn.classList.add('incorrect');
+        options[correctIdx].classList.add('correct');
+      }
+
+      setTimeout(moveToNextQuestion, 1200);
+    }
+
+    function moveToNextQuestion() {
+      currentQuestionIdx += 1;
+      loadQuestion();
+    }
+
+    function completeQuiz() {
+      document.getElementById('quizPlayground').style.display = 'none';
+      
+      const certBox = document.getElementById('certificateBox');
+      certBox.style.display = 'block';
+
+      const userName = prompt("Congratulations on passing the exam! Please enter your full name for the certificate:") || "Excel Student";
+      document.getElementById('certUserName').textContent = userName;
+      
+      earnXP(50);
+    }
+
+    /* Helper: Copy Templates */
+    function copyTemplateCode(btn) {
+      const code = btn.previousElementSibling.value;
+      navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
