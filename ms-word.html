@@ -1,0 +1,4118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic to Pro MS Word – Interactive Learning Portal</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn MS Word from absolute beginner to advanced pro. Interactive tutorials, searchable shortcuts, practice labs, real projects, templates, and MCQ quizzes.">
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS THEMES (Variables)
+       ========================================================================== */
+    :root {
+      --primary-font: 'Inter', sans-serif;
+      --header-font: 'Fredoka One', 'Inter', sans-serif;
+      
+      /* Light Mode Palette */
+      --bg-primary: #f3f7fd;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #1e2c4f;
+      --text-muted: #5c6f96;
+      --border-color: rgba(200, 220, 255, 0.5);
+      --accent-blue: #2b579a; /* Iconic Word Blue */
+      --accent-sky: #4f9bf7;
+      --accent-light: #e6f0ff;
+      --accent-success: #217346;
+      
+      /* Glassmorphism & Shadow */
+      --glass-bg: rgba(255, 255, 255, 0.76);
+      --glass-border: rgba(200, 220, 255, 0.6);
+      --shadow-soft: 0 8px 24px rgba(43, 87, 154, 0.05);
+      --shadow-hover: 0 16px 40px rgba(43, 87, 154, 0.12);
+      
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="dark"] {
+      /* Dark Mode Palette */
+      --bg-primary: #0a0e1a;
+      --bg-sidebar: #101626;
+      --bg-card: #151e33;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-blue: #3b82f6;
+      --accent-sky: #60a5fa;
+      --accent-light: rgba(59, 130, 246, 0.15);
+      
+      /* Glassmorphism & Shadow */
+      --glass-bg: rgba(21, 30, 51, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.2);
+      --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ==========================================================================
+       BASE LAYOUT
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--primary-font);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      display: flex;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Responsive Grid Backdrop Glows */
+    .glow-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 15% 15%, var(--accent-light) 0%, transparent 60%),
+        radial-gradient(circle at 85% 20%, rgba(79, 155, 247, 0.08) 0%, transparent 50%);
+    }
+
+    /* ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--header-font);
+      font-size: 1.25rem;
+      color: var(--text-main);
+      padding: 8px 12px 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .brand-logo i {
+      font-size: 28px;
+      color: var(--accent-blue);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    /* Scrollbar for sidebar */
+    .nav-menu::-webkit-scrollbar { width: 4px; }
+    .nav-menu::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 4px; }
+
+    .nav-item button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item button i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .nav-item button:hover {
+      background: var(--accent-light);
+      color: var(--accent-blue);
+    }
+
+    .nav-item button:hover i {
+      transform: translateX(3px);
+    }
+
+    .nav-item.active button {
+      background: var(--accent-blue);
+      color: #ffffff !important;
+    }
+
+    /* Mobile Sidebar Toggle Header */
+    .mobile-nav-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      padding: 0 16px;
+      z-index: 99;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-bar button {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== */
+    .main-wrapper {
+      margin-left: 260px;
+      flex: 1;
+      padding: 24px 32px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s;
+    }
+
+    /* ==========================================================================
+       TOP BAR (USER PROGRESS, LANGUAGES & THEMES)
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* User XP & Streak Widget */
+    .user-stats-widget {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .xp-meter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .xp-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .xp-bar-outer {
+      width: 140px;
+      height: 8px;
+      background: var(--bg-primary);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .xp-bar-inner {
+      height: 100%;
+      width: 0%; /* Adjusted dynamically in JS */
+      background: linear-gradient(90deg, var(--accent-sky), var(--accent-blue));
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .streak-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #ff7849;
+    }
+
+    .streak-meter i {
+      font-size: 20px;
+      animation: flamePulse 1.2s infinite alternate;
+    }
+
+    @keyframes flamePulse {
+      from { transform: scale(1); filter: drop-shadow(0 0 1px #ff7849); }
+      to { transform: scale(1.15); filter: drop-shadow(0 0 4px #ff3800); }
+    }
+
+    .badges-meter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--accent-blue);
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Controls Panel (Language, Theme) */
+    .controls-panel {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: var(--accent-light);
+      border-color: rgba(43, 87, 154, 0.25);
+    }
+
+    /* ==========================================================================
+       DYNAMIC PAGE SECTIONS
+       ========================================================================== */
+    .portal-section {
+      display: none; /* Managed by JS client-side router */
+    }
+
+    .portal-section.active {
+      display: block;
+      animation: sectionSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes sectionSlideUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Visual Content Cards */
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Hero Banner Styling */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(43, 87, 154, 0.05) 0%, rgba(79, 155, 247, 0.08) 100%), var(--bg-card);
+      border: 1px solid rgba(43, 87, 154, 0.15);
+      border-left: 6px solid var(--accent-blue);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-details h2 {
+      font-family: var(--header-font);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-details p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      background: var(--accent-blue);
+      border: none;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(43, 87, 154, 0.3);
+      transition: all 0.22s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 87, 154, 0.4);
+    }
+
+    /* Layout Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    /* Standardized Curriculum Blocks */
+    .lesson-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .lesson-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .lesson-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .lesson-box-header i {
+      font-size: 22px;
+      color: var(--accent-blue);
+    }
+
+    .lesson-box-header h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .lesson-box ul {
+      list-style: none;
+    }
+
+    .lesson-box ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-box ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-sky);
+      font-weight: bold;
+    }
+
+    .tip-banner {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent-sky);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 1rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .tip-banner i {
+      font-size: 24px;
+      color: var(--accent-blue);
+    }
+
+    .tip-banner p {
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* Tab Layouts Inside Subsections */
+    .tab-bar-wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      padding-bottom: 4px;
+    }
+
+    .bar-tab {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .bar-tab.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY
+       ========================================================================== */
+    .shortcut-search-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .shortcut-search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .shortcut-search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      font-size: 0.92rem;
+      outline: none;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shortcut-search-input-wrap input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .shortcut-search-input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .shortcut-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-height: 450px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .shortcut-card-grid::-webkit-scrollbar { width: 6px; }
+    .shortcut-card-grid::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 6px; }
+
+    .shortcut-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s;
+    }
+
+    .shortcut-card-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .shortcut-card-details h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .shortcut-card-details span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .shortcut-card-keys {
+      display: flex;
+      gap: 4px;
+    }
+
+    .shortcut-kbd {
+      background: var(--bg-primary);
+      border: 1px solid rgba(27, 46, 86, 0.12);
+      border-bottom: 3px solid rgba(27, 46, 86, 0.22);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    /* ==========================================================================
+       QUIZ ENGINE & TIMED MCQ TEST
+       ========================================================================== */
+    .quiz-card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-header-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .timer-pill {
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #ff3b30;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quiz-question-container h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-option-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .quiz-option-btn:hover {
+      background: var(--accent-light);
+      border-color: rgba(43, 87, 154, 0.25);
+    }
+
+    .quiz-option-btn.correct {
+      background: #eafcf1 !important;
+      border-color: #217346 !important;
+      color: #217346 !important;
+    }
+
+    .quiz-option-btn.incorrect {
+      background: #fff2f2 !important;
+      border-color: #ff3b30 !important;
+      color: #ff3b30 !important;
+    }
+
+    /* Unlocked Completion Certificate CSS Rendering */
+    .certificate-panel {
+      display: none;
+      margin-top: 2rem;
+      animation: stampAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes stampAppear {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cert-frame {
+      border: 14px double var(--accent-blue);
+      background: #ffffff;
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(43, 87, 154, 0.15);
+      color: #1b2e56;
+      border-radius: 8px;
+    }
+
+    .cert-frame h2 {
+      font-family: var(--header-font);
+      font-size: 2.2rem;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+    }
+
+    .cert-divider {
+      width: 80px;
+      height: 4px;
+      background: var(--accent-sky);
+      margin: 1.5rem auto;
+      border-radius: 999px;
+    }
+
+    .cert-frame p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #4b5875;
+    }
+
+    .cert-frame .name-tag {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      color: #0b0f19;
+      margin: 1.5rem 0;
+      border-bottom: 2px dashed var(--accent-sky);
+      display: inline-block;
+      padding: 4px 30px;
+    }
+
+    .cert-stamp {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      width: 90px;
+      height: 90px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(43, 87, 154, 0.35);
+      transform: rotate(-12deg);
+      border: 3px double #ffffff;
+    }
+
+    /* ==========================================================================
+       PRACTICE EXERCISES & DOWNLOADS
+       ========================================================================== */
+    .exercise-details-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-top: 1.5rem;
+    }
+
+    .template-box-code {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      resize: none;
+      margin-bottom: 12px;
+    }
+
+    /* ==========================================================================
+       VISUAL COMPARISONS
+       ========================================================================== */
+    .compare-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 1.5rem;
+    }
+
+    .compare-side {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .compare-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .compare-title.before { color: #d32f2f; }
+    .compare-title.after { color: #388e3c; }
+
+    .compare-doc-preview {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 180px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      color: #1b2e56;
+    }
+
+    /* ==========================================================================
+       APP FOOTER (Exactly matching original index.html links)
+       ========================================================================== */
+    .ts-footer {
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      margin-top: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+    }
+
+    .ts-footer .fl {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+
+    .ts-footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--bg-primary);
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .ts-footer a:hover {
+      background: var(--accent-light);
+      transform: translateY(-1px);
+    }
+
+    .ts-footer .fc {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.8;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN SYSTEM OVERRIDES
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-270px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-left: 0;
+        padding-top: 80px;
+      }
+      .mobile-nav-bar {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+      .controls-panel {
+        justify-content: space-between;
+      }
+      .compare-container {
+        grid-template-columns: 1fr;
+      }
+      .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .ts-footer .fl {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .ts-footer a {
+        width: 200px;
+        justify-content: center;
+      }
+    }
+
+    /* ==========================================================================
+       INTERACTIVE RIBBON SIMULATOR & SANDBOX STYLES
+       ========================================================================== */
+    .sandbox-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 24px;
+      margin-top: 1.5rem;
+    }
+    
+    @media (max-width: 992px) {
+      .sandbox-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Authentic Ribbon Mockup */
+    .word-ribbon-mock {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      color: #334155;
+    }
+    
+    [data-theme="dark"] .word-ribbon-mock {
+      background: #111827;
+      border-color: rgba(255,255,255,0.08);
+      color: #f1f5f9;
+    }
+    
+    .ribbon-menu-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+    }
+    
+    [data-theme="dark"] .ribbon-menu-tabs {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .ribbon-menu-tab {
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px 4px 0 0;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    
+    .ribbon-menu-tab.active {
+      background: var(--accent-blue);
+      color: #ffffff !important;
+    }
+    
+    .ribbon-groups-wrap {
+      display: none;
+      gap: 16px;
+      align-items: stretch;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    
+    .ribbon-groups-wrap.active {
+      display: flex;
+    }
+    
+    .ribbon-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      padding-right: 14px;
+      gap: 6px;
+    }
+    
+    [data-theme="dark"] .ribbon-group {
+      border-right-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .ribbon-group:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+    
+    .ribbon-group-title {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+    
+    .ribbon-tools-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    
+    /* Ribbon Buttons */
+    .ribbon-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: inherit;
+      transition: all 0.15s;
+      position: relative;
+    }
+    
+    .ribbon-btn:hover {
+      background: rgba(43, 87, 154, 0.08);
+      border-color: rgba(43, 87, 154, 0.15);
+      color: var(--accent-blue);
+    }
+    
+    [data-theme="dark"] .ribbon-btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.15);
+      color: var(--accent-sky);
+    }
+    
+    .ribbon-btn.active {
+      background: rgba(43, 87, 154, 0.18) !important;
+      border-color: var(--accent-blue) !important;
+      color: var(--accent-blue) !important;
+    }
+    
+    [data-theme="dark"] .ribbon-btn.active {
+      background: rgba(59, 130, 246, 0.25) !important;
+      border-color: var(--accent-sky) !important;
+      color: var(--accent-sky) !important;
+    }
+    
+    .ribbon-select {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      outline: none;
+      color: #333333;
+      cursor: pointer;
+    }
+    
+    [data-theme="dark"] .ribbon-select {
+      background: #1e293b;
+      border-color: rgba(255,255,255,0.1);
+      color: #e5e7eb;
+    }
+    
+    /* Virtual Document Sheet */
+    .virtual-sheet-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .virtual-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .virtual-sheet {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      padding: 40px;
+      min-height: 440px;
+      color: #2c3e50;
+      font-family: 'Calibri', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.15;
+      position: relative;
+      overflow-y: auto;
+      max-height: 520px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+    
+    [data-theme="dark"] .virtual-sheet {
+      background: #ffffff; /* Document sheet always stays white A4 for high precision realism */
+      color: #1e293b;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .virtual-sheet p {
+      margin-bottom: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    /* Custom Formatting States Inside Sandbox Sheet */
+    .vs-bold { font-weight: bold; }
+    .vs-italic { font-style: italic; }
+    .vs-underline { text-decoration: underline; }
+    .vs-strikethrough { text-decoration: line-through; }
+    
+    .vs-highlight { background-color: #ffff00; }
+    .vs-color-blue { color: #2b579a; }
+    
+    .vs-subscript { font-size: 0.75em; vertical-align: sub; line-height: 0; }
+    .vs-superscript { font-size: 0.75em; vertical-align: super; line-height: 0; }
+    
+    .vs-align-left { text-align: left; }
+    .vs-align-center { text-align: center; }
+    .vs-align-right { text-align: right; }
+    .vs-align-justify { text-align: justify; }
+    
+    .vs-bullets {
+      display: list-item;
+      list-style-type: disc;
+      margin-left: 24px;
+    }
+    
+    .vs-numbered {
+      display: list-item;
+      list-style-type: decimal;
+      margin-left: 24px;
+    }
+    
+    /* Interactive Structures */
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 10pt;
+    }
+    
+    .vs-table th, .vs-table td {
+      border: 1px solid #bfdbfe;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    
+    .vs-table th {
+      background-color: #2b579a;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    
+    .vs-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    
+    .vs-picture-box {
+      border: 2px dashed #3b82f6;
+      border-radius: 6px;
+      background: #eff6ff;
+      padding: 16px;
+      margin: 16px auto;
+      text-align: center;
+      max-width: 80%;
+      color: #1e3a8a;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .vs-picture-box i {
+      font-size: 32px;
+      color: #3b82f6;
+    }
+    
+    .vs-shape-box {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 50%;
+      margin: 16px auto;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+    
+    .vs-header-area {
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 6px;
+      margin-bottom: 24px;
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .vs-footer-area {
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 6px;
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Details Panel */
+    .encyclopedia-details {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.3s;
+    }
+    
+    .encyclopedia-details-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .encyclopedia-details-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .encyclopedia-details-title-wrap i {
+      font-size: 24px;
+      color: var(--accent-blue);
+      background: var(--accent-light);
+      padding: 8px;
+      border-radius: var(--radius-sm);
+    }
+    
+    .encyclopedia-details-title-wrap h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+    
+    .tool-keycap-badge {
+      display: inline-flex;
+      gap: 4px;
+    }
+    
+    .tool-instructions-wrap h4 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    
+    .tool-instructions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .tool-instructions-list li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+    
+    .tool-instructions-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-success);
+      font-weight: bold;
+    }
+    
+    .tool-sandbox-tip {
+      font-size: 0.82rem;
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent-sky);
+      padding: 10px 14px;
+      border-radius: 4px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .tool-sandbox-tip i {
+      font-size: 18px;
+      color: var(--accent-blue);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-backdrop"></div>
+
+  <!-- Mobile Navigation Bar Toggle -->
+  <div class="mobile-nav-bar">
+    <div class="brand-logo" style="margin: 0; border: none; padding: 0;">
+      <i class="ti ti-file-text"></i>
+      <span>WordPro Hub</span>
+    </div>
+    <button id="mobileMenuBtn" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+
+  <!-- Left Sidebar Navigation Menu -->
+  <nav class="sidebar" id="appSidebar">
+    <div class="brand-logo">
+      <i class="ti ti-file-text"></i>
+      <span data-localize="sidebarBrand">WordPro Hub</span>
+    </div>
+    
+    <ul class="nav-menu">
+      <li class="nav-item active" data-target="home"><button><i class="ti ti-home"></i> <span data-localize="menuHome">Home Page</span></button></li>
+      <li class="nav-item" data-target="beginner"><button><i class="ti ti-award"></i> <span data-localize="menuBeginner">Beginner Course</span></button></li>
+      <li class="nav-item" data-target="tabs-guide"><button><i class="ti ti-book-2"></i> <span data-localize="menuTabs">Ribbon Tabs Guide</span></button></li>
+      <li class="nav-item" data-target="shortcuts"><button><i class="ti ti-keyboard"></i> <span data-localize="menuShortcuts">Shortcut Keys</span></button></li>
+      <li class="nav-item" data-target="practice"><button><i class="ti ti-barbell"></i> <span data-localize="menuPractice">Practice Lab</span></button></li>
+      <li class="nav-item" data-target="projects"><button><i class="ti ti-briefcase"></i> <span data-localize="menuProjects">Real Projects</span></button></li>
+      <li class="nav-item" data-target="templates"><button><i class="ti ti-download"></i> <span data-localize="menuTemplates">Templates Pack</span></button></li>
+      <li class="nav-item" data-target="advanced"><button><i class="ti ti-crown"></i> <span data-localize="menuAdvanced">Advanced Tools</span></button></li>
+      <li class="nav-item" data-target="developer"><button><i class="ti ti-terminal"></i> <span data-localize="menuDeveloper">Developer Tab</span></button></li>
+      <li class="nav-item" data-target="ai-section"><button><i class="ti ti-stars"></i> <span data-localize="menuAI">AI in MS Word</span></button></li>
+      <li class="nav-item" data-target="errors"><button><i class="ti ti-alert-triangle"></i> <span data-localize="menuErrors">Error Solver</span></button></li>
+      <li class="nav-item" data-target="quiz"><button><i class="ti ti-clipboard-list"></i> <span data-localize="menuQuiz">MCQ & Certificate</span></button></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content Panel Area -->
+  <div class="main-wrapper">
+    
+    <!-- Top Configuration Header (XP, Theme, Languages) -->
+    <header class="top-bar">
+      
+      <!-- Gamification Stats Widget -->
+      <div class="user-stats-widget">
+        <div class="xp-meter-wrap">
+          <span class="xp-label" data-localize="xpTitle">Level Progress</span>
+          <div class="xp-bar-outer">
+            <div class="xp-bar-inner" id="xpBar"></div>
+          </div>
+        </div>
+        <div class="streak-meter">
+          <i class="ti ti-flame"></i>
+          <span id="streakCount">1</span> <span data-localize="streakSuffix">Day Streak</span>
+        </div>
+        <div class="badges-meter">
+          <div class="mini-badge" title="Beginner Unlocked" id="badgeBeg"><i class="ti ti-award"></i></div>
+          <div class="mini-badge" title="Explorer Unlocked" id="badgeExp" style="opacity: 0.35;"><i class="ti ti-compass"></i></div>
+          <div class="mini-badge" title="Word Master Unlocked" id="badgeMaster" style="opacity: 0.35;"><i class="ti ti-crown"></i></div>
+        </div>
+      </div>
+
+      <!-- Controls Panel (Hindi/English & Light/Dark Theme) -->
+      <div class="controls-panel">
+        <button class="control-btn" id="langToggleBtn">
+          <i class="ti ti-language"></i>
+          <span id="langLabel">हिन्दी</span>
+        </button>
+        <button class="control-btn" id="themeToggleBtn">
+          <i class="ti ti-sun"></i>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Content Sections (Routed Client-Side) -->
+
+    <!-- =================== 1. HOME PAGE =================== -->
+    <section class="portal-section active" id="sec-home">
+      <div class="hero-banner">
+        <div class="hero-details">
+          <div class="brand-badge" style="margin-bottom: 12px;" data-localize="homeBadge">⚡ Basic to Pro Blueprint</div>
+          <h2 data-localize="homeHeroTitle">Learn MS Word from Basics to Professional</h2>
+          <p data-localize="homeHeroDesc">Unlock the secrets to premium document formatting, automated templates, and advanced developer macro tools. Tailored for office users and students.</p>
+          <button class="cta-btn" onclick="navigateToSection('beginner')">
+            <i class="ti ti-rocket"></i> <span data-localize="homeCta">Start Learning</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="content-card">
+          <h3 style="margin-bottom: 16px;" data-localize="homeFeaturesTitle">🔥 Key Portal Features</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-language" style="color: var(--accent-blue); font-size: 20px;"></i>
+              <span data-localize="homeFeatLang">Dual Language Guide (Hindi + English)</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-keyboard" style="color: var(--accent-blue); font-size: 20px;"></i>
+              <span data-localize="homeFeatKeys">Real-time Searchable Shortcuts Keys Console</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-briefcase" style="color: var(--accent-blue); font-size: 20px;"></i>
+              <span data-localize="homeFeatProj">Practical Project Blueprint Guides</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-certificate" style="color: var(--accent-blue); font-size: 20px;"></i>
+              <span data-localize="homeFeatCert">Auto-generated Certification Engine</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 style="margin-bottom: 8px;" data-localize="homeProgressTitle">📈 Your Dashboard</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeProgressDesc">Earn experience points (XP) by completing quizzes and explore projects to unlock completion certificates.</p>
+          </div>
+          <div style="background: var(--bg-primary); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerXP">Total XP Accumulated</span>
+              <span style="color: var(--accent-blue);" id="totalXpVal">0 XP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerStatus">Rank Level</span>
+              <span style="color: var(--accent-success);" id="userRankVal">Word Beginner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Learning Gallery -->
+      <div class="content-card" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-photo" style="color: var(--accent-blue);"></i> <span data-localize="homeVisualTitle">Visual Learning Blueprint Gallery</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeVisualDesc">Explore high-definition graphic models and interface layouts to visually master complex document flows.</p>
+        
+        <div class="grid-2" style="gap: 24px;">
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/UUD29WXMR0S8vkmVefE5xj17J3LEWGCR5x6eoVbNUaV8z12nCApgko6hXbnN_0E3fj8DLkBXVJq-doVhrXVuKGyYpqUDg8TogZGWM7r3LwsUA3VGdk9p8q2fO7Y044AfiSY1jeRSkFkQ6kOHrHRJyjCZ2vZB88QonGJZ5433tvw1MDcV2Mnt7Sov__l230j4?purpose=fullsize" alt="Visual Guide 1" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">1. UI Styles &amp; Typography Modeling</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Visualizing Ribbon configurations, margins, and aligned font hierarchies.</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/SV1zpzN14VI91pBRzn08Lad6xS-Kolxel09yPR1knZ7Ld80iMXq7xFLac3ls1XY2hSoV4ZQKr3Wr2WG0PbPKRQhgueZKpwNgvRRdVj8gz05LiHjy94G31kO2NF1BFbR6Fg5J_MFtHMBdoMjh7mS0aGh263LknQjEuqGP07w9Bqqfprmw3zupkzd0sb5hc1op?purpose=fullsize" alt="Visual Guide 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">2. Professional Document Layouts</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Establishing consistent grids, page shapes, and multi-column balances.</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/3DqeBVmceDhmHmGt4hhZQLbn4unriy2bKxzSgLBDagII-2scGncBu7LCDAs0xobtTfnOd5JRGSzUz_qbuBf-td10OqJSkStCaAlYAZRyR6f52tbS2SNC0ZD7KqzcSm7rF1v5pLD1MFdWvHFA7g6njIbOcRBIT_BKnxOPMNqQVa34axyeNMVbw_3VY240Wunz?purpose=fullsize" alt="Visual Guide 3" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">3. References, Citations &amp; Cataloging</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">How academic researchers, colleges, and offices format indices and databases.</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/gGDnz9Y_yNceiL8Yo9U-qtg4JgPE80kp3w7s3FMJQp-RQS0KVjifGB2QWQHi-zQ5sFH0BazGB0OVf5VJ94PM4teXxDQq1jJ7uocapTJB41bengYyPdrsxipqInexRjuAqNLxAP-9i5rlOsxOb2MzMZThZ_FXfYPOYXqG7n3cDBRROJuqyYKScWtWaUJVLHF8?purpose=fullsize" alt="Visual Guide 4" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">4. AI Document Generation &amp; Copilot Controls</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Modern features: prompting AI interfaces to outline formal invoices and designs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 2. BEGINNER COURSE =================== -->
+    <section class="portal-section" id="sec-beginner">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="begTitle">MS Word: Absolute Basics Course</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="begSubtitle">Begin your educational blueprint here. Understand version histories, the standard ribbon panel layout, and core typing mechanics.</p>
+        
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-device-desktop"></i><h3 data-localize="begL1Title">1. What is MS Word?</h3></div>
+            <ul>
+              <li data-localize="begL1Li1">Word Processor software by Microsoft</li>
+              <li data-localize="begL1Li2">Used for documents, notes, resumes</li>
+              <li data-localize="begL1Li3">Supports offline &amp; online editing</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-layout"></i><h3 data-localize="begL2Title">2. Ribbon &amp; Interface</h3></div>
+            <ul>
+              <li data-localize="begL2Li1">Quick Access Toolbar options</li>
+              <li data-localize="begL2Li2">Top tabs (Home, Insert, Layout)</li>
+              <li data-localize="begL2Li3">File menu (Save, Save As, Print)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-edit"></i><h3 data-localize="begL3Title">3. Formatting Text</h3></div>
+            <ul>
+              <li data-localize="begL3Li1">Set font families &amp; font sizes</li>
+              <li data-localize="begL3Li2">Bold, Italic, &amp; Underline keys</li>
+              <li data-localize="begL3Li3">Text color fills &amp; highlight layers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tip-banner">
+          <i class="ti ti-bulb"></i>
+          <p><strong data-localize="begTipLabel">Pro-Tip:</strong> <span data-localize="begTipText">You can type <strong>=rand(2,3)</strong> and press Enter to instantly auto-generate sample placeholder text paragraphs for your tests.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 3. RIBBON TABS GUIDE =================== -->
+    <section class="portal-section" id="sec-tabs-guide">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tabsTitle">Full MS Word Tabs Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tabsSubtitle">Every single command and panel in the MS Word Ribbon menu, categorized tab-by-tab.</p>
+
+        <!-- ===================================================================
+             INTERACTIVE RIBBON & DOCUMENT SANDBOX SIMULATOR
+             =================================================================== -->
+        <div style="background: var(--bg-card); border: 1px dashed var(--accent-sky); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-soft);">
+          <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-family: var(--header-font); font-size: 1.3rem;">
+            <i class="ti ti-device-laptop" style="color: var(--accent-blue);"></i>
+            <span data-localize="simTitle">Interactive MS Word Ribbon & Sandbox Simulator</span>
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="simDesc">Click any tool button on the simulated Microsoft Word Ribbon below to explore its description, keyboard shortcut, step-by-step instructions, and see it format the document in real time!</p>
+
+          <!-- Simulated MS Word Ribbon -->
+          <div class="word-ribbon-mock">
+            <div class="ribbon-menu-tabs">
+              <button class="ribbon-menu-tab active" id="ribbonTabHomeBtn">Home</button>
+              <button class="ribbon-menu-tab" id="ribbonTabInsertBtn">Insert</button>
+            </div>
+
+            <!-- Home Tab Groups -->
+            <div class="ribbon-groups-wrap active" id="ribbonGroupHome">
+              <!-- Group 1: Clipboard -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-paste" title="Paste (Ctrl + V)" onclick="selectRibbonTool('paste')"><i class="ti ti-clipboard"></i></button>
+                  <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <button class="ribbon-btn" id="rtool-cut" title="Cut (Ctrl + X)" style="height: 15px; width: 24px; font-size: 0.7rem;" onclick="selectRibbonTool('cut')"><i class="ti ti-scissors"></i></button>
+                    <button class="ribbon-btn" id="rtool-copy" title="Copy (Ctrl + C)" style="height: 15px; width: 24px; font-size: 0.7rem;" onclick="selectRibbonTool('copy')"><i class="ti ti-copy"></i></button>
+                  </div>
+                  <button class="ribbon-btn" id="rtool-painter" title="Format Painter (Ctrl + Shift + C)" onclick="selectRibbonTool('painter')"><i class="ti ti-brush"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupClipboard">Clipboard</div>
+              </div>
+
+              <!-- Group 2: Font -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row" style="margin-bottom: 4px;">
+                  <select class="ribbon-select" id="rfont-family" style="width: 90px;" onchange="applySandboxFontFamily(this.value)">
+                    <option value="Calibri">Calibri</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                  </select>
+                  <select class="ribbon-select" id="rfont-size" style="width: 48px;" onchange="applySandboxFontSize(this.value)">
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                    <option value="20">20</option>
+                    <option value="24">24</option>
+                  </select>
+                </div>
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-bold" title="Bold (Ctrl + B)" onclick="selectRibbonTool('bold')">B</button>
+                  <button class="ribbon-btn" id="rtool-italic" title="Italic (Ctrl + I)" style="font-style: italic;" onclick="selectRibbonTool('italic')">I</button>
+                  <button class="ribbon-btn" id="rtool-underline" title="Underline (Ctrl + U)" style="text-decoration: underline;" onclick="selectRibbonTool('underline')">U</button>
+                  <button class="ribbon-btn" id="rtool-strikethrough" title="Strikethrough" style="text-decoration: line-through;" onclick="selectRibbonTool('strikethrough')">ab</button>
+                  <button class="ribbon-btn" id="rtool-subscript" title="Subscript" onclick="selectRibbonTool('subscript')">x₂</button>
+                  <button class="ribbon-btn" id="rtool-superscript" title="Superscript" onclick="selectRibbonTool('superscript')">x²</button>
+                  <button class="ribbon-btn" id="rtool-case" title="Change Case" onclick="selectRibbonTool('case')"><i class="ti ti-letter-case"></i></button>
+                  <button class="ribbon-btn" id="rtool-highlight" title="Text Highlight Color" onclick="selectRibbonTool('highlight')"><i class="ti ti-highlight" style="background: #ffff00; color: #000; border-radius: 2px;"></i></button>
+                  <button class="ribbon-btn" id="rtool-fontcolor" title="Font Color" onclick="selectRibbonTool('fontcolor')"><i class="ti ti-color-swatch" style="color: #2b579a;"></i></button>
+                  <button class="ribbon-btn" id="rtool-clear" title="Clear All Formatting" onclick="selectRibbonTool('clear')"><i class="ti ti-eraser"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupFont">Font</div>
+              </div>
+
+              <!-- Group 3: Paragraph -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row" style="margin-bottom: 4px;">
+                  <button class="ribbon-btn" id="rtool-bullets" title="Bullets" onclick="selectRibbonTool('bullets')"><i class="ti ti-list"></i></button>
+                  <button class="ribbon-btn" id="rtool-numbered" title="Numbering" onclick="selectRibbonTool('numbered')"><i class="ti ti-list-numbers"></i></button>
+                  <span style="width: 8px;"></span>
+                  <button class="ribbon-btn" id="rtool-alignleft" title="Align Left (Ctrl + L)" onclick="selectRibbonTool('alignleft')"><i class="ti ti-align-left"></i></button>
+                  <button class="ribbon-btn" id="rtool-aligncenter" title="Align Center (Ctrl + E)" onclick="selectRibbonTool('aligncenter')"><i class="ti ti-align-center"></i></button>
+                  <button class="ribbon-btn" id="rtool-alignright" title="Align Right (Ctrl + R)" onclick="selectRibbonTool('alignright')"><i class="ti ti-align-right"></i></button>
+                  <button class="ribbon-btn" id="rtool-alignjustify" title="Justify (Ctrl + J)" onclick="selectRibbonTool('alignjustify')"><i class="ti ti-align-justified"></i></button>
+                </div>
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-spacing" title="Line Spacing" onclick="selectRibbonTool('spacing')"><i class="ti ti-line-height"></i></button>
+                  <button class="ribbon-btn" id="rtool-shading" title="Shading" onclick="selectRibbonTool('shading')"><i class="ti ti-bucket"></i></button>
+                  <button class="ribbon-btn" id="rtool-borders" title="Borders" onclick="selectRibbonTool('borders')"><i class="ti ti-border-all"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupParagraph">Paragraph</div>
+              </div>
+
+              <!-- Group 4: Editing -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-find" title="Find (Ctrl + F)" onclick="selectRibbonTool('find')"><i class="ti ti-search"></i></button>
+                  <button class="ribbon-btn" id="rtool-replace" title="Replace (Ctrl + H)" onclick="selectRibbonTool('replace')"><i class="ti ti-arrows-right-left"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupEditing">Editing</div>
+              </div>
+            </div>
+
+            <!-- Insert Tab Groups -->
+            <div class="ribbon-groups-wrap" id="ribbonGroupInsert">
+              <!-- Group 1: Pages -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-pagebreak" title="Page Break (Ctrl + Enter)" onclick="selectRibbonTool('pagebreak')"><i class="ti ti-separator-horizontal"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupPages">Pages</div>
+              </div>
+              
+              <!-- Group 2: Tables -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-table" title="Insert Table" onclick="selectRibbonTool('table')"><i class="ti ti-table"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupTables">Tables</div>
+              </div>
+
+              <!-- Group 3: Illustrations -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-picture" title="Insert Picture" onclick="selectRibbonTool('picture')"><i class="ti ti-photo"></i></button>
+                  <button class="ribbon-btn" id="rtool-shape" title="Draw Shapes" onclick="selectRibbonTool('shape')"><i class="ti ti-layout-grid"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupIllustrations">Illustrations</div>
+              </div>
+
+              <!-- Group 4: Header & Footer -->
+              <div class="ribbon-group">
+                <div class="ribbon-tools-row">
+                  <button class="ribbon-btn" id="rtool-header" title="Header & Footer" onclick="selectRibbonTool('header')"><i class="ti ti-browser"></i></button>
+                </div>
+                <div class="ribbon-group-title" data-localize="rgroupHeaderFooter">Header &amp; Footer</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sandbox Layout Grid -->
+          <div class="sandbox-layout">
+            <!-- Left Panel: Encyclopedia Description Card -->
+            <div class="encyclopedia-details" id="toolEncyclopediaPanel">
+              <div class="encyclopedia-details-header">
+                <div class="encyclopedia-details-title-wrap">
+                  <i class="ti ti-info-circle" id="encyclopediaIcon"></i>
+                  <div>
+                    <h3 id="encyclopediaTitle">Select a Ribbon Tool</h3>
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);" id="encyclopediaCategory">MS Word Tool</span>
+                  </div>
+                </div>
+                <div class="tool-keycap-badge" id="encyclopediaShortcut">
+                  <kbd class="shortcut-kbd">Click a button</kbd>
+                </div>
+              </div>
+
+              <div class="tool-instructions-wrap">
+                <h4 data-localize="simHowTo">How to Use (desktop Word):</h4>
+                <ul class="tool-instructions-list" id="encyclopediaSteps">
+                  <li>Click any tool above to view step-by-step instructions.</li>
+                  <li>देखने के लिए ऊपर दिए गए किसी भी टूल पर क्लिक करें।</li>
+                </ul>
+              </div>
+
+              <div class="tool-sandbox-tip">
+                <i class="ti ti-sparkles"></i>
+                <span id="encyclopediaTip">Interaction: Modifying formatting tools updates the virtual A4 document on the right instantly!</span>
+              </div>
+            </div>
+
+            <!-- Right Panel: Simulated Word A4 Document Sheet -->
+            <div class="virtual-sheet-wrap">
+              <div class="virtual-sheet-header">
+                <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted);" data-localize="simDocHeader">📄 Virtual Word A4 Page</span>
+                <button class="control-btn" style="padding: 6px 12px; font-size: 0.78rem;" onclick="resetVirtualDocument()">
+                  <i class="ti ti-refresh"></i> <span data-localize="simResetBtn">Reset Document</span>
+                </button>
+              </div>
+
+              <div class="virtual-sheet" id="virtualWordSheet" contenteditable="true">
+                <!-- Virtual Headers -->
+                <div class="vs-header-area" id="vsHeaderContainer" style="display: none;">
+                  <span>MS Word Sandbox Document</span>
+                  <span>ThunderStudy Educational</span>
+                </div>
+
+                <!-- Sample Document Body -->
+                <p id="vsParagraph1" class="vs-align-left">Microsoft Word is the world's most popular word processor. Mastering its visual styling options can elevate the presentation of your reports, resumes, and corporate forms.</p>
+                <p id="vsParagraph2" class="vs-align-left">You can use this interactive document page to test alignments, paragraph spacings, bullets, fonts, and text highlighting colors instantly by clicking buttons on the Ribbon mockup above!</p>
+                
+                <!-- Insertion Area for dynamic elements -->
+                <div id="vsInsertArea"></div>
+
+                <!-- Virtual Footers -->
+                <div class="vs-footer-area" id="vsFooterContainer" style="display: none;">
+                  <span>Interactive Portal Manual</span>
+                  <span>Page 1 of 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub Tabs Bar -->
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-tabcontent="tab-home">Home Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-insert">Insert Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-design">Design Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-layout">Layout Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-references">References Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-mailings">Mailings Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-review">Review Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-view">View Tab</button>
+        </div>
+
+        <!-- ── Sub Tab Content: HOME ── -->
+        <div class="level-content-box active" id="tab-home">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/UUD29WXMR0S8vkmVefE5xj17J3LEWGCR5x6eoVbNUaV8z12nCApgko6hXbnN_0E3fj8DLkBXVJq-doVhrXVuKGyYpqUDg8TogZGWM7r3LwsUA3VGdk9p8q2fO7Y044AfiSY1jeRSkFkQ6kOHrHRJyjCZ2vZB88QonGJZ5433tvw1MDcV2Mnt7Sov__l230j4?purpose=fullsize" alt="Visual Guide Home" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Home Tab Font groups, heading styles, and cases</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-clipboard"></i><h3 data-localize="tabHomeClipTitle">Clipboard Group</h3></div>
+              <ul>
+                <li data-localize="tabHomeClip1">Copy &amp; Cut selections to memory buffer</li>
+                <li data-localize="tabHomeClip2">Paste styles &amp; unformatted text</li>
+                <li data-localize="tabHomeClip3">Format Painter: Copy styles from one item to another</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-text-size"></i><h3 data-localize="tabHomeFontTitle">Font Group</h3></div>
+              <ul>
+                <li data-localize="tabHomeFont1">Change font families, sizes, case controls</li>
+                <li data-localize="tabHomeFont2">Bold, Italic, Underline, and Strikethrough</li>
+                <li data-localize="tabHomeFont3">Subscript (x₂), Superscript (x²), and Text Effects</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-align-left"></i><h3 data-localize="tabHomeParaTitle">Paragraph Group</h3></div>
+              <ul>
+                <li data-localize="tabHomePara1">Create dynamic Bullets &amp; Numbered sequences</li>
+                <li data-localize="tabHomePara2">Align text (Left, Right, Center, Justified)</li>
+                <li data-localize="tabHomePara3">Adjust line spacing &amp; column fill borders</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-palette"></i><h3 data-localize="tabHomeStylesTitle">Styles &amp; Editing</h3></div>
+              <ul>
+                <li data-localize="tabHomeStyles1">Heading 1, 2, Title rules for quick styling</li>
+                <li data-localize="tabHomeStyles2">Create and modify styles sheets</li>
+                <li data-localize="tabHomeStyles3">Find (Ctrl+F) and Replace (Ctrl+H) keywords</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: INSERT ── -->
+        <div class="level-content-box" id="tab-insert">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/SV1zpzN14VI91pBRzn08Lad6xS-Kolxel09yPR1knZ7Ld80iMXq7xFLac3ls1XY2hSoV4ZQKr3Wr2WG0PbPKRQhgueZKpwNgvRRdVj8gz05LiHjy94G31kO2NF1BFbR6Fg5J_MFtHMBdoMjh7mS0aGh263LknQjEuqGP07w9Bqqfprmw3zupkzd0sb5hc1op?purpose=fullsize" alt="Visual Guide Insert" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Insert Tab graphics, page structures, columns, and breaks</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-file-text"></i><h3 data-localize="tabInsertPagesTitle">Pages &amp; Tables</h3></div>
+              <ul>
+                <li data-localize="tabInsertPages1">Insert cover pages and clean blank pages</li>
+                <li data-localize="tabInsertPages2">Page Break: Push text to the next page</li>
+                <li data-localize="tabInsertPages3">Create custom grid tables &amp; convert text to tables</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-palette"></i><h3 data-localize="tabInsertIllustTitle">Illustrations &amp; Media</h3></div>
+              <ul>
+                <li data-localize="tabInsertIllust1">Insert computer pictures &amp; online graphic assets</li>
+                <li data-localize="tabInsertIllust2">Draw shapes, charts, and SmartArt workflows</li>
+                <li data-localize="tabInsertIllust3">Insert active screenshot captures</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-link"></i><h3 data-localize="tabInsertLinksTitle">Links &amp; Headers</h3></div>
+              <ul>
+                <li data-localize="tabInsertLinks1">Hyperlink: Link to websites or document headers</li>
+                <li data-localize="tabInsertLinks2">Cross-reference and add custom Bookmarks</li>
+                <li data-localize="tabInsertLinks3">Headers, Footers, and dynamic page numbering</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-math-symbols"></i><h3 data-localize="tabInsertSymbolsTitle">Text &amp; Symbols</h3></div>
+              <ul>
+                <li data-localize="tabInsertSymbols1">Insert text boxes and signature lines</li>
+                <li data-localize="tabInsertSymbols2">Create styled text elements with WordArt</li>
+                <li data-localize="tabInsertSymbols3">Write complex mathematical Equations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: DESIGN ── -->
+        <div class="level-content-box" id="tab-design">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/UUD29WXMR0S8vkmVefE5xj17J3LEWGCR5x6eoVbNUaV8z12nCApgko6hXbnN_0E3fj8DLkBXVJq-doVhrXVuKGyYpqUDg8TogZGWM7r3LwsUA3VGdk9p8q2fO7Y044AfiSY1jeRSkFkQ6kOHrHRJyjCZ2vZB88QonGJZ5433tvw1MDcV2Mnt7Sov__l230j4?purpose=fullsize" alt="Visual Guide Design" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Design Tab global formatting, theme elements, colors, and borders</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-palette"></i><h3 data-localize="tabDesignThemeTitle">Themes &amp; Formatting</h3></div>
+              <ul>
+                <li data-localize="tabDesignTheme1">Apply global visual style Themes</li>
+                <li data-localize="tabDesignTheme2">Establish primary and accent color palettes</li>
+                <li data-localize="tabDesignTheme3">Configure document Font families globally</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-photo"></i><h3 data-localize="tabDesignPageTitle">Page Background Panel</h3></div>
+              <ul>
+                <li data-localize="tabDesignPage1">Insert Watermark (Draft, Confidential) overlays</li>
+                <li data-localize="tabDesignPage2">Set visual background Page Colors</li>
+                <li data-localize="tabDesignPage3">Configure solid or stylized Page Borders</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: LAYOUT ── -->
+        <div class="level-content-box" id="tab-layout">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/SV1zpzN14VI91pBRzn08Lad6xS-Kolxel09yPR1knZ7Ld80iMXq7xFLac3ls1XY2hSoV4ZQKr3Wr2WG0PbPKRQhgueZKpwNgvRRdVj8gz05LiHjy94G31kO2NF1BFbR6Fg5J_MFtHMBdoMjh7mS0aGh263LknQjEuqGP07w9Bqqfprmw3zupkzd0sb5hc1op?purpose=fullsize" alt="Visual Guide Layout" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Layout Tab page setups, column splits, orientation, and breaks</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-ruler-2"></i><h3 data-localize="tabLayoutSetupTitle">Page Setup Group</h3></div>
+              <ul>
+                <li data-localize="tabLayoutSetup1">Margins: Normal, Narrow, Wide padding</li>
+                <li data-localize="tabLayoutSetup2">Orientations: Portrait vs. Landscape view</li>
+                <li data-localize="tabLayoutSetup3">Sizes (A4, Letter) &amp; layout Column splits</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-indent-left"></i><h3 data-localize="tabLayoutParaTitle">Paragraph Spacing</h3></div>
+              <ul>
+                <li data-localize="tabLayoutPara1">Manage column indentation (Left, Right)</li>
+                <li data-localize="tabLayoutPara2">Manage paragraph layout Spacing (Before, After)</li>
+                <li data-localize="tabLayoutPara3">Apply section &amp; page breaks cleanly</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: REFERENCES ── -->
+        <div class="level-content-box" id="tab-references">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/3DqeBVmceDhmHmGt4hhZQLbn4unriy2bKxzSgLBDagII-2scGncBu7LCDAs0xobtTfnOd5JRGSzUz_qbuBf-td10OqJSkStCaAlYAZRyR6f52tbS2SNC0ZD7KqzcSm7rF1v5pLD1MFdWvHFA7g6njIbOcRBIT_BKnxOPMNqQVa34axyeNMVbw_3VY240Wunz?purpose=fullsize" alt="Visual Guide References" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: References indices, MLA/APA bibliographies, footnotes, and citation logs</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-notebook-list"></i><h3 data-localize="tabRefTocTitle">Table of Contents</h3></div>
+              <ul>
+                <li data-localize="tabRefToc1">Generate dynamic Table of Contents</li>
+                <li data-localize="tabRefToc2">Set citation and content Heading tags</li>
+                <li data-localize="tabRefToc3">Refresh directory lists on change</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-book-upload"></i><h3 data-localize="tabRefBibTitle">Citations &amp; Bibliographies</h3></div>
+              <ul>
+                <li data-localize="tabRefBib1">Insert dynamic footnotes &amp; document endnotes</li>
+                <li data-localize="tabRefBib2">Establish Citations for book or web research sources</li>
+                <li data-localize="tabRefBib3">Configure styles (APA, MLA) and Bibliographies</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: MAILINGS ── -->
+        <div class="level-content-box" id="tab-mailings">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/gGDnz9Y_yNceiL8Yo9U-qtg4JgPE80kp3w7s3FMJQp-RQS0KVjifGB2QWQHi-zQ5sFH0BazGB0OVf5VJ94PM4teXxDQq1jJ7uocapTJB41bengYyPdrsxipqInexRjuAqNLxAP-9i5rlOsxOb2MzMZThZ_FXfYPOYXqG7n3cDBRROJuqyYKScWtWaUJVLHF8?purpose=fullsize" alt="Visual Guide Mailings" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Mailings automation, AI custom templates, and Copilot formats</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-mail"></i><h3 data-localize="tabMailSetupTitle">Envelopes &amp; Labels</h3></div>
+              <ul>
+                <li data-localize="tabMailSetup1">Configure business Envelopes formatting</li>
+                <li data-localize="tabMailSetup2">Print sheet Labels with address grids</li>
+                <li data-localize="tabMailSetup3">Choose direct email or mail list profiles</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-users"></i><h3 data-localize="tabMailMergeTitle">Mail Merge Automation</h3></div>
+              <ul>
+                <li data-localize="tabMailMerge1">Connect excel rows database files</li>
+                <li data-localize="tabMailMerge2">Embed dynamic field tags (First Name, Address)</li>
+                <li data-localize="tabMailMerge3">Trigger automated customized printing packages</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: REVIEW ── -->
+        <div class="level-content-box" id="tab-review">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/3DqeBVmceDhmHmGt4hhZQLbn4unriy2bKxzSgLBDagII-2scGncBu7LCDAs0xobtTfnOd5JRGSzUz_qbuBf-td10OqJSkStCaAlYAZRyR6f52tbS2SNC0ZD7KqzcSm7rF1v5pLD1MFdWvHFA7g6njIbOcRBIT_BKnxOPMNqQVa34axyeNMVbw_3VY240Wunz?purpose=fullsize" alt="Visual Guide Review" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: Review Tab proofing, translations, spelling/grammar, and comment tags</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-shield-check"></i><h3 data-localize="tabReviewProofTitle">Proofing &amp; Translation</h3></div>
+              <ul>
+                <li data-localize="tabReviewProof1">Launch full Spell &amp; Grammar checks (F7)</li>
+                <li data-localize="tabReviewProof2">Translate paragraph text between languages</li>
+                <li data-localize="tabReviewProof3">Track current Word Count lists</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-message-square"></i><h3 data-localize="tabReviewTrackTitle">Tracking &amp; Protection</h3></div>
+              <ul>
+                <li data-localize="tabReviewTrack1">Leave collaborative comments on specific text</li>
+                <li data-localize="tabReviewTrack2">Enable Track Changes to view co-author edits</li>
+                <li data-localize="tabReviewTrack3">Lock documents using password protections</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: VIEW ── -->
+        <div class="level-content-box" id="tab-view">
+          <!-- Visual Aid -->
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+            <img src="https://images.openai.com/static-rsc-4/gGDnz9Y_yNceiL8Yo9U-qtg4JgPE80kp3w7s3FMJQp-RQS0KVjifGB2QWQHi-zQ5sFH0BazGB0OVf5VJ94PM4teXxDQq1jJ7uocapTJB41bengYyPdrsxipqInexRjuAqNLxAP-9i5rlOsxOb2MzMZThZ_FXfYPOYXqG7n3cDBRROJuqyYKScWtWaUJVLHF8?purpose=fullsize" alt="Visual Guide View" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-blue); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: View Tab layout screens, gridlines, zoom, and navigation pane sidebars</p>
+          </div>
+
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-eye"></i><h3 data-localize="tabViewLayoutTitle">Views &amp; Grids</h3></div>
+              <ul>
+                <li data-localize="tabViewLayout1">Toggles: Print Layout, Read Mode, and Draft View</li>
+                <li data-localize="tabViewLayout2">Toggle margins Ruler and Gridlines visibility</li>
+                <li data-localize="tabViewLayout3">Display the structural Navigation Pane sidebar</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-zoom-in"></i><h3 data-localize="tabViewZoomTitle">Zoom &amp; Windows</h3></div>
+              <ul>
+                <li data-localize="tabViewZoom1">Adjust sheet Zoom (100%, page width fitting)</li>
+                <li data-localize="tabViewZoom2">Arrange multi-window displays side-by-side</li>
+                <li data-localize="tabViewZoom3">Split active screens for vertical draft editing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 4. SHORTCUT KEYS SECTION =================== -->
+    <section class="portal-section" id="sec-shortcuts">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="keysTitle">MS Word Keyboard Shortcuts Hub</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="keysSubtitle">Filter keyboard shortcuts instantly using the live search engine bar below.</p>
+
+        <!-- Shortcuts Settings Console -->
+        <div class="shortcut-search-container">
+          <div class="shortcut-search-input-wrap">
+            <i class="ti ti-search"></i>
+            <input type="text" id="shortcutSearch" placeholder="Search shortcuts (e.g., Save, Bold, Format)...">
+          </div>
+          <button class="control-btn" id="osToggleBtn" style="border-radius: var(--radius-sm);">
+            <i class="ti ti-brand-windows"></i>
+            <span id="osLabel">Windows Keys</span>
+          </button>
+        </div>
+
+        <!-- Subcategory Filter Pills -->
+        <div class="tab-bar-wrap" style="margin-bottom: 1.5rem;" id="shortcutCats">
+          <button class="bar-tab active" data-cat="all">All Shortcuts</button>
+          <button class="bar-tab" data-cat="Basics">Basics</button>
+          <button class="bar-tab" data-cat="Editing">Editing</button>
+          <button class="bar-tab" data-cat="Formatting">Formatting</button>
+          <button class="bar-tab" data-cat="Navigation">Navigation</button>
+          <button class="bar-tab" data-cat="Advanced">Advanced</button>
+        </div>
+
+        <!-- Shortcuts Cards Grid -->
+        <div class="shortcut-card-grid" id="shortcutsGrid">
+          <!-- Rendered in JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="no-shortcuts-found" id="noShortcuts">
+          <i class="ti ti-keyboard-off"></i>
+          <p data-localize="keysEmpty">No matching shortcuts found. Try another keyword.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 5. PRACTICE LAB SECTION =================== -->
+    <section class="portal-section" id="sec-practice">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="pracTitle">Interactive Practice Lab</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="pracSubtitle">Actionable exercises and formatting challenges to practice Word skills.</p>
+
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-practiceid="prac-ex1">Exercise 1: Basic Typing</button>
+          <button class="bar-tab" data-practiceid="prac-ex2">Exercise 2: Title Styles</button>
+          <button class="bar-tab" data-practiceid="prac-ex3">Exercise 3: Table Layouts</button>
+        </div>
+
+        <!-- Exercise 1 Panel -->
+        <div class="exercise-details-panel active" id="prac-ex1">
+          <h3 style="margin-bottom: 10px;" data-localize="pracEx1Title">Practice Exercise 1: Standard Typing &amp; Alignments</h3>
+          <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1.5rem;" data-localize="pracEx1Desc">Type a 3-paragraph letter. The first paragraph should be Left-aligned, the second paragraph should be Centered, and the third paragraph should be Right-aligned.</p>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px; font-style: italic;">
+            <p data-localize="pracEx1Target">"Composition targets: Left-aligned details regarding corporate structures, followed by center highlights of key items, closing with right-aligned signature margins."</p>
+          </div>
+        </div>
+
+        <!-- Exercise 2 Panel -->
+        <div class="exercise-details-panel" id="prac-ex2">
+          <h3 style="margin-bottom: 10px;" data-localize="pracEx2Title">Practice Exercise 2: Title Typography &amp; Case Formats</h3>
+          <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1.5rem;" data-localize="pracEx2Desc">Type a document title. Convert the title to UPPERCASE using Shift + F3, set font size to 24px, and bold the first word.</p>
+          
+          <!-- Visual Comparison Integration -->
+          <div class="compare-container">
+            <div class="compare-side">
+              <div class="compare-title before">Before formatting</div>
+              <div class="compare-doc-preview">
+                <p style="font-size: 14px; font-weight: normal; text-transform: none; color: #555;">how to format documents properly</p>
+              </div>
+            </div>
+            <div class="compare-side">
+              <div class="compare-title after">After formatting</div>
+              <div class="compare-doc-preview">
+                <p style="font-size: 24px; font-weight: 800; text-transform: uppercase; color: var(--accent-blue); text-decoration: underline;">HOW TO <span style="font-weight: normal; text-decoration: none; color: #333;">FORMAT DOCUMENTS PROPERLY</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exercise 3 Panel -->
+        <div class="exercise-details-panel" id="prac-ex3">
+          <h3 style="margin-bottom: 10px;" data-localize="pracEx3Title">Practice Exercise 3: Advanced Relational Tables</h3>
+          <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 1.5rem;" data-localize="pracEx3Desc">Build a table containing 4 columns and 4 rows. Use column headers for Item Name, Stock Level, Price, and Total. Bold the headers and apply borders.</p>
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 20px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+              <tr style="border-bottom: 2px solid var(--accent-blue); font-weight: 800;">
+                <th style="padding: 8px;">Item Name</th>
+                <th style="padding: 8px;">Stock Level</th>
+                <th style="padding: 8px;">Price</th>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 8px;">MS Word Guide</td>
+                <td style="padding: 8px;">92</td>
+                <td style="padding: 8px;">$15.00</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-color);">
+                <td style="padding: 8px;">Excel Blueprint</td>
+                <td style="padding: 8px;">120</td>
+                <td style="padding: 8px;">$18.00</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 6. REAL PROJECTS SECTION =================== -->
+    <section class="portal-section" id="sec-projects">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="projTitle">Real-World Practical Projects</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="projSubtitle">Learn to build real professional documents in Word with step-by-step instructions.</p>
+
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-projectid="proj-resume">Professional Resume</button>
+          <button class="bar-tab" data-projectid="proj-invoice">Business Invoice</button>
+          <button class="bar-tab" data-projectid="proj-letter">Formal Business Letter</button>
+        </div>
+
+        <!-- Project Resume Details -->
+        <div class="exercise-details-panel active" id="proj-resume">
+          <h3 style="margin-bottom: 8px;" data-localize="projResTitle">Project 1: Standard Modern Resume</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="projResDesc">Design a modern resume layout. Configure A4 page sizing, set narrow margins, insert a 2-column table grid, and apply Heading 1 for Section titles.</p>
+          
+          <div class="compare-container">
+            <div class="compare-side">
+              <div class="compare-title before">Before (Plain Text)</div>
+              <div class="compare-doc-preview" style="font-size: 12px; font-family: sans-serif; line-height: 1.4;">
+                <h2 style="margin: 0 0 6px;">John Doe</h2>
+                <p>john.doe@email.com | 123-456-7890</p>
+                <h3 style="margin-top: 12px; border-bottom: 1px solid #aaa;">Work History</h3>
+                <p>Developer at Company X (2020-2023)</p>
+              </div>
+            </div>
+            <div class="compare-side">
+              <div class="compare-title after">After Formatting (Modern Style)</div>
+              <div class="compare-doc-preview" style="font-size: 12px; font-family: 'Inter', sans-serif; line-height: 1.5; border-top: 6px solid var(--accent-blue);">
+                <table style="width: 100%; border: none;">
+                  <tr>
+                    <td style="vertical-align: top; width: 65%; padding-right: 15px;">
+                      <h2 style="margin: 0; color: var(--accent-blue); font-size: 20px; font-weight: 800;">JOHN DOE</h2>
+                      <span style="font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Software Engineer</span>
+                      <h4 style="margin-top: 16px; border-bottom: 1px solid var(--accent-blue); color: var(--accent-blue); font-size: 11px; padding-bottom: 4px;">EXPERIENCE</h4>
+                      <p style="font-weight: 700; margin: 4px 0 2px;">Senior Developer | Company X</p>
+                      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 6px;">2020 - Present</p>
+                      <p style="font-size: 10px; line-height: 1.4;">Lead the development of custom responsive web portals and API systems.</p>
+                    </td>
+                    <td style="vertical-align: top; width: 35%; background: var(--bg-primary); padding: 12px; border-radius: 6px; font-size: 10px;">
+                      <h4 style="color: var(--accent-blue); margin-bottom: 8px;">CONTACT</h4>
+                      <p>📧 john.doe@email.com</p>
+                      <p>📞 123-456-7890</p>
+                      <h4 style="color: var(--accent-blue); margin: 12px 0 8px;">SKILLS</h4>
+                      <p>• Microsoft Word Pro</p>
+                      <p>• Advanced Layouts</p>
+                      <p>• VBA Automations</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Invoice Details -->
+        <div class="exercise-details-panel" id="proj-invoice">
+          <h3 style="margin-bottom: 8px;" data-localize="projInvTitle">Project 2: Professional Billing Invoice</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="projInvDesc">Create an elegant corporate invoice. Use clean gridlines, bold totals, distinct heading blocks, and a light sky-blue header accent table.</p>
+        </div>
+
+        <!-- Project Letter Details -->
+        <div class="exercise-details-panel" id="proj-letter">
+          <h3 style="margin-bottom: 8px;" data-localize="projLetTitle">Project 3: Formal Business Letter</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="projLetDesc">Master corporate letter drafting. Build a clean envelope header, correctly align the sender/recipient details, and set standard paragraph line spacing.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 7. TEMPLATES DOWNLOAD SECTION =================== -->
+    <section class="portal-section" id="sec-templates">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tempTitle">Free MS Word Templates Downloads</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tempSubtitle">Download templates with complete styling guides and layout blocks.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-file-text" style="color: var(--accent-blue);"></i> <span data-localize="tempResTitle">Professional Resume Template</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+[YOUR FULL NAME]
+[Email] | [Phone Number] | [LinkedIn Profile]
+--------------------------------------------------
+OBJECTIVE
+Dedicated professional aiming to leverage advanced formatting skills...
+
+EXPERIENCE
+[Job Title] | [Company Name] | [2022 - Present]
+- Lead formatting sweeps on automated document blueprints...
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-blue); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Code</span>
+            </button>
+          </div>
+
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-receipt" style="color: var(--accent-blue);"></i> <span data-localize="tempInvTitle">Corporate Invoice Template</span></h3>
+            <textarea class="template-box-code" readonly>
+INVOICE #1024
+Date: [Current Date]
+Due Date: [Due Date]
+
+BILLED TO:
+[Client Name / Company]
+
+ITEMS LIST:
+1. Document Formatting Services ..... $120.00
+2. Custom VBA Macro Scripting ..... $250.00
+--------------------------------------------------
+TOTAL DUE: $370.00
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-blue); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Code</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 8. ADVANCED MS WORD SECTION =================== -->
+    <section class="portal-section" id="sec-advanced">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="advTitle">Advanced MS Word Guide</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="advSubtitle">Master the tools required for complex enterprise-level document controls.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-separator"></i><h3 data-localize="advBreaksTitle">1. Section Breaks &amp; Formats</h3></div>
+            <ul>
+              <li data-localize="advBreaksLi1">Split pages into distinct section layout models</li>
+              <li data-localize="advBreaksLi2">Configure mixed orientations (Portrait &amp; Landscape in one document)</li>
+              <li data-localize="advBreaksLi3">Apply separate header rules to different sections</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-lock"></i><h3 data-localize="advLockTitle">2. Content &amp; Formatting Locks</h3></div>
+            <ul>
+              <li data-localize="advLockLi1">Restrict formatting to selected styles</li>
+              <li data-localize="advLockLi2">Protect editing blocks using custom security passwords</li>
+              <li data-localize="advLockLi3">Configure fillable forms without breaking layouts</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 9. DEVELOPER TAB GUIDE =================== -->
+    <section class="portal-section" id="sec-developer">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="devTitle">Developer Tab &amp; VBA Guide</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="devSubtitle">Learn how to write custom VBA macros and use advanced Content Controls.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-terminal"></i><h3 data-localize="devVbaTitle">1. Enabling Developer &amp; VBA Basics</h3></div>
+            <ul>
+              <li data-localize="devVbaLi1">Enable tab: File > Options > Customize Ribbon</li>
+              <li data-localize="devVbaLi2">Record actions as reusable formatting Macros</li>
+              <li data-localize="devVbaLi3">Write simple automation scripts in Visual Basic Editor</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-checkbox"></i><h3 data-localize="devFormTitle">2. Forms &amp; Content Controls</h3></div>
+            <ul>
+              <li data-localize="devFormLi1">Insert interactive Text boxes and Checkboxes</li>
+              <li data-localize="devFormLi2">Add Dropdown List controls for selection fields</li>
+              <li data-localize="devFormLi3">Utilize Date Picker widgets for calendar entries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 10. AI + MS WORD SECTION =================== -->
+    <section class="portal-section" id="sec-ai-section">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="aiTitle">AI &amp; Copilot Integration</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="aiSubtitle">Learn how to write, format, and summarize documents using AI tools in Word.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-stars"></i><h3 data-localize="aiL1Title">1. Copilot in MS Word</h3></div>
+            <ul>
+              <li data-localize="aiL1Li1">Generate full document drafts from short prompts</li>
+              <li data-localize="aiL1Li2">Summarize long research papers and agreements</li>
+              <li data-localize="aiL1Li3">Analyze and adjust writing tone (Professional, Casual)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-wand"></i><h3 data-localize="aiL2Title">2. AI Formatting &amp; Editing</h3></div>
+            <ul>
+              <li data-localize="aiL2Li1">Use AI to automatically format raw text</li>
+              <li data-localize="aiL2Li2">Ask AI to convert text paragraphs into clean tables</li>
+              <li data-localize="aiL2Li3">Auto-generate cover letter layouts matching resumes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 11. ERROR SOLVING SECTION =================== -->
+    <section class="portal-section" id="sec-errors">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="errTitle">MS Word Troubleshooting &amp; Error Solver</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="errSubtitle">Quick solutions for common MS Word issues and formatting errors.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-power"></i><h3 data-localize="errL1Title">1. Word Not Responding / Freeze</h3></div>
+            <ul>
+              <li data-localize="errL1Li1">Launch in Safe Mode: Hold <strong>Ctrl</strong> while opening</li>
+              <li data-localize="errL1Li2">Disable conflicting third-party Add-ins</li>
+              <li data-localize="errL1Li3">Recover documents using AutoRecover files</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-file-x"></i><h3 data-localize="errL2Title">2. Corrupted File / Recovery</h3></div>
+            <ul>
+              <li data-localize="errL2Li1">Use the built-in "Open and Repair" option</li>
+              <li data-localize="errL2Li2">Extract text using "Recover Text from Any File"</li>
+              <li data-localize="errL2Li3">Clear temporary cache files in Windows AppData</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 12. QUIZ & CERTIFICATE =================== -->
+    <section class="portal-section" id="sec-quiz">
+      <div class="content-card quiz-card">
+        <h2 style="margin-bottom: 8px; text-align: center;" data-localize="quizTitle">Timed MCQ Quiz &amp; Certification</h2>
+        <p style="color: var(--text-muted); text-align: center; margin-bottom: 2rem;" data-localize="quizSubtitle">Answer all questions correctly to test your skills and unlock your completion certificate!</p>
+
+        <!-- Quiz Interface Card -->
+        <div class="lesson-box" id="quizPlayground">
+          <div class="quiz-header-status">
+            <span style="font-weight: 700;" id="quizProgressLabel">Question 1 of 5</span>
+            <div class="timer-pill">
+              <i class="ti ti-alarm"></i>
+              <span id="quizTimer">20s</span>
+            </div>
+          </div>
+
+          <div class="quiz-question-container">
+            <h3 id="quizQuestionText">Which keyboard shortcut is used to copy highlighted text?</h3>
+            <div class="quiz-options-list" id="quizOptionsContainer">
+              <!-- JS rendered options -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Certificate Box -->
+        <div class="certificate-panel" id="certificateBox">
+          <div class="cert-frame">
+            <h2 data-localize="certHeader">CERTIFICATE OF COMPLETION</h2>
+            <div class="cert-divider"></div>
+            <p data-localize="certVerify">This is to certify that</p>
+            <div class="name-tag" id="certUserName">Your Name Here</div>
+            <p data-localize="certBody">has successfully completed all levels of the practical curriculum and passed the examination to become an official</p>
+            <h3 style="font-family: var(--header-font); font-size: 1.6rem; color: var(--accent-blue); margin-bottom: 2rem;">MICROSOFT WORD MASTER</h3>
+            <div class="cert-stamp">Verified Pro</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Unified Footer Links (Matches original index.html) -->
+    <footer class="ts-footer">
+      <div class="fl">
+        <a href="https://wondermayank.github.io/" target="_blank">
+          <i class="ti ti-home" style="font-size:13px;margin-right:6px"></i>WonderMayank
+        </a>
+        <a href="https://commercesehoga.github.io/dashboard" target="_blank">
+          <i class="ti ti-device-desktop" style="font-size:13px;margin-right:6px"></i>CBT Mock Platform
+        </a>
+        <a href="https://wondermayank.github.io/terms" target="_blank">Terms</a>
+        <a href="https://wondermayank.github.io/privacy" target="_blank">Privacy</a>
+        <a href="https://wondermayank.github.io/disclaimer" target="_blank">Disclaimer</a>
+        <a href="https://wondermayank.github.io/contact" target="_blank">
+          <i class="ti ti-mail" style="font-size:13px;margin-right:6px"></i>Contact Owner
+        </a>
+        <a href="https://commercesehoga.github.io/help" target="_blank">
+          <i class="ti ti-heart" style="font-size:13px;margin-right:6px"></i>Donation / Support
+        </a>
+      </div>
+      <div class="fc">© 2025 ThunderStudy · Made with ❤️ by WonderMayank · All 200 topics free to learn</div>
+    </footer>
+
+  </div>
+
+  <!-- Dynamic Application Logic -->
+  <script>
+    /* ==========================================================================
+       DUAL LOCALIZATION DICTIONARY (HINDI / ENGLISH)
+       ========================================================================== */
+    const dictionary = {
+      en: {
+        sidebarBrand: "WordPro Hub",
+        menuHome: "Home Page",
+        menuBeginner: "Beginner Course",
+        menuTabs: "Ribbon Tabs Guide",
+        menuShortcuts: "Shortcut Keys",
+        menuPractice: "Practice Lab",
+        menuProjects: "Real Projects",
+        menuTemplates: "Templates Pack",
+        menuAdvanced: "Advanced Tools",
+        menuDeveloper: "Developer Tab",
+        menuAI: "AI in MS Word",
+        menuErrors: "Error Solver",
+        menuQuiz: "MCQ & Certificate",
+        
+        xpTitle: "Level Progress",
+        streakSuffix: "Day Streak",
+        
+        homeBadge: "⚡ Basic to Pro Blueprint",
+        homeHeroTitle: "Learn MS Word from Basics to Professional",
+        homeHeroDesc: "Unlock the secrets to premium document formatting, automated templates, and advanced developer macro tools. Tailored for office users and students.",
+        homeCta: "Start Learning",
+        homeFeaturesTitle: "🔥 Key Portal Features",
+        homeFeatLang: "Dual Language Guide (Hindi + English)",
+        homeFeatKeys: "Real-time Searchable Shortcuts Keys Console",
+        homeFeatProj: "Practical Project Blueprint Guides",
+        homeFeatCert: "Auto-generated Certification Engine",
+        homeProgressTitle: "📈 Your Dashboard",
+        homeProgressDesc: "Earn experience points (XP) by completing quizzes and explore projects to unlock completion certificates.",
+        homeTrackerXP: "Total XP Accumulated",
+        homeTrackerStatus: "Rank Level",
+        homeVisualTitle: "Visual Learning Blueprint Gallery",
+        homeVisualDesc: "Explore high-definition graphic models and interface layouts to visually master complex document flows.",
+        
+        begTitle: "MS Word: Absolute Basics Course",
+        begSubtitle: "Begin your educational blueprint here. Understand version histories, the standard ribbon panel layout, and core typing mechanics.",
+        begL1Title: "1. What is MS Word?",
+        begL1Li1: "Word Processor software by Microsoft",
+        begL1Li2: "Used for documents, notes, resumes",
+        begL1Li3: "Supports offline & online editing",
+        begL2Title: "2. Ribbon & Interface",
+        begL2Li1: "Quick Access Toolbar options",
+        begL2Li2: "Top tabs (Home, Insert, Layout)",
+        begL2Li3: "File menu (Save, Save As, Print)",
+        begL3Title: "3. Formatting Text",
+        begL3Li1: "Set font families & font sizes",
+        begL3Li2: "Bold, Italic, & Underline keys",
+        begL3Li3: "Text color fills & highlight layers",
+        begTipLabel: "Pro-Tip:",
+        begTipText: "You can type =rand(2,3) and press Enter to instantly auto-generate sample placeholder text paragraphs.",
+        
+        tabsTitle: "Full MS Word Tabs Blueprint",
+        tabsSubtitle: "Every single command and panel in the MS Word Ribbon menu, categorized tab-by-tab.",
+        
+        keysTitle: "MS Word Keyboard Shortcuts Hub",
+        keysSubtitle: "Filter keyboard shortcuts instantly using the live search engine bar below.",
+        keysEmpty: "No matching shortcuts found. Try another keyword.",
+        
+        pracTitle: "Interactive Practice Lab",
+        pracSubtitle: "Actionable exercises and formatting challenges to practice Word skills.",
+        pracEx1Title: "Practice Exercise 1: Standard Typing & Alignments",
+        pracEx1Desc: "Type a 3-paragraph letter. The first paragraph should be Left-aligned, the second paragraph should be Centered, and the third paragraph should be Right-aligned.",
+        pracEx1Target: "\"Composition targets: Left-aligned details regarding corporate structures, followed by center highlights of key items, closing with right-aligned signature margins.\"",
+        
+        projTitle: "Real-World Practical Projects",
+        projSubtitle: "Learn to build real professional documents in Word with step-by-step instructions.",
+        
+        tempTitle: "Free MS Word Templates Downloads",
+        tempSubtitle: "Download templates with complete styling guides and layout blocks.",
+        
+        advTitle: "Advanced MS Word Guide",
+        advSubtitle: "Master the tools required for complex enterprise-level document controls.",
+        
+        devTitle: "Developer Tab & VBA Guide",
+        devSubtitle: "Learn how to write custom VBA macros and use advanced Content Controls.",
+        
+        aiTitle: "AI & Copilot Integration",
+        aiSubtitle: "Learn how to write, format, and summarize documents using AI tools in Word.",
+        
+        errTitle: "MS Word Troubleshooting & Error Solver",
+        errSubtitle: "Quick solutions for common MS Word issues and formatting errors.",
+        
+        quizTitle: "Timed MCQ Quiz & Certification",
+        quizSubtitle: "Answer all questions correctly to test your skills and unlock your completion certificate!",
+        certHeader: "CERTIFICATE OF COMPLETION",
+        certVerify: "This is to certify that",
+        certBody: "has successfully completed all levels of the practical curriculum and passed the examination to become an official",
+        
+        simTitle: "Interactive MS Word Ribbon & Sandbox Simulator",
+        simDesc: "Click any tool button on the simulated Microsoft Word Ribbon below to explore its description, keyboard shortcut, step-by-step instructions, and see it format the document in real time!",
+        simHowTo: "How to Use (desktop Word):",
+        simDocHeader: "📄 Virtual Word A4 Page",
+        simResetBtn: "Reset Document",
+        rgroupClipboard: "Clipboard",
+        rgroupFont: "Font",
+        rgroupParagraph: "Paragraph",
+        rgroupEditing: "Editing",
+        rgroupPages: "Pages",
+        rgroupTables: "Tables",
+        rgroupIllustrations: "Illustrations",
+        rgroupHeaderFooter: "Header & Footer"
+      },
+      hi: {
+        sidebarBrand: "वर्डप्रो हब",
+        menuHome: "मुख्य पृष्ठ",
+        menuBeginner: "शुरुआती कोर्स",
+        menuTabs: "रिबन टैब गाइड",
+        menuShortcuts: "शॉर्टकट कुंजी",
+        menuPractice: "प्रैक्टिस लैब",
+        menuProjects: "मुख्य प्रोजेक्ट्स",
+        menuTemplates: "टेम्पलेट पैक",
+        menuAdvanced: "एडवांस्ड टूल्स",
+        menuDeveloper: "डेवलपर टैब",
+        menuAI: "MS वर्ड में AI",
+        menuErrors: "त्रुटि निवारण",
+        menuQuiz: "क्विज़ और प्रमाणपत्र",
+        
+        xpTitle: "लेवल प्रगति",
+        streakSuffix: "दिन की निरंतरता",
+        
+        homeBadge: "⚡ बेसिक से प्रो ब्लूप्रिंट",
+        homeHeroTitle: "MS Word को बेसिक से प्रोफेशनल स्तर तक सीखें",
+        homeHeroDesc: "प्रीमियम डॉक्यूमेंट फ़ॉर्मेटिंग, स्वचालित टेम्प्लेट और एडवांस्ड डेवलपर मैक्रो टूल के रहस्यों को अनलॉक करें। छात्रों और कामकाजी लोगों के लिए विशेष रूप से डिज़ाइन किया गया।",
+        homeCta: "सीखना शुरू करें",
+        homeFeaturesTitle: "🔥 पोर्टल की मुख्य विशेषताएं",
+        homeFeatLang: "दोहरी भाषा गाइड (हिंदी + अंग्रेजी)",
+        homeFeatKeys: "वास्तविक समय खोजने योग्य शॉर्टकट कुंजी कंसोल",
+        homeFeatProj: "व्यावहारिक प्रोजेक्ट ब्लूप्रिंट गाइड",
+        homeFeatCert: "ऑटो-जेनरेटेड प्रमाणन इंजन",
+        homeProgressTitle: "📈 आपका डैशबोर्ड",
+        homeProgressDesc: "क्विज़ पूरा करके अनुभव अंक (XP) अर्जित करें और प्रमाणपत्रों को अनलॉक करने के लिए प्रोजेक्ट्स का अभ्यास करें।",
+        homeTrackerXP: "कुल संचित XP",
+        homeTrackerStatus: "रैंक स्तर",
+        homeVisualTitle: "विजुअल लर्निंग ब्लूप्रिंट गैलरी",
+        homeVisualDesc: "जटिल दस्तावेज़ प्रक्रियाओं को दृश्य रूप से समझने के लिए हाई-डेफिनिशन ग्राफ़िक मॉडल और इंटरफ़ेस लेआउट देखें।",
+        
+        begTitle: "MS Word: बेसिक कोर्स",
+        begSubtitle: "अपनी सीखने की यात्रा यहाँ से शुरू करें। वर्ज़न इतिहास, रिबन पैनल लेआउट और मुख्य टाइपिंग नियमों को समझें।",
+        begL1Title: "1. MS Word क्या है?",
+        begL1Li1: "माइक्रोसॉफ्ट द्वारा निर्मित वर्ड प्रोसेसर सॉफ्टवेयर",
+        begL1Li2: "दस्तावेज़, नोट्स और बायो-डेटा बनाने में उपयोग",
+        begL1Li3: "ऑफ़लाइन और ऑनलाइन संपादन का समर्थन",
+        begL2Title: "2. रिबन और इंटरफ़ेस",
+        begL2Li1: "क्विक एक्सेस टूलबार के विकल्प",
+        begL2Li2: "शीर्ष टैब (होम, इंसर्ट, लेआउट)",
+        begL2Li3: "फ़ाइल मेनू (सेव, सेव एज, प्रिंट)",
+        begL3Title: "3. टेक्स्ट फ़ॉर्मेटिंग",
+        begL3Li1: "फॉन्ट स्टाइल और साइज सेट करना",
+        begL3Li2: "बोल्ड, इटैलिक और अंडरलाइन कुंजी",
+        begL3Li3: "टेक्स्ट का रंग बदलना और हाइलाइट करना",
+        begTipLabel: "महत्वपूर्ण सुझाव:",
+        begTipText: "आप वर्ड में =rand(2,3) टाइप करके और Enter दबाकर तुरंत अभ्यास पैराग्राफ बना सकते हैं।",
+        
+        tabsTitle: "संपूर्ण MS Word टैब ब्लूप्रिंट",
+        tabsSubtitle: "MS Word रिबन मेनू का एक-एक कमांड और पैनल, टैब-दर-टैब वर्गीकृत।",
+        
+        keysTitle: "MS Word कीबोर्ड शॉर्टकट हब",
+        keysSubtitle: "नीचे दिए गए सर्च बार का उपयोग करके कीबोर्ड शॉर्टकट खोजें।",
+        keysEmpty: "कोई मेल खाता शॉर्टकट नहीं मिला। दूसरा शब्द खोजें।",
+        
+        pracTitle: "इंटरैक्टिव प्रैक्टिस लैब",
+        pracSubtitle: "वर्ड कौशल का अभ्यास करने के लिए व्यावहारिक अभ्यास और चुनौतियाँ।",
+        pracEx1Title: "अभ्यास 1: सामान्य टाइपिंग और अलाइनमेंट",
+        pracEx1Desc: "3-पैराग्राफ का पत्र लिखें। पहला पैराग्राफ बाएं (Left-align), दूसरा बीच में (Center-align), और तीसरा दाएं (Right-align) संरेखित होना चाहिए।",
+        pracEx1Target: "\"संरचना लक्ष्य: कॉर्पोरेट विवरण के संबंध में बाएं-संरेखित पैराग्राफ, इसके बाद मुख्य वस्तुओं के मध्यम-संरेखित विवरण, अंत में दाएं-संरेखित हस्ताक्षर।\"",
+        
+        projTitle: "वास्तविक व्यावहारिक प्रोजेक्ट्स",
+        projSubtitle: "चरण-दर-चरण निर्देशों के साथ वर्ड में वास्तविक व्यावसायिक दस्तावेज़ बनाना सीखें।",
+        
+        tempTitle: "मुफ़्त MS Word टेम्पलेट डाउनलोड",
+        tempSubtitle: "पूर्ण फ़ॉर्मेटिंग गाइड और लेआउट ब्लॉक के साथ टेम्प्लेट डाउनलोड करें।",
+        
+        advTitle: "एडवांस्ड MS Word गाइड",
+        advSubtitle: "जटिल व्यावसायिक दस्तावेज़ों के प्रबंधन के लिए आवश्यक टूल्स सीखें।",
+        
+        devTitle: "डेवलपर टैब और VBA गाइड",
+        devSubtitle: "कस्टम VBA मैक्रोज़ लिखना और उन्नत सामग्री नियंत्रणों का उपयोग करना सीखें।",
+        
+        aiTitle: "AI और Copilot एकीकरण",
+        aiSubtitle: "वर्ड में AI टूल का उपयोग करके दस्तावेज़ लिखना, फ़ॉर्मेट करना और सारांश बनाना सीखें।",
+        
+        errTitle: "MS Word त्रुटि निवारण गाइड",
+        errSubtitle: "आम MS Word समस्याओं और फ़ॉर्मेटिंग त्रुटियों के त्वरित समाधान।",
+        
+        quizTitle: "समयबद्ध MCQ क्विज़ और प्रमाणन",
+        quizSubtitle: "प्रमाणपत्र अनलॉक करने के लिए सभी प्रश्नों के सही उत्तर दें और अपना स्कोर बढ़ाएं!",
+        certHeader: "प्रमाणपत्र",
+        certVerify: "यह प्रमाणित किया जाता है कि",
+        certBody: "ने व्यावहारिक पाठ्यक्रम के सभी स्तरों को सफलतापूर्वक पूरा किया है और परीक्षा उत्तीर्ण की है।",
+        
+        simTitle: "इंटरैक्टिव एमएस वर्ड रिबन और सैंडबॉक्स सिम्युलेटर",
+        simDesc: "नीचे दिए गए सिमुलेटेड माइक्रोसॉफ्ट वर्ड रिबन पर किसी भी टूल बटन पर क्लिक करके उसका विवरण, कीबोर्ड शॉर्टकट, चरण-दर-चरण निर्देश देखें और वास्तविक समय में दस्तावेज़ फ़ॉर्मेट देखें!",
+        simHowTo: "उपयोग करने का तरीका (डेस्कटॉप वर्ड):",
+        simDocHeader: "📄 वर्चुअल वर्ड A4 पृष्ठ",
+        simResetBtn: "दस्तावेज़ रीसेट करें",
+        rgroupClipboard: "क्लिपबोर्ड",
+        rgroupFont: "फॉन्ट",
+        rgroupParagraph: "पैराग्राफ",
+        rgroupEditing: "एडिटिंग",
+        rgroupPages: "पेज",
+        rgroupTables: "टेबल",
+        rgroupIllustrations: "चित्र",
+        rgroupHeaderFooter: "हेडर और फुटर"
+      }
+    };
+
+    /* ==========================================================================
+       SHORTCUTS DATA LISTING
+       ========================================================================== */
+    const shortcutsData = [
+      { category: "Basics", desc: "Create a new document", win: ["Ctrl", "N"], mac: ["Cmd", "N"] },
+      { category: "Basics", desc: "Open an existing document", win: ["Ctrl", "O"], mac: ["Cmd", "O"] },
+      { category: "Basics", desc: "Save the active document", win: ["Ctrl", "S"], mac: ["Cmd", "S"] },
+      { category: "Basics", desc: "Close open document", win: ["Ctrl", "W"], mac: ["Cmd", "W"] },
+      { category: "Editing", desc: "Copy highlighted selection", win: ["Ctrl", "C"], mac: ["Cmd", "C"] },
+      { category: "Editing", desc: "Cut highlighted selection", win: ["Ctrl", "X"], mac: ["Cmd", "X"] },
+      { category: "Editing", desc: "Paste copied selection", win: ["Ctrl", "V"], mac: ["Cmd", "V"] },
+      { category: "Editing", desc: "Undo last typing action", win: ["Ctrl", "Z"], mac: ["Cmd", "Z"] },
+      { category: "Editing", desc: "Redo action", win: ["Ctrl", "Y"], mac: ["Cmd", "Y"] },
+      { category: "Formatting", desc: "Apply Bold to selection", win: ["Ctrl", "B"], mac: ["Cmd", "B"] },
+      { category: "Formatting", desc: "Apply Italic to selection", win: ["Ctrl", "I"], mac: ["Cmd", "I"] },
+      { category: "Formatting", desc: "Apply Underline to selection", win: ["Ctrl", "U"], mac: ["Cmd", "U"] },
+      { category: "Formatting", desc: "Center align text paragraph", win: ["Ctrl", "E"], mac: ["Cmd", "E"] },
+      { category: "Formatting", desc: "Left align text paragraph", win: ["Ctrl", "L"], mac: ["Cmd", "L"] },
+      { category: "Formatting", desc: "Right align text paragraph", win: ["Ctrl", "R"], mac: ["Cmd", "R"] },
+      { category: "Navigation", desc: "Move cursor word left", win: ["Ctrl", "Left"], mac: ["Option", "Left"] },
+      { category: "Navigation", desc: "Move cursor word right", win: ["Ctrl", "Right"], mac: ["Option", "Right"] },
+      { category: "Advanced", desc: "Insert standard Page Break", win: ["Ctrl", "Enter"], mac: ["Cmd", "Enter"] },
+      { category: "Advanced", desc: "Insert dynamic Hyperlink", win: ["Ctrl", "K"], mac: ["Cmd", "K"] },
+      { category: "Advanced", desc: "Launch Spell Check menu", win: ["F7"], mac: ["F7"] }
+    ];
+
+    /* ==========================================================================
+       QUIZ CONFIGURATIONS & QUESTIONS
+       ========================================================================== */
+    const quizQuestions = [
+      {
+        q: "What keyboard shortcut is used to apply Bold formatting to text in Word?",
+        o: ["Ctrl + A", "Ctrl + B", "Ctrl + C", "Ctrl + Z"],
+        a: 1
+      },
+      {
+        q: "Which Ribbon tab contains the 'Page Break' tool in MS Word?",
+        o: ["Home Tab", "Insert Tab", "Design Tab", "Layout Tab"],
+        a: 1
+      },
+      {
+        q: "What is the shortcut key to launch the Spell & Grammar Check sweep?",
+        o: ["F2", "F5", "F7", "F9"],
+        a: 2
+      },
+      {
+        q: "Which alignment options fits text evenly between both left and right margins?",
+        o: ["Left Align", "Center Align", "Right Align", "Justify"],
+        a: 3
+      },
+      {
+        q: "How do you open the Developer Tab options in Microsoft Word?",
+        o: ["Ctrl + D", "Developer tab is open by default", "Configure Options > Customize Ribbon", "Launch via Safe Mode"],
+        a: 2
+      }
+    ];
+
+    /* ==========================================================================
+       APPLICATION CORE STATE & ENGINE
+       ========================================================================== */
+    let currentLanguage = 'en';
+    let currentTheme = 'light';
+    let currentOS = 'win'; // win or mac
+    let activeShortcutCategory = 'all';
+    
+    // User progress stats (Saved in localStorage)
+    let userXP = parseInt(localStorage.getItem('wordXP')) || 0;
+    let userStreak = parseInt(localStorage.getItem('wordStreak')) || 1;
+    let lastVisitDate = localStorage.getItem('wordLastVisit') || '';
+
+    // Quiz Engine state variables
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let quizActive = true;
+    let questionTimer = 20;
+    let timerInterval = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Initial Config
+      initLocalization();
+      initTheme();
+      initStats();
+      initSidebar();
+      renderShortcuts();
+      initCurriculumTabs();
+      initQuiz();
+      initRibbonSimulator();
+
+      // Keyboard events or input bindings
+      document.getElementById('shortcutSearch').addEventListener('input', e => {
+        renderShortcuts(e.target.value);
+      });
+
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
+      document.getElementById('osToggleBtn').addEventListener('click', toggleOSKeys);
+
+      // Mobile Menu bindings
+      const sidebar = document.getElementById('appSidebar');
+      document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    });
+
+    /* ==========================================================================
+       THEME & LOCALIZATION CONTROLLERS
+       ========================================================================== */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('wordTheme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('wordTheme', theme);
+      
+      const themeLabel = document.getElementById('themeLabel');
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (theme === 'dark') {
+        themeLabel.textContent = "Light Mode";
+        themeBtn.querySelector('i').className = 'ti ti-sun';
+      } else {
+        themeLabel.textContent = "Dark Mode";
+        themeBtn.querySelector('i').className = 'ti ti-moon';
+      }
+    }
+
+    function toggleTheme() {
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+      initLocalization();
+      
+      const langLabel = document.getElementById('langLabel');
+      langLabel.textContent = currentLanguage === 'en' ? 'हिन्दी' : 'English';
+      
+      renderShortcuts();
+    }
+
+    function initLocalization() {
+      const dict = dictionary[currentLanguage];
+      document.querySelectorAll('[data-localize]').forEach(el => {
+        const key = el.getAttribute('data-localize');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    /* ==========================================================================
+       PROGRESS SAVES ENGINE
+       ========================================================================== */
+    function initStats() {
+      // Manage Streak logic
+      const today = new Date().toDateString();
+      if (lastVisitDate && lastVisitDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastVisitDate === yesterday.toDateString()) {
+          userStreak += 1;
+        } else {
+          userStreak = 1;
+        }
+        localStorage.setItem('wordStreak', userStreak);
+      }
+      localStorage.setItem('wordLastVisit', today);
+      
+      updateStatDisplays();
+    }
+
+    function updateStatDisplays() {
+      document.getElementById('streakCount').textContent = userStreak;
+      document.getElementById('totalXpVal').textContent = `${userXP} XP`;
+      
+      // Calculate level bar percentage
+      const nextLevelThreshold = 100;
+      const progressPercent = Math.min(100, (userXP % nextLevelThreshold));
+      document.getElementById('xpBar').style.width = `${progressPercent}%`;
+      
+      // Unlocked badge opacity mapping
+      if (userXP >= 30) {
+        document.getElementById('badgeExp').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Word Explorer";
+      }
+      if (userXP >= 100) {
+        document.getElementById('badgeMaster').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Word Master";
+      }
+    }
+
+    function earnXP(amount) {
+      userXP += amount;
+      localStorage.setItem('wordXP', userXP);
+      updateStatDisplays();
+    }
+
+    /* ==========================================================================
+       SIDEBAR & CLIENT ROUTER
+       ========================================================================== */
+    function initSidebar() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sidebar = document.getElementById('appSidebar');
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          const target = item.getAttribute('data-target');
+          navigateToSection(target);
+
+          // Close sidebar on mobile
+          sidebar.classList.remove('open');
+        });
+      });
+    }
+
+    function navigateToSection(targetId) {
+      const sections = document.querySelectorAll('.portal-section');
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+        if (sec.id === `sec-${targetId}`) {
+          sec.classList.add('active');
+        }
+      });
+
+      // Synchronize Sidebar active indicator
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === targetId) {
+          item.classList.add('active');
+        }
+      });
+
+      window.scrollTo(0, 0);
+    }
+
+    /* ==========================================================================
+       CURRICULUM TABS & PRACTICE BOXES
+       ========================================================================== */
+    function initCurriculumTabs() {
+      // Ribbon sub-tabs bindings
+      const tabs = document.querySelectorAll('.bar-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const parent = tab.parentElement;
+          parent.querySelectorAll('.bar-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          // Handle Ribbon Tab Guides
+          if (tab.dataset.tabcontent) {
+            const container = parent.nextElementSibling;
+            container.querySelectorAll('.level-content-box').forEach(box => {
+              box.classList.remove('active');
+              if (box.id === tab.dataset.tabcontent) {
+                box.classList.add('active');
+              }
+            });
+          }
+
+          // Handle Practice Lab
+          if (tab.dataset.practiceid) {
+            const container = parent.parentElement;
+            container.querySelectorAll('.exercise-details-panel').forEach(panel => {
+              panel.classList.remove('active');
+              if (panel.id === tab.dataset.practiceid) {
+                panel.classList.add('active');
+              }
+            });
+          }
+
+          // Handle Project Showcase
+          if (tab.dataset.projectid) {
+            const container = parent.parentElement;
+            container.querySelectorAll('.exercise-details-panel').forEach(panel => {
+              panel.classList.remove('active');
+              if (panel.id === tab.dataset.projectid) {
+                panel.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY ENGINE
+       ========================================================================== */
+    function renderShortcuts(filterText = '') {
+      const grid = document.getElementById('shortcutsGrid');
+      const empty = document.getElementById('noShortcuts');
+      const query = filterText.toLowerCase().trim();
+
+      grid.innerHTML = '';
+      
+      const filtered = shortcutsData.filter(s => {
+        const matchCat = activeShortcutCategory === 'all' || s.category === activeShortcutCategory;
+        const matchText = !query || 
+          s.desc.toLowerCase().includes(query) || 
+          s.category.toLowerCase().includes(query) ||
+          s.win.some(k => k.toLowerCase().includes(query)) ||
+          s.mac.some(k => k.toLowerCase().includes(query));
+        return matchCat && matchText;
+      });
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        filtered.forEach(s => {
+          const item = document.createElement('div');
+          item.className = 'shortcut-card-item';
+          
+          const keys = currentOS === 'win' ? s.win : s.mac;
+          let keysHtml = keys.map(k => `<kbd class="shortcut-kbd">${k}</kbd>`).join(' + ');
+
+          item.innerHTML = `
+            <div class="shortcut-card-details">
+              <h4>${s.desc}</h4>
+              <span>${s.category}</span>
+            </div>
+            <div class="shortcut-card-keys">
+              ${keysHtml}
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      }
+    }
+
+    function toggleOSKeys() {
+      currentOS = currentOS === 'win' ? 'mac' : 'win';
+      const btn = document.getElementById('osToggleBtn');
+      const label = document.getElementById('osLabel');
+
+      if (currentOS === 'win') {
+        label.textContent = "Windows Keys";
+        btn.querySelector('i').className = 'ti ti-brand-windows';
+      } else {
+        label.textContent = "Mac Keys";
+        btn.querySelector('i').className = 'ti ti-brand-apple';
+      }
+      renderShortcuts(document.getElementById('shortcutSearch').value);
+    }
+
+    // Connect Shortcuts category filters
+    document.querySelectorAll('#shortcutCats button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#shortcutCats button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeShortcutCategory = btn.dataset.cat;
+        renderShortcuts(document.getElementById('shortcutSearch').value);
+      });
+    });
+
+    /* ==========================================================================
+       QUIZ ENGINE & TIMER CONTROLLER
+       ========================================================================== */
+    function initQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      quizActive = true;
+      document.getElementById('quizPlayground').style.display = 'block';
+      document.getElementById('certificateBox').style.display = 'none';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      clearInterval(timerInterval);
+      if (currentQuestionIdx >= quizQuestions.length) {
+        completeQuiz();
+        return;
+      }
+
+      const qData = quizQuestions[currentQuestionIdx];
+      document.getElementById('quizProgressLabel').textContent = `Question ${currentQuestionIdx + 1} of ${quizQuestions.length}`;
+      document.getElementById('quizQuestionText').textContent = qData.q;
+      
+      const container = document.getElementById('quizOptionsContainer');
+      container.innerHTML = '';
+
+      qData.o.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleOptionClick(btn, idx, qData.a));
+        container.appendChild(btn);
+      });
+
+      // Question Timer Configuration
+      questionTimer = 20;
+      document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+      timerInterval = setInterval(() => {
+        questionTimer -= 1;
+        document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+        if (questionTimer <= 0) {
+          clearInterval(timerInterval);
+          moveToNextQuestion();
+        }
+      }, 1000);
+    }
+
+    function handleOptionClick(selectedBtn, selectedIdx, correctIdx) {
+      clearInterval(timerInterval);
+      
+      const options = document.querySelectorAll('.quiz-option-btn');
+      options.forEach(opt => opt.disabled = true);
+
+      if (selectedIdx === correctIdx) {
+        selectedBtn.classList.add('correct');
+        quizScore += 1;
+        earnXP(20); // Earn 20 XP per correct answer!
+      } else {
+        selectedBtn.classList.add('incorrect');
+        options[correctIdx].classList.add('correct');
+      }
+
+      setTimeout(moveToNextQuestion, 1200);
+    }
+
+    function moveToNextQuestion() {
+      currentQuestionIdx += 1;
+      loadQuestion();
+    }
+
+    function completeQuiz() {
+      document.getElementById('quizPlayground').style.display = 'none';
+      
+      const certBox = document.getElementById('certificateBox');
+      certBox.style.display = 'block';
+
+      // Ask for name to render certificate
+      const userName = prompt("Congratulations on passing the exam! Please enter your full name for the certificate:") || "John Doe";
+      document.getElementById('certUserName').textContent = userName;
+      
+      // Earn a massive 50 XP completion bonus!
+      earnXP(50);
+    }
+
+    /* Helper: Copy Templates */
+    function copyTemplateCode(btn) {
+      const code = btn.previousElementSibling.value;
+      navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+        }, 1500);
+      });
+    }
+
+    /* ==========================================================================
+       INTERACTIVE MS WORD RIBBON & SANDBOX ENGINE DATA & CODE
+       ========================================================================== */
+    const ribbonToolsData = {
+      paste: {
+        category: "Clipboard",
+        icon: "ti-clipboard",
+        win: ["Ctrl", "V"],
+        mac: ["Cmd", "V"],
+        title: { en: "Paste", hi: "पेस्ट (चिपकाएं)" },
+        steps: {
+          en: [
+            "Copy or Cut some text from your document first.",
+            "Click at the target insertion position.",
+            "Click the Paste icon or press Ctrl + V (Cmd + V on Mac) to insert the copied text."
+          ],
+          hi: [
+            "पहले अपने दस्तावेज़ से किसी टेक्स्ट को कॉपी या कट करें।",
+            "लक्ष्य सम्मिलित करने की स्थिति पर क्लिक करें।",
+            "कॉपी किए गए टेक्स्ट को सम्मिलित करने के लिए पेस्ट आइकन पर क्लिक करें या Ctrl + V दबाएं।"
+          ]
+        },
+        tip: {
+          en: "Paste tool simulated: Restored the default introductory paragraphs to your virtual A4 sheet!",
+          hi: "पेस्ट टूल सिम्युलेटेड: आपके वर्चुअल दस्तावेज़ में डिफ़ॉल्ट शुरुआती पैराग्राफ को बहाल किया गया!"
+        }
+      },
+      cut: {
+        category: "Clipboard",
+        icon: "ti-scissors",
+        win: ["Ctrl", "X"],
+        mac: ["Cmd", "X"],
+        title: { en: "Cut", hi: "कट (काटना)" },
+        steps: {
+          en: [
+            "Select the text or objects you wish to move.",
+            "Click Cut in the Clipboard panel or press Ctrl + X.",
+            "The content is removed and saved in your computer's temporary clipboard buffer."
+          ],
+          hi: [
+            "उस टेक्स्ट या ऑब्जेक्ट का चयन करें जिसे आप स्थानांतरित करना चाहते हैं।",
+            "क्लिपबोर्ड पैनल में कट पर क्लिक करें या Ctrl + X दबाएं।",
+            "सामग्री हटा दी जाती है और कंप्यूटर के अस्थायी क्लिपबोर्ड बफर में सहेज ली जाती है।"
+          ]
+        },
+        tip: {
+          en: "Cut tool simulated: Erased sheet contents to mimic cutting text into clipboard memory!",
+          hi: "कट टूल सिम्युलेटेड: क्लिपबोर्ड मेमोरी में टेक्स्ट कट करने की नकल करने के लिए शीट सामग्री को मिटा दिया!"
+        }
+      },
+      copy: {
+        category: "Clipboard",
+        icon: "ti-copy",
+        win: ["Ctrl", "C"],
+        mac: ["Cmd", "C"],
+        title: { en: "Copy", hi: "कॉपी (प्रतिलिपि)" },
+        steps: {
+          en: [
+            "Highlight the targeted text blocks in the editor.",
+            "Click the Copy button on the ribbon or press Ctrl + C.",
+            "The selection remains in place, and a duplicate is stored in the clipboard memory."
+          ],
+          hi: [
+            "संपादक में लक्षित टेक्स्ट ब्लॉक को हाइलाइट करें।",
+            "रिबन पर कॉपी बटन पर क्लिक करें या Ctrl + C दबाएं।",
+            "चयन अपनी जगह पर रहता है, और एक प्रतिलिपि क्लिपबोर्ड मेमोरी में सहेज ली जाती है।"
+          ]
+        },
+        tip: {
+          en: "Copy tool simulated: Stored current virtual sheet paragraphs into the portal's active cache!",
+          hi: "कॉपी टूल सिम्युलेटेड: पोर्टल के सक्रिय कैशे में वर्तमान वर्चुअल शीट पैराग्राफ सहेजे गए!"
+        }
+      },
+      painter: {
+        category: "Clipboard",
+        icon: "ti-brush",
+        win: ["Ctrl", "Shift", "C"],
+        mac: ["Cmd", "Shift", "C"],
+        title: { en: "Format Painter", hi: "फ़ॉर्मेट पेंटर" },
+        steps: {
+          en: [
+            "Select the text that has the formatting you want to copy.",
+            "Click the Format Painter button (brush icon) on the Home tab.",
+            "Drag the brush cursor over the target text to apply the copied styling instantly."
+          ],
+          hi: [
+            "उस टेक्स्ट का चयन करें जिसमें वह फ़ॉर्मेटिंग है जिसे आप कॉपी करना चाहते हैं।",
+            "होम टैब पर फ़ॉर्मेट पेंटर बटन (ब्रश आइकन) पर क्लिक करें।",
+            "कॉपी की गई स्टाइलिंग को तुरंत लागू करने के लिए लक्षित टेक्स्ट पर ब्रश कर्सर घुमाएं।"
+          ]
+        },
+        tip: {
+          en: "Format Painter simulated: Copied Home styling and brushed it onto paragraph 2!",
+          hi: "फ़ॉर्मेट पेंटर सिम्युलेटेड: होम फ़ॉर्मेटिंग को कॉपी किया और इसे पैराग्राफ 2 पर लागू किया!"
+        }
+      },
+      bold: {
+        category: "Font Group",
+        icon: "ti-bold",
+        win: ["Ctrl", "B"],
+        mac: ["Cmd", "B"],
+        title: { en: "Bold", hi: "बोल्ड (गहरा)" },
+        steps: {
+          en: [
+            "Select the text you want to emphasize.",
+            "Click the bold 'B' icon on the Ribbon or press Ctrl + B.",
+            "The text thickness increases, drawing immediate reader attention."
+          ],
+          hi: [
+            "उस टेक्स्ट का चयन करें जिसे आप विशेष महत्व देना चाहते हैं।",
+            "रिबन पर बोल्ड 'B' आइकन पर क्लिक करें या Ctrl + B दबाएं।",
+            "टेक्स्ट की मोटाई बढ़ जाती है, जिससे पाठक का ध्यान तुरंत आकर्षित होता है।"
+          ]
+        },
+        tip: {
+          en: "Bold simulated: Toggled font-weight on paragraphs inside your virtual sheet!",
+          hi: "बोल्ड सिम्युलेटेड: आपके वर्चुअल शीट के अंदर पैराग्राफ पर बोल्ड स्टाइल लागू किया गया!"
+        }
+      },
+      italic: {
+        category: "Font Group",
+        icon: "ti-italic",
+        win: ["Ctrl", "I"],
+        mac: ["Cmd", "I"],
+        title: { en: "Italic", hi: "इटैलिक (तिरछा)" },
+        steps: {
+          en: [
+            "Select the words or characters you want to tilt.",
+            "Click the slanted 'I' button on the Ribbon or press Ctrl + I.",
+            "Use this styling for book titles, emphasis, or quote blocks."
+          ],
+          hi: [
+            "उन शब्दों या अक्षरों का चयन करें जिन्हें आप तिरछा करना चाहते हैं।",
+            "रिबन पर इटैलिक 'I' बटन पर क्लिक करें या Ctrl + I दबाएं।",
+            "इस स्टाइल का उपयोग पुस्तकों के शीर्षक, जोर देने या उद्धरण ब्लॉक के लिए करें।"
+          ]
+        },
+        tip: {
+          en: "Italic simulated: Toggled italic font styles on paragraphs in your sandbox!",
+          hi: "इटैलिक सिम्युलेटेड: आपके सैंडबॉक्स में पैराग्राफ पर तिरछी स्टाइल को टॉगल किया गया!"
+        }
+      },
+      underline: {
+        category: "Font Group",
+        icon: "ti-underline",
+        win: ["Ctrl", "U"],
+        mac: ["Cmd", "U"],
+        title: { en: "Underline", hi: "अंडरलाइन (रेखांकित)" },
+        steps: {
+          en: [
+            "Highlight the text block requiring an underline.",
+            "Click the underlined 'U' button on the Ribbon or press Ctrl + U.",
+            "Click the dropdown arrow next to U to select double, dotted, or colored underlines."
+          ],
+          hi: [
+            "अंडरलाइन की आवश्यकता वाले टेक्स्ट ब्लॉक को हाइलाइट करें।",
+            "रिबन पर अंडरलाइन 'U' बटन पर क्लिक करें या Ctrl + U दबाएं।",
+            "डबल, बिंदीदार या रंगीन रेखांकन चुनने के लिए U के बगल वाले ड्रॉपडाउन तीर पर क्लिक करें।"
+          ]
+        },
+        tip: {
+          en: "Underline simulated: Drew a solid line beneath the virtual document paragraphs!",
+          hi: "अंडरलाइन सिम्युलेटेड: वर्चुअल दस्तावेज़ पैराग्राफ के नीचे एक ठोस रेखा खींची गई!"
+        }
+      },
+      strikethrough: {
+        category: "Font Group",
+        icon: "ti-strikethrough",
+        win: ["Alt", "Shift", "5"],
+        mac: ["Cmd", "Shift", "X"],
+        title: { en: "Strikethrough", hi: "स्ट्राइकथ्रू (मध्य रेखा)" },
+        steps: {
+          en: [
+            "Highlight the text to show deleted or obsolete details.",
+            "Click the 'ab' icon with a line through it in the Font panel.",
+            "Perfect for tracking contract edits or listing completed checkout items."
+          ],
+          hi: [
+            "हटाए गए या पुराने विवरण दिखाने के लिए टेक्स्ट को हाइलाइट करें।",
+            "फ़ॉन्ट पैनल में बीच में रेखा वाले 'ab' आइकन पर क्लिक करें।",
+            "अनुबंध संशोधनों को ट्रैक करने या पूर्ण की गई वस्तुओं को सूचीबद्ध करने के लिए बिल्कुल सही।"
+          ]
+        },
+        tip: {
+          en: "Strikethrough simulated: Struck a neat horizontal line through document sentences!",
+          hi: "स्ट्राइकथ्रू सिम्युलेटेड: दस्तावेज़ वाक्यों के बीच में एक क्षैतिज रेखा खींची गई!"
+        }
+      },
+      subscript: {
+        category: "Font Group",
+        icon: "ti-subscript",
+        win: ["Ctrl", "="],
+        mac: ["Cmd", "="],
+        title: { en: "Subscript", hi: "सबस्क्रिप्ट (नीचे छोटा अक्षर)" },
+        steps: {
+          en: [
+            "Select the numbers or text to shrink below the normal line.",
+            "Click the 'x₂' button on the Home tab ribbon.",
+            "Used heavily for chemistry formulas (like H₂O) and indices."
+          ],
+          hi: [
+            "सामान्य रेखा से नीचे छोटा करने के लिए नंबर या टेक्स्ट चुनें।",
+            "होम टैब रिबन पर 'x₂' बटन पर क्लिक करें।",
+            "रसायन विज्ञान के सूत्रों (जैसे H₂O) और अनुक्रमणिकाओं के लिए अत्यधिक उपयोग किया जाता है।"
+          ]
+        },
+        tip: {
+          en: "Subscript simulated: Wrapped chemical indices at the end of paragraph 2!",
+          hi: "सबस्क्रिप्ट सिम्युलेटेड: पैराग्राफ 2 के अंत में रासायनिक प्रतीकों को छोटा किया गया!"
+        }
+      },
+      superscript: {
+        category: "Font Group",
+        icon: "ti-superscript",
+        win: ["Ctrl", "Shift", "+"],
+        mac: ["Cmd", "Shift", "+"],
+        title: { en: "Superscript", hi: "सुपरस्क्रिप्ट (ऊपर घात)" },
+        steps: {
+          en: [
+            "Highlight the mathematical exponent numbers or footnote tags.",
+            "Click the 'x²' button in the Font group.",
+            "Commonly used for algebraic exponents (x³) and ordinal indicators (1st, 2nd)."
+          ],
+          hi: [
+            "गणितीय घात संख्याओं या फुटनोट टैग को हाइलाइट करें।",
+            "फ़ॉन्ट समूह में 'x²' बटन पर क्लिक करें।",
+            "बीजगणितीय घातों (x³) और क्रमसूचक संकेतकों (1st, 2nd) के लिए उपयोग किया जाता है।"
+          ]
+        },
+        tip: {
+          en: "Superscript simulated: Injected mathematical exponents above the text baseline!",
+          hi: "सुपरस्क्रिप्ट सिम्युलेटेड: टेक्स्ट बेसलाइन के ऊपर गणितीय घातों को लागू किया गया!"
+        }
+      },
+      case: {
+        category: "Font Group",
+        icon: "ti-letter-case",
+        win: ["Shift", "F3"],
+        mac: ["Shift", "F3"],
+        title: { en: "Change Case", hi: "चेंज केस (अक्षर बदलना)" },
+        steps: {
+          en: [
+            "Highlight your target sentences or titles.",
+            "Click the 'Aa' button on the Home Ribbon.",
+            "Select lowercase, UPPERCASE, Sentence case, or Capitalize Each Word instantly."
+          ],
+          hi: [
+            "अपने लक्षित वाक्यों या शीर्षकों को हाइलाइट करें।",
+            "होम रिबन पर 'Aa' बटन पर क्लिक करें।",
+            "तुरंत lowercase, UPPERCASE, Sentence case, या Capitalize Each Word चुनें।"
+          ]
+        },
+        tip: {
+          en: "Change Case simulated: Cycled paragraph 1 text between lowercase, UPPERCASE, and Sentence case!",
+          hi: "चेंज केस सिम्युलेटेड: पैराग्राफ 1 के टेक्स्ट को lowercase, UPPERCASE और Sentence case के बीच बदला गया!"
+        }
+      },
+      highlight: {
+        category: "Font Group",
+        icon: "ti-highlight",
+        win: ["Alt", "H", "I"],
+        mac: ["Cmd", "Ctrl", "H"],
+        title: { en: "Text Highlight Color", hi: "टेक्स्ट हाइलाइट रंग" },
+        steps: {
+          en: [
+            "Select the text you want to mark.",
+            "Click the pen highlighter tool on the Ribbon.",
+            "Choose a vibrant color (like bright yellow) to make critical portions stand out."
+          ],
+          hi: [
+            "उस टेक्स्ट का चयन करें जिसे आप चिह्नित करना चाहते हैं।",
+            "रिबन पर पेन हाइलाइटर टूल पर क्लिक करें।",
+            "महत्वपूर्ण भागों को अलग दिखाने के लिए एक चमकीला रंग (जैसे पीला) चुनें।"
+          ]
+        },
+        tip: {
+          en: "Text Highlight simulated: Brushed a glowing yellow background marker over your sandbox paragraphs!",
+          hi: "टेक्स्ट हाइलाइट सिम्युलेटेड: आपके सैंडबॉक्स पैराग्राफ पर एक चमकीला पीला मार्कर लागू किया गया!"
+        }
+      },
+      fontcolor: {
+        category: "Font Group",
+        icon: "ti-color-swatch",
+        win: ["Alt", "H", "F", "C"],
+        mac: ["Cmd", "D", "(Color)"],
+        title: { en: "Font Color", hi: "फॉन्ट रंग" },
+        steps: {
+          en: [
+            "Highlight the target characters.",
+            "Click the dropdown arrow next to the 'A' color bar button.",
+            "Pick a harmonized professional color palette (like corporate Word navy blue)."
+          ],
+          hi: [
+            "लक्षित अक्षरों को हाइलाइट करें।",
+            "रंग पट्टी वाले 'A' बटन के बगल वाले ड्रॉपडाउन तीर पर क्लिक करें।",
+            "एक सामंजस्यपूर्ण पेशेवर रंग (जैसे कॉर्पोरेट वर्ड नेवी ब्लू) चुनें।"
+          ]
+        },
+        tip: {
+          en: "Font Color simulated: Colored your virtual sheet sentences with iconic corporate Word Blue!",
+          hi: "फॉन्ट रंग सिम्युलेटेड: आपके वाक्यों को प्रतिष्ठित कॉर्पोरेट वर्ड ब्लू रंग में बदला गया!"
+        }
+      },
+      clear: {
+        category: "Font Group",
+        icon: "ti-eraser",
+        win: ["Ctrl", "Space"],
+        mac: ["Cmd", "Space"],
+        title: { en: "Clear All Formatting", hi: "सभी फ़ॉर्मेटिंग साफ़ करें" },
+        steps: {
+          en: [
+            "Select all customized text items (Ctrl + A).",
+            "Click the eraser icon (Clear All Formatting) in the Font panel.",
+            "Word strips away all bold, colors, sizes, returning to standard plain Calibri text."
+          ],
+          hi: [
+            "सभी अनुकूलित टेक्स्ट का चयन करें (Ctrl + A)।",
+            "फ़ॉन्ट पैनल में इरेज़र आइकन (Clear All Formatting) पर क्लिक करें।",
+            "वर्ड सभी बोल्ड, रंग, आकार को हटाकर सामान्य कैलीबरी टेक्स्ट में बदल देता है।"
+          ]
+        },
+        tip: {
+          en: "Clear Formatting simulated: Restored A4 sheet back to clean, unformatted plain text!",
+          hi: "फ़ॉर्मेटिंग साफ़ सिम्युलेटेड: A4 शीट को वापस पूरी तरह से साफ सामान्य टेक्स्ट में बदला गया!"
+        }
+      },
+      bullets: {
+        category: "Paragraph",
+        icon: "ti-list",
+        win: ["Ctrl", "Shift", "L"],
+        mac: ["Cmd", "Shift", "L"],
+        title: { en: "Bullets", hi: "बुलेट्स (बिंदु सूची)" },
+        steps: {
+          en: [
+            "Select the list items or paragraphs.",
+            "Click the Bullets list button on the Ribbon.",
+            "Click the arrow next to it to select square, hollow circular, or arrow bullets."
+          ],
+          hi: [
+            "सूची आइटम या पैराग्राफ का चयन करें।",
+            "रिबन पर बुलेट्स सूची बटन पर क्लिक करें।",
+            "वर्ग, खोखले गोल, या तीर वाले बुलेट्स चुनने के लिए इसके बगल वाले तीर पर क्लिक करें।"
+          ]
+        },
+        tip: {
+          en: "Bullets simulated: Converted your paragraph blocks into structured bullet points!",
+          hi: "बुलेट्स सिम्युलेटेड: आपके पैराग्राफ ब्लॉक को संरचित बुलेट बिंदुओं में बदला गया!"
+        }
+      },
+      numbered: {
+        category: "Paragraph",
+        icon: "ti-list-numbers",
+        win: ["Alt", "H", "N"],
+        mac: ["Cmd", "Shift", "N"],
+        title: { en: "Numbering", hi: "नंबरिंग (क्रमबद्ध सूची)" },
+        steps: {
+          en: [
+            "Highlight the target items requiring step indices.",
+            "Click the Numbering button in the Paragraph panel.",
+            "Select roman numerals (I, II), alphabets (a, b, c), or numeric tags."
+          ],
+          hi: [
+            "चरण सूचकांकों की आवश्यकता वाले लक्षित आइटम को हाइलाइट करें।",
+            "पैराग्राफ पैनल में नंबरिंग बटन पर क्लिक करें।",
+            "रोमन अंक (I, II), वर्णमाला (a, b, c), या संख्यात्मक टैग चुनें।"
+          ]
+        },
+        tip: {
+          en: "Numbering simulated: Transformed paragraph text into a clear ordered list sequence!",
+          hi: "नंबरिंग सिम्युलेटेड: पैराग्राफ टेक्स्ट को एक स्पष्ट क्रमबद्ध सूची में बदला गया!"
+        }
+      },
+      alignleft: {
+        category: "Paragraph",
+        icon: "ti-align-left",
+        win: ["Ctrl", "L"],
+        mac: ["Cmd", "L"],
+        title: { en: "Align Left", hi: "बाएं संरेखित करें" },
+        steps: {
+          en: [
+            "Select text paragraphs.",
+            "Click the Align Left button on the Ribbon or press Ctrl + L.",
+            "Standard alignment for body text, creating a clean left document edge."
+          ],
+          hi: [
+            "टेक्स्ट पैराग्राफ का चयन करें।",
+            "रिबन पर अलाइन लेफ्ट बटन पर क्लिक करें या Ctrl + L दबाएं।",
+            "मुख्य टेक्स्ट के लिए मानक संरेखण, जो एक साफ बायां किनारा बनाता है।"
+          ]
+        },
+        tip: {
+          en: "Align Left simulated: Snapped sandbox document paragraphs flush with the left margin!",
+          hi: "बाएं संरेखित सिम्युलेटेड: सैंडबॉक्स पैराग्राफ को बाएं हाशिये के बराबर संरेखित किया गया!"
+        }
+      },
+      aligncenter: {
+        category: "Paragraph",
+        icon: "ti-align-center",
+        win: ["Ctrl", "E"],
+        mac: ["Cmd", "E"],
+        title: { en: "Align Center", hi: "मध्य में संरेखित करें" },
+        steps: {
+          en: [
+            "Highlight the target lines (e.g. your report title).",
+            "Click the Center Align button or press Ctrl + E.",
+            "Center aligns lines relative to both A4 margins, perfect for covers and invitations."
+          ],
+          hi: [
+            "लक्षित लाइनों को हाइलाइट करें (जैसे आपकी रिपोर्ट का शीर्षक)।",
+            "सेंटर अलाइन बटन पर क्लिक करें या Ctrl + E दबाएं।",
+            "दोनों हाशिये के सापेक्ष बीच में संरेखित करता है, कवर और निमंत्रण के लिए बिल्कुल सही।"
+          ]
+        },
+        tip: {
+          en: "Align Center simulated: Balanced text strings directly in the center of the sheet!",
+          hi: "मध्य संरेखित सिम्युलेटेड: टेक्स्ट को शीट के ठीक बीच में संरेखित किया गया!"
+        }
+      },
+      alignright: {
+        category: "Paragraph",
+        icon: "ti-align-right",
+        win: ["Ctrl", "R"],
+        mac: ["Cmd", "R"],
+        title: { en: "Align Right", hi: "दाएं संरेखित करें" },
+        steps: {
+          en: [
+            "Highlight signatures, header dates, or reference numbers.",
+            "Click the Align Right button or press Ctrl + R.",
+            "Aligns text flush along the right margin, leaving left margins variable."
+          ],
+          hi: [
+            "हस्ताक्षर, हेडर तिथियों या संदर्भ नंबरों को हाइलाइट करें।",
+            "अलाइन राइट बटन पर क्लिक करें या Ctrl + R दबाएं।",
+            "टेक्स्ट को दाएं हाशिये के साथ संरेखित करता है, जिससे बाएं हाशिये पर जगह छूटती है।"
+          ]
+        },
+        tip: {
+          en: "Align Right simulated: Aligned paragraphs perfectly flush with the right document boundary!",
+          hi: "दाएं संरेखित सिम्युलेटेड: पैराग्राफ को दस्तावेज़ की दाईं सीमा पर संरेखित किया गया!"
+        }
+      },
+      alignjustify: {
+        category: "Paragraph",
+        icon: "ti-align-justified",
+        win: ["Ctrl", "J"],
+        mac: ["Cmd", "J"],
+        title: { en: "Justify", hi: "जस्टिफाई (समान संरेखण)" },
+        steps: {
+          en: [
+            "Highlight major editorial body paragraphs.",
+            "Click the Justify button on the Ribbon or press Ctrl + J.",
+            "Distributes letters evenly between left/right borders, creating neat newspaper columns."
+          ],
+          hi: [
+            "मुख्य संपादकीय पैराग्राफ को हाइलाइट करें।",
+            "रिबन पर जस्टिफाई बटन पर क्लिक करें या Ctrl + J दबाएं।",
+            "अक्षरों को बाएं/दाएं दोनों किनारों के बीच समान रूप से फैलाता है, जिससे अखबार जैसी साफ कॉलम बनती हैं।"
+          ]
+        },
+        tip: {
+          en: "Justify simulated: Distributed text words evenly, creating crisp straight left and right margins!",
+          hi: "जस्टिफाई सिम्युलेटेड: शब्दों को समान रूप से वितरित किया गया, जिससे सीधे बाएं और दाएं हाशिये बन गए!"
+        }
+      },
+      spacing: {
+        category: "Paragraph",
+        icon: "ti-line-height",
+        win: ["Ctrl", "2", "(Double)"],
+        mac: ["Cmd", "2", "(Double)"],
+        title: { en: "Line Spacing", hi: "लाइन और पैराग्राफ स्पेसिंग" },
+        steps: {
+          en: [
+            "Select text lines requiring increased spacing.",
+            "Click the Line Spacing button (vertical arrows icon).",
+            "Choose 1.15, 1.5, or double 2.0 spacing to improve manuscript readability."
+          ],
+          hi: [
+            "अधिक स्पेसिंग की आवश्यकता वाले टेक्स्ट लाइनों का चयन करें।",
+            "लाइन स्पेसिंग बटन (ऊर्ध्वाधर तीर आइकन) पर क्लिक करें।",
+            "पठनीयता में सुधार के लिए 1.15, 1.5, या डबल 2.0 स्पेसिंग चुनें।"
+          ]
+        },
+        tip: {
+          en: "Line Spacing simulated: Doubled text line heights inside the active sandbox document!",
+          hi: "लाइन स्पेसिंग सिम्युलेटेड: सक्रिय दस्तावेज़ के अंदर टेक्स्ट लाइन स्पेसिंग को दोगुना किया गया!"
+        }
+      },
+      shading: {
+        category: "Paragraph",
+        icon: "ti-bucket",
+        win: ["Alt", "H", "H"],
+        mac: ["Cmd", "Option", "S"],
+        title: { en: "Shading", hi: "शेडिंग (पृष्ठभूमि रंग)" },
+        steps: {
+          en: [
+            "Select the targeted paragraph block.",
+            "Click the bucket Shading button on the Home Ribbon.",
+            "Pick a solid accent background color. Unlike highlight, shading fills the entire block."
+          ],
+          hi: [
+            "लक्षित पैराग्राफ ब्लॉक का चयन करें।",
+            "होम रिबन पर बाल्टी शेडिंग बटन पर क्लिक करें।",
+            "एक ठोस पृष्ठभूमि रंग चुनें। हाइलाइट के विपरीत, शेडिंग पूरे ब्लॉक को भर देती है।"
+          ]
+        },
+        tip: {
+          en: "Shading simulated: Injected a corporate light-blue background tint behind paragraph 1!",
+          hi: "शेडिंग सिम्युलेटेड: पैराग्राफ 1 के पीछे एक हल्का नीला पृष्ठभूमि रंग भरा गया!"
+        }
+      },
+      borders: {
+        category: "Paragraph",
+        icon: "ti-border-all",
+        win: ["Alt", "H", "B"],
+        mac: ["Cmd", "Option", "B"],
+        title: { en: "Borders", hi: "बॉर्डर्स (सीमाएं)" },
+        steps: {
+          en: [
+            "Highlight the text, table, or paragraph needing borders.",
+            "Click the Borders grid icon in the Paragraph group.",
+            "Select Bottom Border, All Borders, or Outside Borders from the panel list."
+          ],
+          hi: [
+            "बॉर्डर की आवश्यकता वाले टेक्स्ट, टेबल या पैराग्राफ को हाइलाइट करें।",
+            "पैराग्राफ समूह में बॉर्डर्स ग्रिड आइकन पर क्लिक करें।",
+            "पैनल सूची से बॉटम बॉर्डर, ऑल बॉर्डर्स, या आउटसाइड बॉर्डर्स चुनें।"
+          ]
+        },
+        tip: {
+          en: "Borders simulated: Wrapped paragraph 1 inside a clean corporate outline border!",
+          hi: "बॉर्डर्स सिम्युलेटेड: पैराग्राफ 1 के चारों ओर एक साफ़ आउटलाइन बॉर्डर बनाया गया!"
+        }
+      },
+      find: {
+        category: "Editing",
+        icon: "ti-search",
+        win: ["Ctrl", "F"],
+        mac: ["Cmd", "F"],
+        title: { en: "Find", hi: "खोजें" },
+        steps: {
+          en: [
+            "Press Ctrl + F to open the structural Navigation Pane on the left.",
+            "Type your targeted word or phrase in the input prompt.",
+            "Word instantly highlights every match in yellow across the entire document."
+          ],
+          hi: [
+            "बाईं ओर नेविगेशन फलक खोलने के लिए Ctrl + F दबाएं।",
+            "इनपुट बार में अपना लक्षित शब्द या वाक्यांश टाइप करें।",
+            "वर्ड तुरंत पूरे दस्तावेज़ में प्रत्येक मिलान को पीले रंग में हाइलाइट करता है।"
+          ]
+        },
+        tip: {
+          en: "Find simulated: Located and highlighted every occurrence of the keyword 'Word' in yellow!",
+          hi: "खोजें सिम्युलेटेड: दस्तावेज़ में 'Word' कीवर्ड के प्रत्येक मिलान को पीले रंग में दर्शाया गया!"
+        }
+      },
+      replace: {
+        category: "Editing",
+        icon: "ti-arrows-right-left",
+        win: ["Ctrl", "H"],
+        mac: ["Cmd", "H"],
+        title: { en: "Replace", hi: "बदलें" },
+        steps: {
+          en: [
+            "Press Ctrl + H to launch the Find and Replace popup card.",
+            "Type the old text in 'Find what' and the new text in 'Replace with'.",
+            "Click 'Replace' to change one, or 'Replace All' to swap every occurrence instantly."
+          ],
+          hi: [
+            "ढूंढें और बदलें (Find and Replace) पॉपअप खोलने के लिए Ctrl + H दबाएं।",
+            "'Find what' में पुराना टेक्स्ट और 'Replace with' में नया टेक्स्ट टाइप करें।",
+            "एक बदलने के लिए 'Replace' या सभी को तुरंत बदलने के लिए 'Replace All' पर क्लिक करें।"
+          ]
+        },
+        tip: {
+          en: "Replace simulated: Replaced all occurrences of 'Microsoft Word' with 'MS Word Professional'!",
+          hi: "बदलें सिम्युलेटेड: 'Microsoft Word' के सभी स्थानों को 'MS Word Professional' से बदल दिया गया!"
+        }
+      },
+      pagebreak: {
+        category: "Insert: Pages",
+        icon: "ti-separator-horizontal",
+        win: ["Ctrl", "Enter"],
+        mac: ["Cmd", "Enter"],
+        title: { en: "Page Break", hi: "पेज ब्रेक (नया पृष्ठ)" },
+        steps: {
+          en: [
+            "Position the insertion cursor where you want to end the current page.",
+            "Click 'Page Break' in the Insert tab, or press Ctrl + Enter.",
+            "Text after the cursor immediately moves onto the top of the next page."
+          ],
+          hi: [
+            "इंसर्ट कर्सर को वहां रखें जहां आप वर्तमान पृष्ठ को समाप्त करना चाहते हैं।",
+            "इंसर्ट टैब में 'पेज ब्रेक' पर क्लिक करें, या Ctrl + Enter दबाएं।",
+            "कर्सर के बाद का टेक्स्ट तुरंत अगले पृष्ठ के शीर्ष पर चला जाता है।"
+          ]
+        },
+        tip: {
+          en: "Page Break simulated: Injected a dotted structural Page Break line into your document!",
+          hi: "पेज ब्रेक सिम्युलेटेड: आपके दस्तावेज़ में एक बिंदीदार पेज ब्रेक लाइन जोड़ी गई!"
+        }
+      },
+      table: {
+        category: "Insert: Tables",
+        icon: "ti-table",
+        win: ["Alt", "N", "T"],
+        mac: ["Cmd", "Ctrl", "T"],
+        title: { en: "Table", hi: "तालिका" },
+        steps: {
+          en: [
+            "Click on the Table grid button under the Insert tab.",
+            "Hover your mouse over the grid squares to choose columns & rows.",
+            "Click to render the table. Add data into cells and style it with Table Design presets."
+          ],
+          hi: [
+            "इंसर्ट टैब के अंतर्गत टेबल ग्रिड बटन पर क्लिक करें।",
+            "कॉलम और पंक्तियों को चुनने के लिए ग्रिड चौकों पर माउस घुमाएं।",
+            "टेबल बनाने के लिए क्लिक करें। सेल में डेटा जोड़ें और टेबल डिज़ाइन प्रीसेट के साथ इसे स्टाइल करें।"
+          ]
+        },
+        tip: {
+          en: "Table simulated: Inserted a beautifully styled 3-column billing ledger grid into the sheet!",
+          hi: "टेबल सिम्युलेटेड: शीट में एक खूबसूरती से स्टाइल की गई 3-कॉलम बिलिंग तालिका जोड़ी गई!"
+        }
+      },
+      picture: {
+        category: "Insert: Graphics",
+        icon: "ti-photo",
+        win: ["Alt", "N", "P"],
+        mac: ["Cmd", "Ctrl", "I"],
+        title: { en: "Insert Picture", hi: "चित्र जोड़ें" },
+        steps: {
+          en: [
+            "Click Pictures in the Insert tab panel.",
+            "Choose 'This Device' to upload local photos or 'Online Pictures' for web illustrations.",
+            "Double-click your image file to insert. Adjust alignment options using Layout Options."
+          ],
+          hi: [
+            "इंसर्ट टैब पैनल में पिक्चर्स पर क्लिक करें।",
+            "स्थानीय फ़ोटो अपलोड करने के लिए 'This Device' या वेब चित्रों के लिए 'Online Pictures' चुनें।",
+            "जोड़ने के लिए अपनी छवि फ़ाइल पर डबल-क्लिक करें। संरेखण को लेआउट विकल्पों के साथ समायोजित करें।"
+          ]
+        },
+        tip: {
+          en: "Insert Picture simulated: Embedded an educational graphic placeholder box inside the sandbox A4 paper!",
+          hi: "चित्र जोड़ें सिम्युलेटेड: सैंडबॉक्स A4 पेपर के अंदर एक छवि प्लेसहोल्डर बॉक्स जोड़ा गया!"
+        }
+      },
+      shape: {
+        category: "Insert: Graphics",
+        icon: "ti-layout-grid",
+        win: ["Alt", "N", "S"],
+        mac: ["Cmd", "Ctrl", "S"],
+        title: { en: "Draw Shapes", hi: "आकृतियाँ (शेप्स) बनाएं" },
+        steps: {
+          en: [
+            "Click Shapes in the Illustrations group under the Insert Tab.",
+            "Select a shape category (like Arrows, Circles, Banner boxes, Callouts).",
+            "Click and drag on your document canvas to draw the shape. Use Shape Format to recolor."
+          ],
+          hi: [
+            "इंसर्ट टैब के अंतर्गत चित्र समूह में आकृतियों (Shapes) पर क्लिक करें।",
+            "आकृति श्रेणी (जैसे तीर, वृत्त, बैनर बॉक्स) चुनें।",
+            "आकृति बनाने के लिए दस्तावेज़ कैनवास पर क्लिक करें और खींचें। रंग बदलने के लिए शेप फ़ॉर्मेट का उपयोग करें।"
+          ]
+        },
+        tip: {
+          en: "Draw Shape simulated: Rendered a glowing blue circular geometric shape inside the insertion region!",
+          hi: "आकृति बनाएं सिम्युलेटेड: इंसर्ट क्षेत्र में एक नीली गोलाकार ज्यामितीय आकृति बनाई गई!"
+        }
+      },
+      header: {
+        category: "Insert: Layout",
+        icon: "ti-browser",
+        win: ["Alt", "N", "H"],
+        mac: ["Cmd", "Ctrl", "H"],
+        title: { en: "Header & Footer", hi: "हेडर और फुटर" },
+        steps: {
+          en: [
+            "Click Header or Footer buttons in the Header & Footer tab group.",
+            "Select a built-in preformatted theme template.",
+            "Type in header information. Double-click the body area or press Esc to close header editing."
+          ],
+          hi: [
+            "हेडर और फुटर टैब समूह में हेडर या फुटर बटन पर क्लिक करें।",
+            "एक पूर्व-फ़ॉर्मेट किया गया अंतर्निहित थीम टेम्प्लेट चुनें।",
+            "हेडर जानकारी टाइप करें। हेडर संपादन बंद करने के लिए बॉडी क्षेत्र पर डबल-क्लिक करें या Esc दबाएं।"
+          ]
+        },
+        tip: {
+          en: "Header/Footer simulated: Toggled visibility of dynamic structural running headers and page-numbered footers!",
+          hi: "हेडर/फुटर सिम्युलेटेड: डायनामिक रनिंग हेडर और पेज-नंबर वाले फुटर को प्रदर्शित/टॉगल किया गया!"
+        }
+      }
+    };
+
+    /* Initialize Ribbon Event Listeners */
+    function initRibbonSimulator() {
+      const tabHomeBtn = document.getElementById('ribbonTabHomeBtn');
+      const tabInsertBtn = document.getElementById('ribbonTabInsertBtn');
+      const groupHome = document.getElementById('ribbonGroupHome');
+      const groupInsert = document.getElementById('ribbonGroupInsert');
+
+      if (!tabHomeBtn || !tabInsertBtn) return;
+
+      tabHomeBtn.addEventListener('click', () => {
+        tabHomeBtn.classList.add('active');
+        tabInsertBtn.classList.remove('active');
+        groupHome.classList.add('active');
+        groupInsert.classList.remove('active');
+      });
+
+      tabInsertBtn.addEventListener('click', () => {
+        tabInsertBtn.classList.add('active');
+        tabHomeBtn.classList.remove('active');
+        groupInsert.classList.add('active');
+        groupHome.classList.remove('active');
+      });
+
+      // Select Bold by default on startup
+      selectRibbonTool('bold');
+    }
+
+    /* Select Tool Handler */
+    function selectRibbonTool(toolKey) {
+      // Toggle button highlight in the simulated ribbon UI
+      document.querySelectorAll('.ribbon-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(`rtool-${toolKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const toolData = ribbonToolsData[toolKey];
+      if (!toolData) return;
+
+      // Update Visual Info Card
+      document.getElementById('encyclopediaTitle').textContent = currentLanguage === 'en' ? toolData.title.en : toolData.title.hi;
+      document.getElementById('encyclopediaCategory').textContent = toolData.category;
+      document.getElementById('encyclopediaIcon').className = `ti ${toolData.icon}`;
+      document.getElementById('encyclopediaTip').textContent = currentLanguage === 'en' ? toolData.tip.en : toolData.tip.hi;
+
+      // Shortcut rendering (Windows vs Mac keys)
+      const shortcutContainer = document.getElementById('encyclopediaShortcut');
+      const keys = currentOS === 'win' ? toolData.win : toolData.mac;
+      shortcutContainer.innerHTML = keys.map(k => `<kbd class="shortcut-kbd">${k}</kbd>`).join(' + ');
+
+      // Steps rendering
+      const stepsList = document.getElementById('encyclopediaSteps');
+      stepsList.innerHTML = '';
+      const activeSteps = currentLanguage === 'en' ? toolData.steps.en : toolData.steps.hi;
+      activeSteps.forEach(step => {
+        const li = document.createElement('li');
+        li.textContent = step;
+        stepsList.appendChild(li);
+      });
+
+      // Sandbox simulated document execution
+      executeSandboxSimulation(toolKey);
+    }
+
+    /* Sandbox Interactive Formatting Actions */
+    let changeCaseCycle = 0; // 0: lowercase, 1: UPPERCASE, 2: Sentence case
+
+    function executeSandboxSimulation(toolKey) {
+      const sheet = document.getElementById('virtualWordSheet');
+      const p1 = document.getElementById('vsParagraph1');
+      const p2 = document.getElementById('vsParagraph2');
+      const insertArea = document.getElementById('vsInsertArea');
+
+      if (!sheet || !p1 || !p2) return;
+
+      switch(toolKey) {
+        case 'bold':
+          p1.classList.toggle('vs-bold');
+          p2.classList.toggle('vs-bold');
+          break;
+        case 'italic':
+          p1.classList.toggle('vs-italic');
+          p2.classList.toggle('vs-italic');
+          break;
+        case 'underline':
+          p1.classList.toggle('vs-underline');
+          p2.classList.toggle('vs-underline');
+          break;
+        case 'strikethrough':
+          p1.classList.toggle('vs-strikethrough');
+          p2.classList.toggle('vs-strikethrough');
+          break;
+        case 'subscript':
+          // Subscript index visual mapping on the text "visual"
+          p2.innerHTML = p2.innerHTML.replace(/\b(visual)\b/gi, '<sub>visual</sub>');
+          break;
+        case 'superscript':
+          // Superscript algebra visual mapping on the text "spacings"
+          p2.innerHTML = p2.innerHTML.replace(/\b(spacings)\b/gi, '<sup>spacings</sup>');
+          break;
+        case 'case':
+          if (changeCaseCycle === 0) {
+            p1.textContent = p1.textContent.toLowerCase();
+            changeCaseCycle = 1;
+          } else if (changeCaseCycle === 1) {
+            p1.textContent = p1.textContent.toUpperCase();
+            changeCaseCycle = 2;
+          } else {
+            p1.textContent = "Microsoft Word is the world's most popular word processor. Mastering its visual styling options can elevate the presentation of your reports, resumes, and corporate forms.";
+            changeCaseCycle = 0;
+          }
+          break;
+        case 'highlight':
+          p1.classList.toggle('vs-highlight');
+          p2.classList.toggle('vs-highlight');
+          break;
+        case 'fontcolor':
+          p1.classList.toggle('vs-color-blue');
+          p2.classList.toggle('vs-color-blue');
+          break;
+        case 'clear':
+          resetVirtualDocument();
+          break;
+        case 'bullets':
+          p1.classList.toggle('vs-bullets');
+          p2.classList.toggle('vs-bullets');
+          p1.classList.remove('vs-numbered');
+          p2.classList.remove('vs-numbered');
+          break;
+        case 'numbered':
+          p1.classList.toggle('vs-numbered');
+          p2.classList.toggle('vs-numbered');
+          p1.classList.remove('vs-bullets');
+          p2.classList.remove('vs-bullets');
+          break;
+        case 'alignleft':
+          setParagraphAlignment('left');
+          break;
+        case 'aligncenter':
+          setParagraphAlignment('center');
+          break;
+        case 'alignright':
+          setParagraphAlignment('right');
+          break;
+        case 'alignjustify':
+          setParagraphAlignment('justify');
+          break;
+        case 'spacing':
+          if (p1.style.lineHeight === '2') {
+            p1.style.lineHeight = '1.15';
+            p2.style.lineHeight = '1.15';
+          } else {
+            p1.style.lineHeight = '2';
+            p2.style.lineHeight = '2';
+          }
+          break;
+        case 'shading':
+          if (p1.style.backgroundColor === 'rgb(239, 246, 255)') {
+            p1.style.backgroundColor = 'transparent';
+          } else {
+            p1.style.backgroundColor = '#eff6ff';
+            p1.style.padding = '8px';
+            p1.style.borderRadius = '4px';
+          }
+          break;
+        case 'borders':
+          if (p1.style.border === '2px solid rgb(43, 87, 154)') {
+            p1.style.border = 'none';
+            p1.style.padding = '0';
+          } else {
+            p1.style.border = '2px solid #2b579a';
+            p1.style.padding = '12px';
+            p1.style.borderRadius = '4px';
+          }
+          break;
+        case 'cut':
+          p1.style.opacity = '0.05';
+          p2.style.opacity = '0.05';
+          break;
+        case 'copy':
+          p1.style.opacity = '1';
+          p2.style.opacity = '1';
+          break;
+        case 'paste':
+          p1.style.opacity = '1';
+          p2.style.opacity = '1';
+          if (p1.textContent === '') {
+            p1.textContent = "Microsoft Word is the world's most popular word processor. Mastering its visual styling options can elevate the presentation of your reports, resumes, and corporate forms.";
+            p2.textContent = "You can use this interactive document page to test alignments, paragraph spacings, bullets, fonts, and text highlighting colors instantly by clicking buttons on the Ribbon mockup above!";
+          }
+          break;
+        case 'painter':
+          p2.className = p1.className; // copy styles
+          p2.style.cssText = p1.style.cssText;
+          break;
+        case 'find':
+          p1.innerHTML = p1.innerHTML.replace(/\b(Word)\b/g, '<span style="background-color: #ffd8a8; border: 1px solid #ff922b; border-radius: 2px; padding: 0 2px;">$1</span>');
+          break;
+        case 'replace':
+          p1.innerHTML = p1.innerHTML.replace(/Microsoft Word/g, '<strong>MS Word Professional</strong>');
+          break;
+        case 'pagebreak':
+          insertArea.innerHTML = `<div style="border-top: 2px dotted #2b579a; margin: 24px 0; text-align: center; color: #2b579a; font-weight: 700; font-size: 0.8rem; user-select: none;">[---------- Page Break / नया पृष्ठ ----------]</div>`;
+          break;
+        case 'table':
+          insertArea.innerHTML = `
+            <table class="vs-table">
+              <thead>
+                <tr><th>Item Name</th><th>Cost (USD)</th><th>Department</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Word License</td><td>$120.00</td><td>HR Office</td></tr>
+                <tr><td>VBA Developer Script</td><td>$250.00</td><td>IT Support</td></tr>
+                <tr><td>Premium Cover Page Layout</td><td>$45.00</td><td>Design Corp</td></tr>
+              </tbody>
+            </table>
+          `;
+          break;
+        case 'picture':
+          insertArea.innerHTML = `
+            <div class="vs-picture-box">
+              <i class="ti ti-photo"></i>
+              <span>[Embedded Illustration Graphic Map]</span>
+              <p style="font-size:0.75rem;font-weight:normal;color:#555;margin:0">Layout: Wrap Square (Margins 0.5")</p>
+            </div>
+          `;
+          break;
+        case 'shape':
+          insertArea.innerHTML = `
+            <div class="vs-shape-box">Shape</div>
+          `;
+          break;
+        case 'header':
+          const hc = document.getElementById('vsHeaderContainer');
+          const fc = document.getElementById('vsFooterContainer');
+          if (hc && fc) {
+            if (hc.style.display === 'none') {
+              hc.style.display = 'flex';
+              fc.style.display = 'flex';
+            } else {
+              hc.style.display = 'none';
+              fc.style.display = 'none';
+            }
+          }
+          break;
+      }
+    }
+
+    function setParagraphAlignment(align) {
+      const p1 = document.getElementById('vsParagraph1');
+      const p2 = document.getElementById('vsParagraph2');
+      if (!p1 || !p2) return;
+
+      p1.classList.remove('vs-align-left', 'vs-align-center', 'vs-align-right', 'vs-align-justify');
+      p2.classList.remove('vs-align-left', 'vs-align-center', 'vs-align-right', 'vs-align-justify');
+
+      p1.classList.add(`vs-align-${align}`);
+      p2.classList.add(`vs-align-${align}`);
+    }
+
+    /* Font controls bindings */
+    function applySandboxFontFamily(font) {
+      const sheet = document.getElementById('virtualWordSheet');
+      if (sheet) sheet.style.fontFamily = font;
+    }
+
+    function applySandboxFontSize(size) {
+      const sheet = document.getElementById('virtualWordSheet');
+      if (sheet) sheet.style.fontSize = `${size}pt`;
+    }
+
+    /* Reset sandbox sheet */
+    function resetVirtualDocument() {
+      const p1 = document.getElementById('vsParagraph1');
+      const p2 = document.getElementById('vsParagraph2');
+      const insertArea = document.getElementById('vsInsertArea');
+      const sheet = document.getElementById('virtualWordSheet');
+      const hc = document.getElementById('vsHeaderContainer');
+      const fc = document.getElementById('vsFooterContainer');
+
+      if (p1) {
+        p1.className = 'vs-align-left';
+        p1.style.cssText = '';
+        p1.textContent = "Microsoft Word is the world's most popular word processor. Mastering its visual styling options can elevate the presentation of your reports, resumes, and corporate forms.";
+      }
+
+      if (p2) {
+        p2.className = 'vs-align-left';
+        p2.style.cssText = '';
+        p2.textContent = "You can use this interactive document page to test alignments, paragraph spacings, bullets, fonts, and text highlighting colors instantly by clicking buttons on the Ribbon mockup above!";
+      }
+
+      if (insertArea) insertArea.innerHTML = '';
+      if (sheet) {
+        sheet.style.fontFamily = "'Calibri', 'Arial', sans-serif";
+        sheet.style.fontSize = '11pt';
+      }
+
+      if (hc) hc.style.display = 'none';
+      if (fc) fc.style.display = 'none';
+
+      document.getElementById('rfont-family').value = 'Calibri';
+      document.getElementById('rfont-size').value = '11';
+    }
+  </script>
+</body>
+</html>
