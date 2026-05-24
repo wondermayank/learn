@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThunderStudy – Computer Learning Index</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif}
+.ts-wrap{background:linear-gradient(160deg,#e8f4fd 0%,#f0f8ff 50%,#ffffff 100%);min-height:100vh;padding:0 0 3rem}
+.ts-hero{background:linear-gradient(135deg,#1a6fc4 0%,#2196f3 60%,#42b0ff 100%);color:#fff;padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden}
+.ts-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.07);border-radius:50%}
+.ts-hero::after{content:'';position:absolute;bottom:-60px;left:-30px;width:160px;height:160px;background:rgba(255,255,255,0.05);border-radius:50%}
+.brand{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:0.8;margin-bottom:8px;font-weight:500}
+.ts-hero h1{font-size:2.6rem;font-weight:700;letter-spacing:-1px;margin-bottom:6px}
+.ts-hero p{opacity:0.85;font-size:1rem;margin-bottom:4px}
+.made-by{font-size:12px;opacity:0.65;margin-top:8px}
+.badge-count{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 14px;font-size:13px;margin-top:12px;font-weight:500}
+.search-bar{max-width:520px;margin:1.5rem auto 0;position:relative;z-index:2}
+.search-bar input{width:100%;padding:12px 16px 12px 44px;border-radius:30px;border:none;font-size:15px;outline:none;box-shadow:0 4px 20px rgba(0,0,0,0.15);color:#1a3a5c}
+.search-bar .si{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#5a9fd4;font-size:18px}
+.ts-body{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+.section{margin-top:2.2rem}
+.section-title{font-size:0.7rem;letter-spacing:2.5px;text-transform:uppercase;color:#1a6fc4;font-weight:700;margin-bottom:1rem;padding-bottom:6px;border-bottom:2px solid #c8e4f8;display:flex;align-items:center;gap:8px}
+.section-title i{font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.card{background:#fff;border:1px solid #d0e8f8;border-radius:12px;padding:14px 12px 12px;cursor:pointer;transition:all 0.18s ease;text-decoration:none;display:block;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2196f3,#64c8ff);opacity:0;transition:opacity 0.2s}
+.card:hover{border-color:#2196f3;transform:translateY(-2px);box-shadow:0 6px 20px rgba(33,150,243,0.12)}
+.card:hover::before{opacity:1}
+.card-icon{width:34px;height:34px;background:#e8f4fd;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:#1a6fc4;font-size:18px}
+.card-num{font-size:10px;color:#90b8d8;font-weight:600;letter-spacing:1px;margin-bottom:2px}
+.card-title{font-size:13px;font-weight:600;color:#1a3a5c;line-height:1.35}
+.card-tag{font-size:10px;color:#5a9fd4;margin-top:5px}
+.ts-footer{background:#1a3a5c;color:#a8c8e8;text-align:center;padding:2.5rem 1.5rem 2rem;margin-top:3rem}
+.ts-footer .fl{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:1.2rem}
+.ts-footer a{color:#64b8f0;text-decoration:none;font-size:13px;padding:5px 10px;background:rgba(255,255,255,0.06);border-radius:6px;border:1px solid rgba(100,184,240,0.2);transition:background 0.15s}
+.ts-footer a:hover{background:rgba(100,184,240,0.12)}
+.ts-footer .fc{font-size:12px;opacity:0.5;margin-top:1rem}
+.no-result{text-align:center;padding:3rem;color:#5a9fd4;font-size:15px;display:none}
+</style>
+</head>
+<body>
+<div class="ts-wrap">
+<div class="ts-hero">
+  <div class="brand">⚡ ThunderStudy</div>
+  <h1>Computer</h1>
+  <p>Free learning resources — from basics to coding</p>
+  <div class="made-by">Made by <strong>WonderMayank</strong></div>
+  <div class="badge-count">200 Topics</div>
+  <div class="search-bar">
+    <i class="ti ti-search si"></i>
+    <input type="text" id="searchInput" placeholder="Search any topic..." oninput="filterCards()">
+  </div>
+</div>
+
+<div class="ts-body" id="mainBody">
+<div class="no-result" id="noResult"><i class="ti ti-mood-sad" style="font-size:32px;display:block;margin-bottom:8px"></i>No topics found. Try another keyword.</div>
+
+<div class="section" data-section="Microsoft Office">
+<div class="section-title"><i class="ti ti-apps"></i> Microsoft Office</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/ms-word" target="_blank"><div class="card-icon"><i class="ti ti-file-text"></i></div><div class="card-num">01</div><div class="card-title">MS Word</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-excel" target="_blank"><div class="card-icon"><i class="ti ti-table"></i></div><div class="card-num">02</div><div class="card-title">MS Excel</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-powerpoint" target="_blank"><div class="card-icon"><i class="ti ti-presentation"></i></div><div class="card-num">03</div><div class="card-title">MS PowerPoint</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-access" target="_blank"><div class="card-icon"><i class="ti ti-database"></i></div><div class="card-num">04</div><div class="card-title">MS Access</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-outlook" target="_blank"><div class="card-icon"><i class="ti ti-mail"></i></div><div class="card-num">05</div><div class="card-title">MS Outlook</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-onenote" target="_blank"><div class="card-icon"><i class="ti ti-notebook"></i></div><div class="card-num">06</div><div class="card-title">MS OneNote</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-publisher" target="_blank"><div class="card-icon"><i class="ti ti-layout"></i></div><div class="card-num">07</div><div class="card-title">MS Publisher</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-teams" target="_blank"><div class="card-icon"><i class="ti ti-users"></i></div><div class="card-num">08</div><div class="card-title">MS Teams</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-forms" target="_blank"><div class="card-icon"><i class="ti ti-forms"></i></div><div class="card-num">09</div><div class="card-title">MS Forms</div><div class="card-tag">Office</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-visio" target="_blank"><div class="card-icon"><i class="ti ti-vector"></i></div><div class="card-num">10</div><div class="card-title">MS Visio</div><div class="card-tag">Office</div></a>
+</div></div>
+
+<div class="section" data-section="Computer Basics">
+<div class="section-title"><i class="ti ti-device-desktop"></i> Computer Basics</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/computer-basics" target="_blank"><div class="card-icon"><i class="ti ti-device-desktop"></i></div><div class="card-num">11</div><div class="card-title">Computer Basics</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/keyboard-mouse" target="_blank"><div class="card-icon"><i class="ti ti-keyboard"></i></div><div class="card-num">12</div><div class="card-title">Keyboard &amp; Mouse</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/windows-10" target="_blank"><div class="card-icon"><i class="ti ti-brand-windows"></i></div><div class="card-num">13</div><div class="card-title">Windows 10</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/windows-11" target="_blank"><div class="card-icon"><i class="ti ti-brand-windows"></i></div><div class="card-num">14</div><div class="card-title">Windows 11</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/file-management" target="_blank"><div class="card-icon"><i class="ti ti-folder"></i></div><div class="card-num">15</div><div class="card-title">File Management</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/computer-shortcuts" target="_blank"><div class="card-icon"><i class="ti ti-command"></i></div><div class="card-num">16</div><div class="card-title">Computer Shortcuts</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/task-manager" target="_blank"><div class="card-icon"><i class="ti ti-activity"></i></div><div class="card-num">17</div><div class="card-title">Task Manager</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/control-panel" target="_blank"><div class="card-icon"><i class="ti ti-settings"></i></div><div class="card-num">18</div><div class="card-title">Control Panel</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/computer-maintenance" target="_blank"><div class="card-icon"><i class="ti ti-tool"></i></div><div class="card-num">19</div><div class="card-title">Computer Maintenance</div><div class="card-tag">Basics</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/computer-security" target="_blank"><div class="card-icon"><i class="ti ti-shield"></i></div><div class="card-num">20</div><div class="card-title">Computer Security</div><div class="card-tag">Basics</div></a>
+</div></div>
+
+<div class="section" data-section="Internet & Browsing">
+<div class="section-title"><i class="ti ti-world"></i> Internet &amp; Browsing</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/internet-basics" target="_blank"><div class="card-icon"><i class="ti ti-world"></i></div><div class="card-num">21</div><div class="card-title">Internet Basics</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-chrome" target="_blank"><div class="card-icon"><i class="ti ti-brand-chrome"></i></div><div class="card-num">22</div><div class="card-title">Google Chrome</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/mozilla-firefox" target="_blank"><div class="card-icon"><i class="ti ti-browser"></i></div><div class="card-num">23</div><div class="card-title">Mozilla Firefox</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-search-tips" target="_blank"><div class="card-icon"><i class="ti ti-search"></i></div><div class="card-num">24</div><div class="card-title">Google Search Tips</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/youtube" target="_blank"><div class="card-icon"><i class="ti ti-brand-youtube"></i></div><div class="card-num">25</div><div class="card-title">YouTube</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-safety" target="_blank"><div class="card-icon"><i class="ti ti-shield-check"></i></div><div class="card-num">26</div><div class="card-title">Online Safety</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/email-basics" target="_blank"><div class="card-icon"><i class="ti ti-mail"></i></div><div class="card-num">27</div><div class="card-title">Email Basics</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/gmail" target="_blank"><div class="card-icon"><i class="ti ti-inbox"></i></div><div class="card-num">28</div><div class="card-title">Gmail</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/downloading-files" target="_blank"><div class="card-icon"><i class="ti ti-download"></i></div><div class="card-num">29</div><div class="card-title">Downloading Files</div><div class="card-tag">Internet</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/vpn-basics" target="_blank"><div class="card-icon"><i class="ti ti-lock"></i></div><div class="card-num">30</div><div class="card-title">VPN Basics</div><div class="card-tag">Internet</div></a>
+</div></div>
+
+<div class="section" data-section="Storage & Cloud">
+<div class="section-title"><i class="ti ti-cloud"></i> Storage &amp; Cloud</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/google-drive" target="_blank"><div class="card-icon"><i class="ti ti-brand-google-drive"></i></div><div class="card-num">31</div><div class="card-title">Google Drive</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/onedrive" target="_blank"><div class="card-icon"><i class="ti ti-cloud-upload"></i></div><div class="card-num">32</div><div class="card-title">OneDrive</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/dropbox" target="_blank"><div class="card-icon"><i class="ti ti-brand-dropbox"></i></div><div class="card-num">33</div><div class="card-title">Dropbox</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/pendrive-usb" target="_blank"><div class="card-icon"><i class="ti ti-usb"></i></div><div class="card-num">34</div><div class="card-title">Pendrive &amp; USB</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/cloud-storage" target="_blank"><div class="card-icon"><i class="ti ti-cloud"></i></div><div class="card-num">35</div><div class="card-title">Cloud Storage Basics</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/file-compression" target="_blank"><div class="card-icon"><i class="ti ti-file-zip"></i></div><div class="card-num">36</div><div class="card-title">File Compression (ZIP)</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-photos" target="_blank"><div class="card-icon"><i class="ti ti-photo"></i></div><div class="card-num">37</div><div class="card-title">Google Photos</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/backup-restore" target="_blank"><div class="card-icon"><i class="ti ti-database-export"></i></div><div class="card-num">38</div><div class="card-title">Backup &amp; Restore</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/hard-disk-basics" target="_blank"><div class="card-icon"><i class="ti ti-device-floppy"></i></div><div class="card-num">39</div><div class="card-title">Hard Disk Basics</div><div class="card-tag">Cloud</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ram-storage" target="_blank"><div class="card-icon"><i class="ti ti-cpu"></i></div><div class="card-num">40</div><div class="card-title">RAM &amp; Storage</div><div class="card-tag">Cloud</div></a>
+</div></div>
+
+<div class="section" data-section="Cybersecurity">
+<div class="section-title"><i class="ti ti-shield-lock"></i> Cybersecurity</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/password-safety" target="_blank"><div class="card-icon"><i class="ti ti-key"></i></div><div class="card-num">41</div><div class="card-title">Password Safety</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/antivirus-software" target="_blank"><div class="card-icon"><i class="ti ti-virus-off"></i></div><div class="card-num">42</div><div class="card-title">Antivirus Software</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/phishing-awareness" target="_blank"><div class="card-icon"><i class="ti ti-fish-off"></i></div><div class="card-num">43</div><div class="card-title">Phishing Awareness</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/two-factor-auth" target="_blank"><div class="card-icon"><i class="ti ti-device-mobile-check"></i></div><div class="card-num">44</div><div class="card-title">Two-Factor Auth</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/safe-browsing" target="_blank"><div class="card-icon"><i class="ti ti-browser-check"></i></div><div class="card-num">45</div><div class="card-title">Safe Browsing</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/privacy-settings" target="_blank"><div class="card-icon"><i class="ti ti-eye-off"></i></div><div class="card-num">46</div><div class="card-title">Privacy Settings</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/public-wifi-safety" target="_blank"><div class="card-icon"><i class="ti ti-wifi-off"></i></div><div class="card-num">47</div><div class="card-title">Public WiFi Safety</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/parental-controls" target="_blank"><div class="card-icon"><i class="ti ti-user-shield"></i></div><div class="card-num">48</div><div class="card-title">Parental Controls</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/data-privacy" target="_blank"><div class="card-icon"><i class="ti ti-lock-access"></i></div><div class="card-num">49</div><div class="card-title">Data Privacy</div><div class="card-tag">Security</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/cybercrime-awareness" target="_blank"><div class="card-icon"><i class="ti ti-alert-triangle"></i></div><div class="card-num">50</div><div class="card-title">Cybercrime Awareness</div><div class="card-tag">Security</div></a>
+</div></div>
+
+<div class="section" data-section="Mobile & Smartphones">
+<div class="section-title"><i class="ti ti-device-mobile"></i> Mobile &amp; Smartphones</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/android-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-android"></i></div><div class="card-num">51</div><div class="card-title">Android Basics</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/iphone-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-apple"></i></div><div class="card-num">52</div><div class="card-title">iPhone Basics</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/whatsapp" target="_blank"><div class="card-icon"><i class="ti ti-brand-whatsapp"></i></div><div class="card-num">53</div><div class="card-title">WhatsApp</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/smartphone-settings" target="_blank"><div class="card-icon"><i class="ti ti-settings"></i></div><div class="card-num">54</div><div class="card-title">Smartphone Settings</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/mobile-security" target="_blank"><div class="card-icon"><i class="ti ti-shield"></i></div><div class="card-num">55</div><div class="card-title">Mobile Security</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-maps" target="_blank"><div class="card-icon"><i class="ti ti-map-pin"></i></div><div class="card-num">56</div><div class="card-title">Google Maps</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/upi-digital-payments" target="_blank"><div class="card-icon"><i class="ti ti-credit-card"></i></div><div class="card-num">57</div><div class="card-title">UPI &amp; Digital Payments</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/screen-recording" target="_blank"><div class="card-icon"><i class="ti ti-screen-share"></i></div><div class="card-num">58</div><div class="card-title">Screen Recording</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/mobile-photography" target="_blank"><div class="card-icon"><i class="ti ti-camera"></i></div><div class="card-num">59</div><div class="card-title">Mobile Photography</div><div class="card-tag">Mobile</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/app-management" target="_blank"><div class="card-icon"><i class="ti ti-apps"></i></div><div class="card-num">60</div><div class="card-title">App Management</div><div class="card-tag">Mobile</div></a>
+</div></div>
+
+<div class="section" data-section="Design & Creativity">
+<div class="section-title"><i class="ti ti-palette"></i> Design &amp; Creativity</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/canva" target="_blank"><div class="card-icon"><i class="ti ti-palette"></i></div><div class="card-num">61</div><div class="card-title">Canva</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-paint" target="_blank"><div class="card-icon"><i class="ti ti-paint"></i></div><div class="card-num">62</div><div class="card-title">MS Paint</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/photo-editing" target="_blank"><div class="card-icon"><i class="ti ti-photo-edit"></i></div><div class="card-num">63</div><div class="card-title">Photo Editing Basics</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/resume-design" target="_blank"><div class="card-icon"><i class="ti ti-file-cv"></i></div><div class="card-num">64</div><div class="card-title">Resume Design</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/poster-making" target="_blank"><div class="card-icon"><i class="ti ti-artboard"></i></div><div class="card-num">65</div><div class="card-title">Poster Making</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/logo-making" target="_blank"><div class="card-icon"><i class="ti ti-vector-triangle"></i></div><div class="card-num">66</div><div class="card-title">Logo Making</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/thumbnail-design" target="_blank"><div class="card-icon"><i class="ti ti-photo"></i></div><div class="card-num">67</div><div class="card-title">Thumbnail Design</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/infographic-design" target="_blank"><div class="card-icon"><i class="ti ti-chart-dots"></i></div><div class="card-num">68</div><div class="card-title">Infographic Design</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/visiting-card" target="_blank"><div class="card-icon"><i class="ti ti-id-badge"></i></div><div class="card-num">69</div><div class="card-title">Visiting Card Design</div><div class="card-tag">Design</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/adobe-express" target="_blank"><div class="card-icon"><i class="ti ti-stars"></i></div><div class="card-num">70</div><div class="card-title">Adobe Express</div><div class="card-tag">Design</div></a>
+</div></div>
+
+<div class="section" data-section="Coding & Programming">
+<div class="section-title"><i class="ti ti-code"></i> Coding &amp; Programming</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/html-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-html5"></i></div><div class="card-num">71</div><div class="card-title">HTML Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/css-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-css3"></i></div><div class="card-num">72</div><div class="card-title">CSS Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/javascript-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-javascript"></i></div><div class="card-num">73</div><div class="card-title">JavaScript Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/python-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-python"></i></div><div class="card-num">74</div><div class="card-title">Python Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/c-language" target="_blank"><div class="card-icon"><i class="ti ti-code"></i></div><div class="card-num">75</div><div class="card-title">C Language Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/java-basics" target="_blank"><div class="card-icon"><i class="ti ti-coffee"></i></div><div class="card-num">76</div><div class="card-title">Java Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/php-basics" target="_blank"><div class="card-icon"><i class="ti ti-brand-php"></i></div><div class="card-num">77</div><div class="card-title">PHP Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/sql-basics" target="_blank"><div class="card-icon"><i class="ti ti-database"></i></div><div class="card-num">78</div><div class="card-title">SQL Basics</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/what-is-coding" target="_blank"><div class="card-icon"><i class="ti ti-terminal"></i></div><div class="card-num">79</div><div class="card-title">What is Coding</div><div class="card-tag">Coding</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/scratch-coding" target="_blank"><div class="card-icon"><i class="ti ti-lego"></i></div><div class="card-num">80</div><div class="card-title">Scratch (Visual Coding)</div><div class="card-tag">Coding</div></a>
+</div></div>
+
+<div class="section" data-section="Web Development">
+<div class="section-title"><i class="ti ti-world-www"></i> Web Development</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/website-basics" target="_blank"><div class="card-icon"><i class="ti ti-world"></i></div><div class="card-num">81</div><div class="card-title">Website Basics</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/wordpress" target="_blank"><div class="card-icon"><i class="ti ti-brand-wordpress"></i></div><div class="card-num">82</div><div class="card-title">WordPress</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/blogger" target="_blank"><div class="card-icon"><i class="ti ti-rss"></i></div><div class="card-num">83</div><div class="card-title">Blogger</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/github-pages" target="_blank"><div class="card-icon"><i class="ti ti-brand-github"></i></div><div class="card-num">84</div><div class="card-title">GitHub Pages</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/domain-hosting" target="_blank"><div class="card-icon"><i class="ti ti-server"></i></div><div class="card-num">85</div><div class="card-title">Domain &amp; Hosting</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/responsive-design" target="_blank"><div class="card-icon"><i class="ti ti-device-tablet"></i></div><div class="card-num">86</div><div class="card-title">Responsive Design</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/bootstrap" target="_blank"><div class="card-icon"><i class="ti ti-brand-bootstrap"></i></div><div class="card-num">87</div><div class="card-title">Bootstrap Basics</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/web-design-basics" target="_blank"><div class="card-icon"><i class="ti ti-layout-grid"></i></div><div class="card-num">88</div><div class="card-title">Web Design Basics</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/seo-basics" target="_blank"><div class="card-icon"><i class="ti ti-chart-line"></i></div><div class="card-num">89</div><div class="card-title">SEO Basics</div><div class="card-tag">Web Dev</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/website-speed" target="_blank"><div class="card-icon"><i class="ti ti-rocket"></i></div><div class="card-num">90</div><div class="card-title">Website Speed</div><div class="card-tag">Web Dev</div></a>
+</div></div>
+
+<div class="section" data-section="Data & Spreadsheets">
+<div class="section-title"><i class="ti ti-table"></i> Data &amp; Spreadsheets</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/google-sheets" target="_blank"><div class="card-icon"><i class="ti ti-table"></i></div><div class="card-num">91</div><div class="card-title">Google Sheets</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/data-entry" target="_blank"><div class="card-icon"><i class="ti ti-keyboard"></i></div><div class="card-num">92</div><div class="card-title">Data Entry</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/data-analysis" target="_blank"><div class="card-icon"><i class="ti ti-chart-bar"></i></div><div class="card-num">93</div><div class="card-title">Data Analysis Basics</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/charts-graphs" target="_blank"><div class="card-icon"><i class="ti ti-chart-pie"></i></div><div class="card-num">94</div><div class="card-title">Charts &amp; Graphs</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/database-basics" target="_blank"><div class="card-icon"><i class="ti ti-database"></i></div><div class="card-num">95</div><div class="card-title">Database Basics</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-forms" target="_blank"><div class="card-icon"><i class="ti ti-forms"></i></div><div class="card-num">96</div><div class="card-title">Google Forms</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/survey-making" target="_blank"><div class="card-icon"><i class="ti ti-checklist"></i></div><div class="card-num">97</div><div class="card-title">Survey Making</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/report-making" target="_blank"><div class="card-icon"><i class="ti ti-report"></i></div><div class="card-num">98</div><div class="card-title">Report Making</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/excel-formulas" target="_blank"><div class="card-icon"><i class="ti ti-math-function"></i></div><div class="card-num">99</div><div class="card-title">Excel Formulas</div><div class="card-tag">Data</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/dashboard-making" target="_blank"><div class="card-icon"><i class="ti ti-layout-dashboard"></i></div><div class="card-num">100</div><div class="card-title">Dashboard Making</div><div class="card-tag">Data</div></a>
+</div></div>
+
+<div class="section" data-section="AI & New Technology">
+<div class="section-title"><i class="ti ti-robot"></i> AI &amp; New Technology</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/what-is-ai" target="_blank"><div class="card-icon"><i class="ti ti-robot"></i></div><div class="card-num">101</div><div class="card-title">What is AI</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/chatgpt" target="_blank"><div class="card-icon"><i class="ti ti-messages"></i></div><div class="card-num">102</div><div class="card-title">ChatGPT</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-gemini" target="_blank"><div class="card-icon"><i class="ti ti-stars"></i></div><div class="card-num">103</div><div class="card-title">Google Gemini</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ai-image-making" target="_blank"><div class="card-icon"><i class="ti ti-wand"></i></div><div class="card-num">104</div><div class="card-title">AI Image Making</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ai-for-students" target="_blank"><div class="card-icon"><i class="ti ti-school"></i></div><div class="card-num">105</div><div class="card-title">AI for Students</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ai-tools-basics" target="_blank"><div class="card-icon"><i class="ti ti-plug"></i></div><div class="card-num">106</div><div class="card-title">AI Tools Basics</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/machine-learning" target="_blank"><div class="card-icon"><i class="ti ti-brain"></i></div><div class="card-num">107</div><div class="card-title">Machine Learning Basics</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/robotics-basics" target="_blank"><div class="card-icon"><i class="ti ti-robot"></i></div><div class="card-num">108</div><div class="card-title">Robotics Basics</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/iot-basics" target="_blank"><div class="card-icon"><i class="ti ti-wifi"></i></div><div class="card-num">109</div><div class="card-title">IoT Basics</div><div class="card-tag">AI</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/blockchain-basics" target="_blank"><div class="card-icon"><i class="ti ti-link"></i></div><div class="card-num">110</div><div class="card-title">Blockchain Basics</div><div class="card-tag">AI</div></a>
+</div></div>
+
+<div class="section" data-section="Communication Tools">
+<div class="section-title"><i class="ti ti-video"></i> Communication Tools</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/zoom" target="_blank"><div class="card-icon"><i class="ti ti-video"></i></div><div class="card-num">111</div><div class="card-title">Zoom</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-meet" target="_blank"><div class="card-icon"><i class="ti ti-camera"></i></div><div class="card-num">112</div><div class="card-title">Google Meet</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ms-teams-meetings" target="_blank"><div class="card-icon"><i class="ti ti-users"></i></div><div class="card-num">113</div><div class="card-title">MS Teams Meetings</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/slack" target="_blank"><div class="card-icon"><i class="ti ti-brand-slack"></i></div><div class="card-num">114</div><div class="card-title">Slack</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/telegram" target="_blank"><div class="card-icon"><i class="ti ti-brand-telegram"></i></div><div class="card-num">115</div><div class="card-title">Telegram</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/discord" target="_blank"><div class="card-icon"><i class="ti ti-brand-discord"></i></div><div class="card-num">116</div><div class="card-title">Discord</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/video-calling" target="_blank"><div class="card-icon"><i class="ti ti-phone-call"></i></div><div class="card-num">117</div><div class="card-title">Video Calling Basics</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-presentation" target="_blank"><div class="card-icon"><i class="ti ti-presentation"></i></div><div class="card-num">118</div><div class="card-title">Online Presentation</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/email-etiquette" target="_blank"><div class="card-icon"><i class="ti ti-mail-opened"></i></div><div class="card-num">119</div><div class="card-title">Email Etiquette</div><div class="card-tag">Comm</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/professional-communication" target="_blank"><div class="card-icon"><i class="ti ti-message-dots"></i></div><div class="card-num">120</div><div class="card-title">Professional Communication</div><div class="card-tag">Comm</div></a>
+</div></div>
+
+<div class="section" data-section="Multimedia">
+<div class="section-title"><i class="ti ti-movie"></i> Multimedia</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/video-editing" target="_blank"><div class="card-icon"><i class="ti ti-movie"></i></div><div class="card-num">121</div><div class="card-title">Video Editing Basics</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/capcut" target="_blank"><div class="card-icon"><i class="ti ti-cut"></i></div><div class="card-num">122</div><div class="card-title">CapCut</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/vlc-media-player" target="_blank"><div class="card-icon"><i class="ti ti-player-play"></i></div><div class="card-num">123</div><div class="card-title">VLC Media Player</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/audio-editing" target="_blank"><div class="card-icon"><i class="ti ti-music"></i></div><div class="card-num">124</div><div class="card-title">Audio Editing Basics</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/podcast-basics" target="_blank"><div class="card-icon"><i class="ti ti-microphone"></i></div><div class="card-num">125</div><div class="card-title">Podcast Basics</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/screen-recording-pc" target="_blank"><div class="card-icon"><i class="ti ti-screen-share"></i></div><div class="card-num">126</div><div class="card-title">Screen Recording (PC)</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/subtitles-captions" target="_blank"><div class="card-icon"><i class="ti ti-subtask"></i></div><div class="card-num">127</div><div class="card-title">Subtitles &amp; Captions</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/youtube-studio" target="_blank"><div class="card-icon"><i class="ti ti-brand-youtube"></i></div><div class="card-num">128</div><div class="card-title">YouTube Studio</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/obs-studio" target="_blank"><div class="card-icon"><i class="ti ti-live-photo"></i></div><div class="card-num">129</div><div class="card-title">OBS Studio Basics</div><div class="card-tag">Media</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/image-formats" target="_blank"><div class="card-icon"><i class="ti ti-file-type-jpg"></i></div><div class="card-num">130</div><div class="card-title">Image Formats Explained</div><div class="card-tag">Media</div></a>
+</div></div>
+
+<div class="section" data-section="Student Tools">
+<div class="section-title"><i class="ti ti-school"></i> Student Tools</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/google-classroom" target="_blank"><div class="card-icon"><i class="ti ti-school"></i></div><div class="card-num">131</div><div class="card-title">Google Classroom</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/typing-master" target="_blank"><div class="card-icon"><i class="ti ti-keyboard"></i></div><div class="card-num">132</div><div class="card-title">Typing Speed</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/10-finger-typing" target="_blank"><div class="card-icon"><i class="ti ti-hand-stop"></i></div><div class="card-num">133</div><div class="card-title">10-Finger Typing</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/note-taking-apps" target="_blank"><div class="card-icon"><i class="ti ti-notes"></i></div><div class="card-num">134</div><div class="card-title">Note Taking Apps</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-docs" target="_blank"><div class="card-icon"><i class="ti ti-file-text"></i></div><div class="card-num">135</div><div class="card-title">Google Docs</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-slides" target="_blank"><div class="card-icon"><i class="ti ti-presentation"></i></div><div class="card-num">136</div><div class="card-title">Google Slides</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/citation-references" target="_blank"><div class="card-icon"><i class="ti ti-quote"></i></div><div class="card-num">137</div><div class="card-title">Citation &amp; References</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-research" target="_blank"><div class="card-icon"><i class="ti ti-search"></i></div><div class="card-num">138</div><div class="card-title">Online Research Skills</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/digital-assignments" target="_blank"><div class="card-icon"><i class="ti ti-clipboard-list"></i></div><div class="card-num">139</div><div class="card-title">Digital Assignments</div><div class="card-tag">Student</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ebooks-pdfs" target="_blank"><div class="card-icon"><i class="ti ti-book"></i></div><div class="card-num">140</div><div class="card-title">E-books &amp; PDFs</div><div class="card-tag">Student</div></a>
+</div></div>
+
+<div class="section" data-section="Career & Jobs">
+<div class="section-title"><i class="ti ti-briefcase"></i> Career &amp; Jobs</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/resume-making" target="_blank"><div class="card-icon"><i class="ti ti-file-cv"></i></div><div class="card-num">141</div><div class="card-title">Resume Making</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/linkedin" target="_blank"><div class="card-icon"><i class="ti ti-brand-linkedin"></i></div><div class="card-num">142</div><div class="card-title">LinkedIn</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/job-portals" target="_blank"><div class="card-icon"><i class="ti ti-briefcase"></i></div><div class="card-num">143</div><div class="card-title">Job Portals</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/freelancing-basics" target="_blank"><div class="card-icon"><i class="ti ti-user-check"></i></div><div class="card-num">144</div><div class="card-title">Freelancing Basics</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/upwork-fiverr" target="_blank"><div class="card-icon"><i class="ti ti-coin"></i></div><div class="card-num">145</div><div class="card-title">Upwork &amp; Fiverr</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/digital-marketing" target="_blank"><div class="card-icon"><i class="ti ti-speakerphone"></i></div><div class="card-num">146</div><div class="card-title">Digital Marketing Basics</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/social-media-marketing" target="_blank"><div class="card-icon"><i class="ti ti-social"></i></div><div class="card-num">147</div><div class="card-title">Social Media Marketing</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/content-writing" target="_blank"><div class="card-icon"><i class="ti ti-pencil"></i></div><div class="card-num">148</div><div class="card-title">Content Writing</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-interview-tips" target="_blank"><div class="card-icon"><i class="ti ti-microphone"></i></div><div class="card-num">149</div><div class="card-title">Online Interview Tips</div><div class="card-tag">Career</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/work-from-home" target="_blank"><div class="card-icon"><i class="ti ti-home"></i></div><div class="card-num">150</div><div class="card-title">Work From Home Tips</div><div class="card-tag">Career</div></a>
+</div></div>
+
+<div class="section" data-section="Digital Finance">
+<div class="section-title"><i class="ti ti-cash"></i> Digital Finance</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/online-banking" target="_blank"><div class="card-icon"><i class="ti ti-building-bank"></i></div><div class="card-num">151</div><div class="card-title">Online Banking Basics</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/upi-apps" target="_blank"><div class="card-icon"><i class="ti ti-credit-card"></i></div><div class="card-num">152</div><div class="card-title">UPI Apps (PhonePe, GPay)</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/mobile-wallet" target="_blank"><div class="card-icon"><i class="ti ti-wallet"></i></div><div class="card-num">153</div><div class="card-title">Mobile Wallet</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/net-banking" target="_blank"><div class="card-icon"><i class="ti ti-cash"></i></div><div class="card-num">154</div><div class="card-title">Net Banking</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/income-tax-filing" target="_blank"><div class="card-icon"><i class="ti ti-receipt-tax"></i></div><div class="card-num">155</div><div class="card-title">Income Tax Filing Basics</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/digital-receipts" target="_blank"><div class="card-icon"><i class="ti ti-receipt"></i></div><div class="card-num">156</div><div class="card-title">Digital Receipts &amp; Bills</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ecommerce-basics" target="_blank"><div class="card-icon"><i class="ti ti-shopping-cart"></i></div><div class="card-num">157</div><div class="card-title">E-commerce Basics</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-shopping-safety" target="_blank"><div class="card-icon"><i class="ti ti-shield-check"></i></div><div class="card-num">158</div><div class="card-title">Online Shopping Safety</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/emi-loans-online" target="_blank"><div class="card-icon"><i class="ti ti-percentage"></i></div><div class="card-num">159</div><div class="card-title">EMI &amp; Loans Online</div><div class="card-tag">Finance</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/investment-apps" target="_blank"><div class="card-icon"><i class="ti ti-trending-up"></i></div><div class="card-num">160</div><div class="card-title">Investment Apps Basics</div><div class="card-tag">Finance</div></a>
+</div></div>
+
+<div class="section" data-section="Productivity Tools">
+<div class="section-title"><i class="ti ti-calendar"></i> Productivity Tools</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/google-calendar" target="_blank"><div class="card-icon"><i class="ti ti-calendar"></i></div><div class="card-num">161</div><div class="card-title">Google Calendar</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/microsoft-todo" target="_blank"><div class="card-icon"><i class="ti ti-checklist"></i></div><div class="card-num">162</div><div class="card-title">Microsoft To-Do</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/notion-basics" target="_blank"><div class="card-icon"><i class="ti ti-layout-kanban"></i></div><div class="card-num">163</div><div class="card-title">Notion Basics</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/trello-basics" target="_blank"><div class="card-icon"><i class="ti ti-columns"></i></div><div class="card-num">164</div><div class="card-title">Trello Basics</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/time-management-apps" target="_blank"><div class="card-icon"><i class="ti ti-clock"></i></div><div class="card-num">165</div><div class="card-title">Time Management Apps</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/focus-pomodoro-apps" target="_blank"><div class="card-icon"><i class="ti ti-circle"></i></div><div class="card-num">166</div><div class="card-title">Focus &amp; Pomodoro Apps</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/mind-mapping" target="_blank"><div class="card-icon"><i class="ti ti-hierarchy"></i></div><div class="card-num">167</div><div class="card-title">Mind Mapping</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/goal-setting-apps" target="_blank"><div class="card-icon"><i class="ti ti-target"></i></div><div class="card-num">168</div><div class="card-title">Goal Setting Apps</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/habit-tracker-apps" target="_blank"><div class="card-icon"><i class="ti ti-repeat"></i></div><div class="card-num">169</div><div class="card-title">Habit Tracker Apps</div><div class="card-tag">Productivity</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/alarm-reminder-apps" target="_blank"><div class="card-icon"><i class="ti ti-bell"></i></div><div class="card-num">170</div><div class="card-title">Alarm &amp; Reminder Apps</div><div class="card-tag">Productivity</div></a>
+</div></div>
+
+<div class="section" data-section="Fun & Games in Tech">
+<div class="section-title"><i class="ti ti-device-gamepad"></i> Fun &amp; Games in Tech</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/coding-games-kids" target="_blank"><div class="card-icon"><i class="ti ti-device-gamepad-2"></i></div><div class="card-num">171</div><div class="card-title">Coding Games for Kids</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/typing-games" target="_blank"><div class="card-icon"><i class="ti ti-keyboard"></i></div><div class="card-num">172</div><div class="card-title">Typing Games</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/math-apps" target="_blank"><div class="card-icon"><i class="ti ti-calculator"></i></div><div class="card-num">173</div><div class="card-title">Math Apps</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/educational-apps" target="_blank"><div class="card-icon"><i class="ti ti-book-2"></i></div><div class="card-num">174</div><div class="card-title">Educational Apps</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/brain-training-apps" target="_blank"><div class="card-icon"><i class="ti ti-brain"></i></div><div class="card-num">175</div><div class="card-title">Brain Training Apps</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/quiz-making-kahoot" target="_blank"><div class="card-icon"><i class="ti ti-question-mark"></i></div><div class="card-num">176</div><div class="card-title">Quiz Making (Kahoot)</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/online-puzzles" target="_blank"><div class="card-icon"><i class="ti ti-puzzle"></i></div><div class="card-num">177</div><div class="card-title">Online Puzzles</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/google-doodle-games" target="_blank"><div class="card-icon"><i class="ti ti-brand-google"></i></div><div class="card-num">178</div><div class="card-title">Google Doodle Games</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/chess-online" target="_blank"><div class="card-icon"><i class="ti ti-chess"></i></div><div class="card-num">179</div><div class="card-title">Chess Online</div><div class="card-tag">Fun</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/learning-apps" target="_blank"><div class="card-icon"><i class="ti ti-language"></i></div><div class="card-num">180</div><div class="card-title">Learning Apps (Duolingo)</div><div class="card-tag">Fun</div></a>
+</div></div>
+
+<div class="section" data-section="Troubleshooting & Repair">
+<div class="section-title"><i class="ti ti-tool"></i> Troubleshooting &amp; Repair</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/slow-computer-fix" target="_blank"><div class="card-icon"><i class="ti ti-hourglass"></i></div><div class="card-num">181</div><div class="card-title">Slow Computer Fix</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/internet-not-working" target="_blank"><div class="card-icon"><i class="ti ti-wifi-off"></i></div><div class="card-num">182</div><div class="card-title">Internet Not Working</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/printer-problems" target="_blank"><div class="card-icon"><i class="ti ti-printer"></i></div><div class="card-num">183</div><div class="card-title">Printer Problems</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/virus-removal" target="_blank"><div class="card-icon"><i class="ti ti-virus-off"></i></div><div class="card-num">184</div><div class="card-title">Virus Removal</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/windows-reset" target="_blank"><div class="card-icon"><i class="ti ti-refresh"></i></div><div class="card-num">185</div><div class="card-title">Windows Reset</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/software-not-opening" target="_blank"><div class="card-icon"><i class="ti ti-alert-circle"></i></div><div class="card-num">186</div><div class="card-title">Software Not Opening</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/forgot-password-fix" target="_blank"><div class="card-icon"><i class="ti ti-key-off"></i></div><div class="card-num">187</div><div class="card-title">Forgot Password Fix</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/screen-problems" target="_blank"><div class="card-icon"><i class="ti ti-device-desktop-off"></i></div><div class="card-num">188</div><div class="card-title">Screen Problems</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/sound-not-working" target="_blank"><div class="card-icon"><i class="ti ti-volume-off"></i></div><div class="card-num">189</div><div class="card-title">Sound Not Working</div><div class="card-tag">Fix</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/usb-not-detected" target="_blank"><div class="card-icon"><i class="ti ti-usb-off"></i></div><div class="card-num">190</div><div class="card-title">USB Not Detected</div><div class="card-tag">Fix</div></a>
+</div></div>
+
+<div class="section" data-section="Networking">
+<div class="section-title"><i class="ti ti-network"></i> Networking</div>
+<div class="grid">
+<a class="card" href="https://wondermayank.github.io/learn/what-is-wifi" target="_blank"><div class="card-icon"><i class="ti ti-wifi"></i></div><div class="card-num">191</div><div class="card-title">What is WiFi</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/router-setup" target="_blank"><div class="card-icon"><i class="ti ti-router"></i></div><div class="card-num">192</div><div class="card-title">Router Setup</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/network-troubleshooting" target="_blank"><div class="card-icon"><i class="ti ti-network-off"></i></div><div class="card-num">193</div><div class="card-title">Network Troubleshooting</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/hotspot-setup" target="_blank"><div class="card-icon"><i class="ti ti-access-point"></i></div><div class="card-num">194</div><div class="card-title">Hotspot Setup</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ethernet-vs-wifi" target="_blank"><div class="card-icon"><i class="ti ti-plug-connected"></i></div><div class="card-num">195</div><div class="card-title">Ethernet vs WiFi</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/ip-address-basics" target="_blank"><div class="card-icon"><i class="ti ti-hash"></i></div><div class="card-num">196</div><div class="card-title">IP Address Basics</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/dns-basics" target="_blank"><div class="card-icon"><i class="ti ti-server"></i></div><div class="card-num">197</div><div class="card-title">DNS Basics</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/firewall-basics" target="_blank"><div class="card-icon"><i class="ti ti-firewall"></i></div><div class="card-num">198</div><div class="card-title">Firewall Basics</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/network-security" target="_blank"><div class="card-icon"><i class="ti ti-shield-lock"></i></div><div class="card-num">199</div><div class="card-title">Network Security</div><div class="card-tag">Network</div></a>
+<a class="card" href="https://wondermayank.github.io/learn/broadband-vs-mobile" target="_blank"><div class="card-icon"><i class="ti ti-antenna-bars-5"></i></div><div class="card-num">200</div><div class="card-title">Broadband vs Mobile Data</div><div class="card-tag">Network</div></a>
+</div></div>
+
+</div>
+
+<div class="ts-footer">
+  <div class="fl">
+    <a href="https://wondermayank.github.io/" target="_blank"><i class="ti ti-home" style="font-size:13px;margin-right:4px"></i>WonderMayank</a>
+    <a href="https://commercesehoga.github.io/dashboard" target="_blank"><i class="ti ti-device-desktop" style="font-size:13px;margin-right:4px"></i>CBT Mock Platform</a>
+    <a href="https://wondermayank.github.io/terms" target="_blank">Terms</a>
+    <a href="https://wondermayank.github.io/privacy" target="_blank">Privacy</a>
+    <a href="https://wondermayank.github.io/disclaimer" target="_blank">Disclaimer</a>
+    <a href="https://wondermayank.github.io/contact" target="_blank"><i class="ti ti-mail" style="font-size:13px;margin-right:4px"></i>Contact Owner</a>
+    <a href="https://commercesehoga.github.io/help" target="_blank"><i class="ti ti-heart" style="font-size:13px;margin-right:4px"></i>Donation / Support</a>
+  </div>
+  <div class="fc">© 2025 ThunderStudy · Made with ❤️ by WonderMayank · All 200 topics free to learn</div>
+</div>
+
+</div>
+
+<script>
+function filterCards(){
+  var q=document.getElementById('searchInput').value.toLowerCase().trim();
+  var sections=document.querySelectorAll('.section');
+  var total=0;
+  sections.forEach(function(sec){
+    var cards=sec.querySelectorAll('.card');
+    var vis=0;
+    cards.forEach(function(c){
+      var t=c.querySelector('.card-title').textContent.toLowerCase();
+      var tg=c.querySelector('.card-tag').textContent.toLowerCase();
+      var sn=sec.dataset.section.toLowerCase();
+      if(!q||t.includes(q)||tg.includes(q)||sn.includes(q)){c.style.display='';vis++;}
+      else c.style.display='none';
+    });
+    sec.style.display=vis?'':'none';
+    total+=vis;
+  });
+  document.getElementById('noResult').style.display=total?'none':'block';
+}
+</script>
+</body>
+</html>
