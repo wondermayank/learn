@@ -1,0 +1,2666 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Master Academy – Ultimate Interactive Relational Database School</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn Microsoft Access from relational database fundamentals to SQL queries, Table normalizations, lookup fields, reports design, and VBA database automation. Timed labs.">
+  <meta name="referrer" content="no-referrer">
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS THEMES (Variables)
+       ========================================================================== */
+    :root {
+      --primary-font: 'Inter', sans-serif;
+      --header-font: 'Fredoka One', 'Inter', sans-serif;
+      
+      /* Fluent Light Mode Access Red Palette */
+      --bg-primary: #faf5f5;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #201f1e;
+      --text-muted: #605e5c;
+      --border-color: rgba(164, 55, 58, 0.15);
+      --accent-red: #a4373a; /* Iconic Microsoft Access Red/Burgundy */
+      --accent-light-red: #fdf0f0;
+      --accent-blue: #0078d4;
+      --accent-light-blue: #f0f6fc;
+      --accent-success: #107c41;
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(255, 255, 255, 0.82);
+      --glass-border: rgba(164, 55, 58, 0.2);
+      --shadow-soft: 0 8px 24px rgba(164, 55, 58, 0.04);
+      --shadow-hover: 0 16px 40px rgba(164, 55, 58, 0.1);
+      
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="dark"] {
+      /* Fluent Dark Mode Palette */
+      --bg-primary: #0f0c0c;
+      --bg-sidebar: #171313;
+      --bg-card: #1e1919;
+      --text-main: #f3f2f1;
+      --text-muted: #a19f9d;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-red: #cc4347;
+      --accent-light-red: rgba(204, 67, 71, 0.15);
+      
+      /* Glassmorphism & Shadows */
+      --glass-bg: rgba(30, 25, 25, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+      --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ==========================================================================
+       BASE LAYOUT
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--primary-font);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      display: flex;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Grid Backdrop mesh */
+    .glow-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 10% 15%, var(--accent-light-red) 0%, transparent 60%),
+        radial-gradient(circle at 85% 25%, rgba(164, 55, 58, 0.06) 0%, transparent 50%);
+    }
+
+    /* ==========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================== */
+    .sidebar {
+      width: 260px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color 0.3s, border-color 0.3s;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--header-font);
+      font-size: 1.2rem;
+      color: var(--text-main);
+      padding: 8px 12px 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+
+    .brand-logo i {
+      font-size: 28px;
+      color: var(--accent-red);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    .nav-menu::-webkit-scrollbar { width: 4px; }
+    .nav-menu::-webkit-scrollbar-thumb { background: var(--accent-light-red); border-radius: 4px; }
+
+    .nav-item button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item button i {
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .nav-item button:hover {
+      background: var(--accent-light-red);
+      color: var(--accent-red);
+    }
+
+    .nav-item button:hover i {
+      transform: translateX(3px);
+    }
+
+    .nav-item.active button {
+      background: var(--accent-red);
+      color: #ffffff !important;
+    }
+
+    /* Mobile Sidebar toggler */
+    .mobile-nav-bar {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+      padding: 0 16px;
+      z-index: 99;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-bar button {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== */
+    .main-wrapper {
+      margin-left: 260px;
+      flex: 1;
+      padding: 24px 32px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s;
+    }
+
+    /* ==========================================================================
+       TOP CONFIGURATION BAR
+       ========================================================================== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px 24px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Gamification meters */
+    .user-stats-widget {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .xp-meter-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .xp-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .xp-bar-outer {
+      width: 140px;
+      height: 8px;
+      background: var(--bg-primary);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .xp-bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #a4373a, #cc4347);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .streak-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #ff7849;
+    }
+
+    .streak-meter i {
+      font-size: 20px;
+      animation: flamePulse 1.2s infinite alternate;
+    }
+
+    @keyframes flamePulse {
+      from { transform: scale(1); filter: drop-shadow(0 0 1px #ff7849); }
+      to { transform: scale(1.15); filter: drop-shadow(0 0 4px #ff3800); }
+    }
+
+    .badges-meter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mini-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-light-red);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--accent-red);
+      cursor: pointer;
+    }
+
+    /* Top Controls Buttons */
+    .controls-panel {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: var(--accent-light-red);
+      border-color: rgba(164, 55, 58, 0.25);
+    }
+
+    /* ==========================================================================
+       DYNAMIC PAGE SECTIONS
+       ========================================================================== */
+    .portal-section {
+      display: none;
+    }
+
+    .portal-section.active {
+      display: block;
+      animation: sectionSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes sectionSlideUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(164, 55, 58, 0.05) 0%, rgba(164, 55, 58, 0.08) 100%), var(--bg-card);
+      border: 1px solid rgba(164, 55, 58, 0.15);
+      border-left: 6px solid var(--accent-red);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-details h2 {
+      font-family: var(--header-font);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .hero-details p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-btn {
+      background: var(--accent-red);
+      border: none;
+      color: #ffffff;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(164, 55, 58, 0.3);
+      transition: all 0.22s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(164, 55, 58, 0.4);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .lesson-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .lesson-box:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .lesson-box-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .lesson-box-header i {
+      font-size: 22px;
+      color: var(--accent-red);
+    }
+
+    .lesson-box-header h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+    }
+
+    .lesson-box ul {
+      list-style: none;
+    }
+
+    .lesson-box ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-box ul li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--accent-red);
+      font-weight: bold;
+    }
+
+    .tip-banner {
+      background: var(--accent-light-red);
+      border-left: 4px solid var(--accent-red);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-top: 1rem;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: var(--text-main);
+    }
+
+    .tip-banner i {
+      font-size: 24px;
+      color: var(--accent-red);
+    }
+
+    .tab-bar-wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      padding-bottom: 4px;
+    }
+
+    .bar-tab {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .bar-tab.active {
+      background: var(--accent-red);
+      color: #ffffff;
+      border-color: var(--accent-red);
+    }
+
+    .level-content-box {
+      display: none;
+    }
+
+    .level-content-box.active {
+      display: block;
+      animation: sectionSlideUp 0.3s ease forwards;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE RELATIONAL DATABASE SIMULATOR & PLAYGROUND
+       ========================================================================== */
+    .db-simulator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .db-sim-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .db-tab-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .db-tab-btn.active {
+      background: var(--accent-red);
+      color: #ffffff;
+      border-color: var(--accent-red);
+    }
+
+    /* Datasheet Grid Table styling */
+    .db-grid-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #333333;
+      margin-bottom: 1rem;
+    }
+
+    .db-grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 13px;
+    }
+
+    .db-grid-table th, .db-grid-table td {
+      border: 1px solid #d2d2d2;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    .db-grid-table th {
+      background: #f3f3f3;
+      color: #555555;
+      font-weight: 700;
+    }
+
+    .db-grid-table tr:hover {
+      background: rgba(164, 55, 58, 0.03);
+    }
+
+    .db-pk-icon {
+      color: #ffb900;
+      margin-right: 4px;
+      font-size: 12px;
+    }
+
+    .db-grid-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      background: var(--bg-primary);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .db-input {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    /* SQL Practice playground styles */
+    .sql-playground-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .sql-playground-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sql-editor-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sql-textarea {
+      width: 100%;
+      height: 140px;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.9rem;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      resize: none;
+      outline: none;
+    }
+
+    .sql-error-console {
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #ff3b30;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      display: none;
+    }
+
+    /* ER relationship schema builder */
+    .er-diagram-wrap {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      position: relative;
+      overflow-x: auto;
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+
+    .er-table-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 220px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .er-table-header {
+      background: var(--accent-red);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .er-fields-list {
+      list-style: none;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .er-fields-list li {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+    }
+
+    .er-field-pk {
+      font-weight: 800;
+      color: var(--accent-red);
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY
+       ========================================================================== */
+    .shortcut-search-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .shortcut-search-input-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .shortcut-search-input-wrap input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      font-size: 0.92rem;
+      outline: none;
+      color: var(--text-main);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .shortcut-search-input-wrap i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .shortcut-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      max-height: 450px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .shortcut-card-grid::-webkit-scrollbar { width: 6px; }
+    .shortcut-card-grid::-webkit-scrollbar-thumb { background: var(--accent-light-red); border-radius: 6px; }
+
+    .shortcut-card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.2s;
+    }
+
+    .shortcut-card-item:hover { transform: translateY(-2px); }
+
+    .shortcut-card-details h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .shortcut-card-details span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .shortcut-kbd {
+      background: var(--bg-primary);
+      border: 1px solid rgba(164, 55, 58, 0.12);
+      border-bottom: 3px solid rgba(164, 55, 58, 0.22);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-red);
+    }
+
+    /* ==========================================================================
+       QUIZ ENGINE & MCQS
+       ========================================================================== */
+    .quiz-card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .quiz-header-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .timer-pill {
+      background: #fff0f0;
+      border: 1px solid #ffd6d6;
+      color: #ff3b30;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quiz-question-container h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-option-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .quiz-option-btn:hover {
+      background: var(--accent-light-red);
+      border-color: rgba(164, 55, 58, 0.25);
+    }
+
+    .quiz-option-btn.correct {
+      background: #eafcf1 !important;
+      border-color: #107c41 !important;
+      color: #107c41 !important;
+    }
+
+    .quiz-option-btn.incorrect {
+      background: #fff2f2 !important;
+      border-color: #ff3b30 !important;
+      color: #ff3b30 !important;
+    }
+
+    .certificate-panel {
+      display: none;
+      margin-top: 2rem;
+      animation: stampAppear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes stampAppear {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cert-frame {
+      border: 14px double var(--accent-red);
+      background: #ffffff;
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(164, 55, 58, 0.15);
+      color: #3b1d1d;
+      border-radius: 8px;
+    }
+
+    .cert-frame h2 {
+      font-family: var(--header-font);
+      font-size: 2.2rem;
+      color: var(--accent-red);
+      margin-bottom: 8px;
+    }
+
+    .cert-divider {
+      width: 80px;
+      height: 4px;
+      background: #a4373a;
+      margin: 1.5rem auto;
+      border-radius: 999px;
+    }
+
+    .cert-frame p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #5c4747;
+    }
+
+    .cert-frame .name-tag {
+      font-family: var(--header-font);
+      font-size: 2rem;
+      color: #0b0f19;
+      margin: 1.5rem 0;
+      border-bottom: 2px dashed #a4373a;
+      display: inline-block;
+      padding: 4px 30px;
+    }
+
+    .cert-stamp {
+      position: absolute;
+      bottom: 24px;
+      right: 48px;
+      width: 95px;
+      height: 95px;
+      background: var(--accent-red);
+      border-radius: 50%;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 20px rgba(164, 55, 58, 0.35);
+      transform: rotate(-12deg);
+      border: 3px double #ffffff;
+    }
+
+    /* Template Downloads */
+    .template-box-code {
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: var(--bg-primary);
+      color: var(--text-main);
+      resize: none;
+      margin-bottom: 12px;
+    }
+
+    /* VBA Macros Highlight Block */
+    .vba-code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 18px;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--accent-red);
+    }
+
+    /* ==========================================================================
+       APP FOOTER (Consistent Template Links)
+       ========================================================================== */
+    .ts-footer {
+      background: var(--bg-sidebar);
+      border-top: 1px solid var(--border-color);
+      color: var(--text-main);
+      text-align: center;
+      padding: 3rem 1.5rem 2rem;
+      margin-top: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+    }
+
+    .ts-footer .fl {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+    }
+
+    .ts-footer a {
+      color: var(--accent-red);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 6px 14px;
+      background: var(--bg-primary);
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .ts-footer a:hover {
+      background: var(--accent-light-red);
+      transform: translateY(-1px);
+    }
+
+    .ts-footer .fc {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.8;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-270px);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-wrapper {
+        margin-left: 0;
+        padding-top: 80px;
+      }
+      .mobile-nav-bar {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+      .controls-panel {
+        justify-content: space-between;
+      }
+      .hero-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-backdrop"></div>
+
+  <!-- Mobile Top Hamburger Navigation Header -->
+  <div class="mobile-nav-bar">
+    <div class="brand-logo" style="margin:0; border:none; padding:0;">
+      <i class="ti ti-database"></i>
+      <span>Access Academy</span>
+    </div>
+    <button id="mobileMenuBtn" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
+  </div>
+
+  <!-- Sidebar Navigation Drawer -->
+  <nav class="sidebar" id="appSidebar">
+    <div class="brand-logo">
+      <i class="ti ti-database"></i>
+      <span data-localize="sidebarBrand">Access Academy</span>
+    </div>
+    
+    <ul class="nav-menu">
+      <li class="nav-item active" data-target="home"><button><i class="ti ti-home"></i> <span data-localize="menuHome">Home Page</span></button></li>
+      <li class="nav-item" data-target="beginner"><button><i class="ti ti-award"></i> <span data-localize="menuBeginner">Beginner Course</span></button></li>
+      <li class="nav-item" data-target="db-playground"><button><i class="ti ti-database-cog"></i> <span data-localize="menuSimulator">Database &amp; SQL Lab</span></button></li>
+      <li class="nav-item" data-target="tabs-guide"><button><i class="ti ti-book-2"></i> <span data-localize="menuTabs">Ribbon Tabs Guide</span></button></li>
+      <li class="nav-item" data-target="fundamentals"><button><i class="ti ti-git-branch"></i> <span data-localize="menuFund">Fundamentals &amp; Relationships</span></button></li>
+      <li class="nav-item" data-target="table-design"><button><i class="ti ti-table"></i> <span data-localize="menuTables">Table Design Academy</span></button></li>
+      <li class="nav-item" data-target="shortcuts"><button><i class="ti ti-keyboard"></i> <span data-localize="menuShortcuts">Shortcut Keys</span></button></li>
+      <li class="nav-item" data-target="vba-macros"><button><i class="ti ti-terminal-2"></i> <span data-localize="menuVba">VBA Automation</span></button></li>
+      <li class="nav-item" data-target="templates"><button><i class="ti ti-download"></i> <span data-localize="menuTemplates">Templates Pack</span></button></li>
+      <li class="nav-item" data-target="errors"><button><i class="ti ti-alert-triangle"></i> <span data-localize="menuErrors">Error Solver</span></button></li>
+      <li class="nav-item" data-target="quiz"><button><i class="ti ti-clipboard-list"></i> <span data-localize="menuQuiz">MCQ &amp; Certificate</span></button></li>
+    </ul>
+  </nav>
+
+  <!-- Main View Container wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Top Bar User progress & options panels -->
+    <header class="top-bar">
+      
+      <!-- Gamified stats meters -->
+      <div class="user-stats-widget">
+        <div class="xp-meter-wrap">
+          <span class="xp-label" data-localize="xpTitle">DB Developer Rank Progress</span>
+          <div class="xp-bar-outer">
+            <div class="xp-bar-inner" id="xpBar"></div>
+          </div>
+        </div>
+        <div class="streak-meter">
+          <i class="ti ti-flame"></i>
+          <span id="streakCount">1</span> <span data-localize="streakSuffix">Day Streak</span>
+        </div>
+        <div class="badges-meter">
+          <div class="mini-badge" title="Data Entry Unlocked" id="badgeBeg"><i class="ti ti-award"></i></div>
+          <div class="mini-badge" title="SQL Query Analyst Unlocked" id="badgeExp" style="opacity: 0.35;"><i class="ti ti-terminal"></i></div>
+          <div class="mini-badge" title="Database Architect Unlocked" id="badgeMaster" style="opacity: 0.35;"><i class="ti ti-crown"></i></div>
+        </div>
+      </div>
+
+      <!-- Theme & Translation controls -->
+      <div class="controls-panel">
+        <button class="control-btn" id="langToggleBtn">
+          <i class="ti ti-language"></i>
+          <span id="langLabel">हिन्दी</span>
+        </button>
+        <button class="control-btn" id="themeToggleBtn">
+          <i class="ti ti-sun"></i>
+          <span id="themeLabel">Dark Mode</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- Dynamic PowerPoint Sections -->
+
+    <!-- =================== 1. HOME PAGE =================== -->
+    <section class="portal-section active" id="sec-home">
+      <div class="hero-banner">
+        <div class="hero-details">
+          <div class="brand-badge" style="margin-bottom: 12px; font-weight: 800; font-size: 0.8rem; background: var(--accent-light-red); color: var(--accent-red); padding: 4px 10px; border-radius: 20px; display: inline-block;" data-localize="homeBadge">⚡ Relational Database Blueprint</div>
+          <h2 data-localize="homeHeroTitle">Learn Access From Absolute Beginner to Expert Developer</h2>
+          <p data-localize="homeHeroDesc">Unlock database normalization schemas, advanced SQL parameters queries, forms data entry flows, chevron reports, and VBA automation modules. Designed for inventory managers, analysts, and office workers.</p>
+          <button class="cta-btn" onclick="navigateToSection('beginner')">
+            <i class="ti ti-rocket"></i> <span data-localize="homeCta">Start Learning</span>
+          </button>
+        </div>
+        <!-- Gorgeous Generated Local Hero Illustration -->
+        <img src="images/access_hero.png" alt="Microsoft Access Relational Schema" style="max-width: 300px; border-radius: var(--radius-md); box-shadow: 0 10px 30px rgba(164, 55, 58, 0.15); object-fit: cover; height: 160px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+      </div>
+
+      <div class="grid-2">
+        <div class="content-card">
+          <h3 style="margin-bottom: 16px;" data-localize="homeFeaturesTitle">📊 Relational Database Platform</h3>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-database-cog" style="color: var(--accent-red); font-size: 20px;"></i>
+              <span data-localize="homeFeatSpread">Interactive Relational Datasheet &amp; SQL Simulator</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-language" style="color: var(--accent-red); font-size: 20px;"></i>
+              <span data-localize="homeFeatLang">Dual Language Curriculum (Hindi + English Mode)</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-keyboard" style="color: var(--accent-red); font-size: 20px;"></i>
+              <span data-localize="homeFeatShort">Multi-OS Keyboard Shortcuts Console</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 10px; font-weight: 600;">
+              <i class="ti ti-certificate" style="color: var(--accent-red); font-size: 20px;"></i>
+              <span data-localize="homeFeatCert">Dynamic Timed Relational MCQ Quiz Certification Engine</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3 style="margin-bottom: 8px;" data-localize="homeProgressTitle">📈 Student Developer Dashboard</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeProgressDesc">Execute accurate SQL queries, normalize databases, and build relations to earn XP points!</p>
+          </div>
+          <div style="background: var(--bg-primary); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerXP">XP Points Earned</span>
+              <span style="color: var(--accent-red);" id="totalXpVal">0 XP</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.88rem;">
+              <span data-localize="homeTrackerStatus">Active Rank</span>
+              <span style="color: var(--accent-red);" id="userRankVal">Data Entry Apprentice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Image gallery mapping relational structures -->
+      <div class="content-card" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-photo" style="color: var(--accent-red);"></i> <span data-localize="homeVisualTitle">Relational Database Graphic Maps</span></h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;" data-localize="homeVisualDesc">Study table mappings, lookup controls, one-to-many relationship fields, and macros structures.</p>
+        
+        <div class="grid-2" style="gap: 24px;">
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/access_hero.png" alt="Access Database Map 1" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">1. Entity Relationships (ER) Mappings</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">Visualizing primary keys, foreign fields, referential integrity tracks.</p>
+            </div>
+          </div>
+          
+          <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <img src="images/access_ribbon.png" alt="Access Database Map 2" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 220px; transition: transform 0.25s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="text-align: center;">
+              <h4 style="font-weight: 800; font-size: 0.95rem; margin-bottom: 4px;">2. Table Properties &amp; Form Fields</h4>
+              <p style="color: var(--text-muted); font-size: 0.8rem;">How validation rules, input masks, and lookup values govern data entries.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 2. BEGINNER COURSE =================== -->
+    <section class="portal-section" id="sec-beginner">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="begTitle">Access Absolute Beginner Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="begSubtitle">Understand what relational databases are, differences between Excel and Access, navigation pane, and fields terminology.</p>
+        
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-table"></i><h3 data-localize="begL1Title">1. Tables, Fields &amp; Records</h3></div>
+            <ul>
+              <li data-localize="begL1Li1">Tables hold structured categories of objects (e.g. Customers)</li>
+              <li data-localize="begL1Li2">Fields are columns representing properties (e.g. PhoneNumber)</li>
+              <li data-localize="begL1Li3">Records represent single rows of entity entries (e.g. John Doe)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-key"></i><h3 data-localize="begL2Title">2. Primary &amp; Foreign Keys</h3></div>
+            <ul>
+              <li data-localize="begL2Li1">Primary Key (PK) is a unique index identifying records strictly</li>
+              <li data-localize="begL2Li2">Foreign Key (FK) references a PK inside another table</li>
+              <li data-localize="begL2Li3">Keys establish relations and avoid data duplicates</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-layout-sidebar"></i><h3 data-localize="begL3Title">3. Excel vs Access Databases</h3></div>
+            <ul>
+              <li data-localize="begL3Li1">Excel is a flat spreadsheet file for data formatting &amp; math</li>
+              <li data-localize="begL3Li2">Access is a relational database for large linked ledgers</li>
+              <li data-localize="begL3Li3">Access prevents typos using validation rules and formats</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tip-banner">
+          <i class="ti ti-bulb"></i>
+          <p><strong data-localize="begTipLabel">Pro-Tip:</strong> <span data-localize="begTipText">Always compact and repair your database (File > Compact & Repair) regularly! Relational tables gather ghost record bytes over time, and compacting cleans memory up to 80%!</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 3. RELATIONAL DATABASE & SQL SIMULATOR =================== -->
+    <section class="portal-section" id="sec-db-playground">
+      <div class="db-simulator-card">
+        <h2 style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-database-cog" style="color: var(--accent-red);"></i> <span data-localize="simTitle">Relational Database &amp; SQL Playground Simulator</span></h2>
+        <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.5rem;" data-localize="simDesc">Select tabs to view tables, insert new data rows, or write live SQL queries below to query relational metrics!</p>
+
+        <!-- Database Table Selector Tabs -->
+        <div class="db-sim-tabs" id="dbTableTabs">
+          <button class="db-tab-btn active" onclick="switchSimulatorTable('Employees')">Employees Table</button>
+          <button class="db-tab-btn" onclick="switchSimulatorTable('Departments')">Departments Table</button>
+          <button class="db-tab-btn" onclick="switchSimulatorTable('Projects')">Projects Table</button>
+        </div>
+
+        <!-- Dynamic Datasheet Grid View -->
+        <div class="db-grid-container">
+          <table class="db-grid-table" id="dbDatasheetGrid">
+            <!-- Rendered by JS -->
+          </table>
+        </div>
+
+        <!-- Add Record Console -->
+        <div class="db-grid-actions" id="addRecordPanel">
+          <!-- Populated dynamically based on selected table fields -->
+        </div>
+
+        <!-- Visual ER Diagram Window -->
+        <h3 style="font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 6px;"><i class="ti ti-git-branch" style="color: var(--accent-red);"></i> <span data-localize="simErTitle">Active Entity Relationship (ER) diagram</span></h3>
+        <div class="er-diagram-wrap">
+          <div class="er-table-card">
+            <div class="er-table-header"><i class="ti ti-table"></i> Employees</div>
+            <ul class="er-fields-list">
+              <li><span class="er-field-pk"><i class="ti ti-key"></i> EmpId</span> <span style="font-size: 0.65rem; color: var(--text-muted);">AutoNumber</span></li>
+              <li><span>Name</span> <span style="font-size: 0.65rem; color: var(--text-muted);">Short Text</span></li>
+              <li><span style="font-weight: 700; color: var(--accent-blue);">DeptId (FK)</span> <span style="font-size: 0.65rem; color: var(--text-muted);">Number</span></li>
+              <li><span>Salary</span> <span style="font-size: 0.65rem; color: var(--text-muted);">Currency</span></li>
+            </ul>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: var(--accent-red);">
+            <span>1</span>
+            <div style="width: 60px; height: 2px; background: var(--accent-red); position: relative; margin: 0 8px;">
+              <div style="position: absolute; right: -2px; top: -5px; font-size: 14px; font-weight: 800;">∞</div>
+            </div>
+          </div>
+
+          <div class="er-table-card">
+            <div class="er-table-header"><i class="ti ti-table"></i> Departments</div>
+            <ul class="er-fields-list">
+              <li><span class="er-field-pk"><i class="ti ti-key"></i> DeptId</span> <span style="font-size: 0.65rem; color: var(--text-muted);">AutoNumber</span></li>
+              <li><span>DeptName</span> <span style="font-size: 0.65rem; color: var(--text-muted);">Short Text</span></li>
+              <li><span>Location</span> <span style="font-size: 0.65rem; color: var(--text-muted);">Short Text</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SQL Playground practice area -->
+        <div class="sql-playground-layout">
+          <div class="sql-editor-box">
+            <h3 style="font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 6px;"><i class="ti ti-terminal" style="color: var(--accent-red);"></i> <span data-localize="sqlBoxTitle">Live SQL Query Practice Editor</span></h3>
+            <textarea class="sql-textarea" id="sqlQueryInput" placeholder="-- Try writing SQL! E.g.&#10;SELECT * FROM Employees&#10;SELECT Name, Salary FROM Employees WHERE Salary > 60000&#10;SELECT Name FROM Employees WHERE DeptId = 2 ORDER BY Name DESC&#10;SELECT Employees.Name, Departments.DeptName FROM Employees INNER JOIN Departments ON Employees.DeptId = Departments.DeptId"></textarea>
+            <div class="sql-error-console" id="sqlConsoleError"></div>
+            <button class="cta-btn" onclick="executeSqlQuery()" style="margin-top: 8px; justify-content: center;">
+              <i class="ti ti-play"></i> <span data-localize="sqlRunBtn">Run SQL Query</span>
+            </button>
+          </div>
+
+          <div class="sql-editor-box">
+            <h3 style="font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 6px;"><i class="ti ti-table-shortcut" style="color: var(--accent-red);"></i> <span data-localize="sqlOutTitle">SQL Query Output Datasheet</span></h3>
+            <div class="db-grid-container" style="height: 190px;">
+              <table class="db-grid-table" id="sqlOutputGrid">
+                <thead><tr><th>Query Result</th></tr></thead>
+                <tbody><tr><td style="color: var(--text-muted);">Write query and click Run to preview output tables...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 4. RIBBON TABS GUIDE =================== -->
+    <section class="portal-section" id="sec-tabs-guide">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tabsTitle">Full Access Tabs Blueprint</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tabsSubtitle">Every command, design view group, and external tool in the Access Ribbon menu structure.</p>
+
+        <!-- Visual Map at the top of the Ribbon Section -->
+        <div style="background: var(--bg-primary); border-radius: var(--radius-md); padding: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+          <img src="images/access_ribbon.png" alt="Access Ribbon Setup Guide Map" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); object-fit: cover; max-height: 250px;">
+          <p style="font-size: 0.85rem; font-weight: 700; color: var(--accent-red); text-align: center;"><i class="ti ti-info-circle"></i> Visual Map: MS Access tables datasheet view structures and tools ribbon controls</p>
+        </div>
+
+        <!-- Sub Tabs Bar -->
+        <div class="tab-bar-wrap">
+          <button class="bar-tab active" data-tabcontent="tab-home">Home Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-create">Create Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-extdata">External Data Tab</button>
+          <button class="bar-tab" data-tabcontent="tab-tools">Database Tools Tab</button>
+        </div>
+
+        <!-- ── Sub Tab Content: HOME ── -->
+        <div class="level-content-box active" id="tab-home">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-filter"></i><h3 data-localize="tabHomeFilterTitle">Sort &amp; Filter Group</h3></div>
+              <ul>
+                <li data-localize="tabHomeFilter1">Toggle Filter: Isolate records matching specific selected properties</li>
+                <li data-localize="tabHomeFilter2">Advanced Filter: Set complex parameter ranges (e.g. Salary > 50000 AND Dept = 1)</li>
+                <li data-localize="tabHomeFilter3">Compact Sorting: Ascending/Descending values on active datasheet columns</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-edit"></i><h3 data-localize="tabHomeRecordsTitle">Records &amp; Finds</h3></div>
+              <ul>
+                <li data-localize="tabHomeRecords1">New Record: Add rows to the end of datasheet tables</li>
+                <li data-localize="tabHomeRecords2">Find &amp; Replace: Search massive table indices for keyword matches</li>
+                <li data-localize="tabHomeRecords3">Totals: Append mathematical rows (Sum, Average, Counts) dynamically</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: CREATE ── -->
+        <div class="level-content-box" id="tab-create">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-layout-grid-add"></i><h3 data-localize="tabCreateTablesTitle">Tables &amp; Queries</h3></div>
+              <ul>
+                <li data-localize="tabCreateTables1">Table Design: Setup exact field properties and validation masks</li>
+                <li data-localize="tabCreateTables2">Query Design: Visual query builder mapping tables visually</li>
+                <li data-localize="tabCreateTables3">Query Wizard: Step-by-step Crosstab and duplicate query generator</li>
+              </ul>
+            </div>
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-box"></i><h3 data-localize="tabCreateFormsTitle">Forms &amp; Reports</h3></div>
+              <ul>
+                <li data-localize="tabCreateForms1">Form Design: Add text fields, lists, drop-down menus, and save buttons</li>
+                <li data-localize="tabCreateForms2">Report Wizard: Generate clean tabular printable sheets grouped by category</li>
+                <li data-localize="tabCreateForms3">Navigation Form: Create main dashboard menus to slide between tables</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: EXTERNAL DATA ── -->
+        <div class="level-content-box" id="tab-extdata">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-file-import"></i><h3 data-localize="tabExtImportTitle">Import &amp; Links</h3></div>
+              <ul>
+                <li data-localize="tabExtImport1">Import Excel: Map Excel column rows directly into Access databases</li>
+                <li data-localize="tabExtImport2">Linked Table: Link an Excel sheet dynamically (updates in Excel write to Access!)</li>
+                <li data-localize="tabExtImport3">ODBC database: Connect SQL Server or SharePoint lists to your files</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Sub Tab Content: TOOLS ── -->
+        <div class="level-content-box" id="tab-tools">
+          <div class="grid-2">
+            <div class="lesson-box">
+              <div class="lesson-box-header"><i class="ti ti-git-branch"></i><h3 data-localize="tabToolsRelationsTitle">Relationships &amp; VBA</h3></div>
+              <ul>
+                <li data-localize="tabToolsRelations1">Relationships: Visualize entity links and map key coordinates</li>
+                <li data-localize="tabToolsRelations2">Referential Integrity: Prevent orphaned rows when deleting key rows</li>
+                <li data-localize="tabToolsRelations3">Visual Basic: Open full code editor to write advanced event macros</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================== 5. FUNDAMENTALS & RELATIONSHIPS =================== -->
+    <section class="portal-section" id="sec-fundamentals">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="fundTitle">Database Fundamentals &amp; Modeling</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="fundSubtitle">Relational schemas, Normalizations (1NF/2NF/3NF), and Referential Integrity constraints.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-git-merge"></i><h3 data-localize="fundL1Title">1. Types of Relationships</h3></div>
+            <ul>
+              <li data-localize="fundL1Li1">One-to-Many: One department has many employees (most common!)</li>
+              <li data-localize="fundL1Li2">One-to-One: One employee has exactly one security record</li>
+              <li data-localize="fundL1Li3">Many-to-Many: Many students take many courses (requires Junction Table!)</li>
+            </ul>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-shield-check"></i><h3 data-localize="fundL2Title">2. Normalization Rules</h3></div>
+            <ul>
+              <li data-localize="fundL2Li1">1NF: Atomicity (every column cell must contain a single discrete value)</li>
+              <li data-localize="fundL2Li2">2NF: No partial dependencies (all non-key columns depend on full PK)</li>
+              <li data-localize="fundL2Li3">3NF: No transitive dependencies (columns depend only on the PK!)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 6. TABLE DESIGN ACADEMY =================== -->
+    <section class="portal-section" id="sec-table-design">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tabTitle">Table Design Academy</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tabSubtitle">Field data types, validation syntax, input masks, and drop-down lookup fields.</p>
+
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 8px; font-weight: 800; font-size: 1rem;"><i class="ti ti-key"></i> Key Field Rules</h3>
+            <p style="color:var(--text-muted); font-size: 0.9rem; line-height: 1.5;">AutoNumber is perfect for primary keys because it auto-generates unique ascending integers. Short Text holds alphanumeric characters up to 255 bytes.</p>
+          </div>
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 8px; font-weight: 800; font-size: 1rem;"><i class="ti ti-shield-alert"></i> Validation Rules</h3>
+            <p style="color:var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Syntax: `>0 AND <120` prevents age typos. `[Salary] >= 15000` sets minimum corporate salary boundaries at database level.</p>
+          </div>
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 8px; font-weight: 800; font-size: 1rem;"><i class="ti ti-mask"></i> Input Masks</h3>
+            <p style="color:var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Syntax: `(999) 000-0000` enforces phone formats. `00000-9999` formats US zip codes to block letters from being typed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 7. SHORTCUT KEYS DATABASE =================== -->
+    <section class="portal-section" id="sec-shortcuts">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="keysTitle">Keyboard Shortcuts database Console</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="keysSubtitle">Filter Access shortcuts instantly using the live search engine bar below.</p>
+
+        <!-- Shortcuts Settings Console -->
+        <div class="shortcut-search-container">
+          <div class="shortcut-search-input-wrap">
+            <i class="ti ti-search"></i>
+            <input type="text" id="shortcutSearch" placeholder="Search shortcuts (e.g., Save, Compact, Datasheet, VBA)...">
+          </div>
+          <button class="control-btn" id="osToggleBtn" style="border-radius: var(--radius-sm);">
+            <i class="ti ti-brand-windows"></i>
+            <span id="osLabel">Windows Keys</span>
+          </button>
+        </div>
+
+        <!-- Filter Subcategory bar -->
+        <div class="tab-bar-wrap" style="margin-bottom: 1.5rem;" id="shortcutCats">
+          <button class="bar-tab active" data-cat="all">All Shortcuts</button>
+          <button class="bar-tab" data-cat="Navigation">Navigation</button>
+          <button class="bar-tab" data-cat="Table">Tables &amp; Datasheet</button>
+          <button class="bar-tab" data-cat="Query">Queries</button>
+          <button class="bar-tab" data-cat="VBA">VBA</button>
+        </div>
+
+        <!-- Shortcuts Render Grid -->
+        <div class="shortcut-card-grid" id="shortcutsGrid">
+          <!-- Rendered in JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="no-shortcuts-found" id="noShortcuts" style="display:none; text-align:center; padding: 2rem; color:var(--text-muted);">
+          <i class="ti ti-keyboard-off" style="font-size:32px;"></i>
+          <p data-localize="keysEmpty" style="margin-top:8px;">No matching shortcuts found. Try another keyword.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 8. VBA & AUTOMATION =================== -->
+    <section class="portal-section" id="sec-vba-macros">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="vbaTitle">Access VBA &amp; Database Automation</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="vbaSubtitle">Unlock MS Access developer tools. Write scripts to generate invoices and auto-backup tables.</p>
+
+        <div class="lesson-box" style="margin-bottom: 2rem;">
+          <div class="lesson-box-header"><i class="ti ti-code"></i><h3 data-localize="vbaProjTitle">Automated Project: Auto-Audit Record Backups</h3></div>
+          <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:1rem;" data-localize="vbaProjDesc">Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro automatically backs up active employee records to an audit ledger!</p>
+          
+          <pre class="vba-code-block">
+Sub BackupAuditLedger()
+    Dim db As DAO.Database
+    Dim sqlString As String
+    
+    Set db = CurrentDb
+    
+    ' SQL script to append Employees table rows into audit table
+    sqlString = "INSERT INTO Employees_Audit SELECT * FROM Employees;"
+    
+    ' Execute append query
+    db.Execute sqlString, dbFailOnError
+    
+    MsgBox "Employees ledger backed up to audit logs successfully!", vbInformation, "Access Academy"
+End Sub
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 9. TEMPLATES PACK =================== -->
+    <section class="portal-section" id="sec-templates">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="tempTitle">Relational Database Templates Pack</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="tempSubtitle">Download templates with complete relational structures, lookups, and macros.</p>
+
+        <div class="grid-2">
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-package" style="color: var(--accent-red);"></i> <span data-localize="tempInvTitle">Inventory Management System Outline</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+ACCESS INVENTORY DATABASE SCHEMA
+Table 1: Products (ProdId PK, Name, QtyOnHand)
+Table 2: Suppliers (SupplierId PK, SupplierName)
+Table 3: Purchases (PurchaseId PK, ProdId FK, QtyRec)
+--------------------------------------------------
+RELATION: One-to-Many on Products > Purchases
+VALIDATION: [QtyOnHand] >= 0
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-red); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Template Pack</span>
+            </button>
+          </div>
+
+          <div class="lesson-box">
+            <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="ti ti-school" style="color: var(--accent-red);"></i> <span data-localize="tempResTitle">Student Management System Blueprint</span></h3>
+            <textarea class="template-box-code" readonly>
+--------------------------------------------------
+ACCESS STUDENT DATABASE SCHEMA
+Table 1: Students (StudentId PK, Name, Email)
+Table 2: Courses (CourseId PK, CourseTitle)
+Table 3: Enrolment (EnrollId PK, StudentId FK, CourseId FK)
+--------------------------------------------------
+RELATION: Junction table mapping Students & Courses
+MACRO: Auto-backup enrollment counts on exit
+            </textarea>
+            <button class="control-btn" style="width: 100%; justify-content: center; background: var(--accent-red); color: #fff;" onclick="copyTemplateCode(this)">
+              <i class="ti ti-copy"></i> <span data-localize="tempCopyBtn">Copy Template Pack</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 10. ERRORS & SOLVER =================== -->
+    <section class="portal-section" id="sec-errors">
+      <div class="content-card">
+        <h2 style="margin-bottom: 8px;" data-localize="errTitle">Database Troubleshooting &amp; Warning Fixes</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;" data-localize="errSubtitle">Quick resolutions for database corruptions, relationship conflicts, and SQL errors.</p>
+
+        <div class="grid-3">
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-alert-circle"></i><h3>Referential Conflict</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errValueText">Occurs when you try to insert a foreign key DeptId that does not exist inside the Departments table. Fix by creating the parent department first!</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-database-x"></i><h3>Database Corruption</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errNameText">Occurs due to sudden crashes or multi-user network disconnections. Fix by immediately running the 'Compact and Repair' tool.</p>
+          </div>
+          <div class="lesson-box">
+            <div class="lesson-box-header"><i class="ti ti-terminal-2"></i><h3>SQL Join Errors</h3></div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;" data-localize="errRefText">Access SQL requires explicit parentheses when chaining multiple INNER JOIN statements. E.g. `(A INNER JOIN B) INNER JOIN C`.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== 11. QUIZ & CERTIFICATION =================== -->
+    <section class="portal-section" id="sec-quiz">
+      <div class="content-card quiz-card">
+        <h2 style="margin-bottom: 8px; text-align: center;" data-localize="quizTitle">Timed Developer Quiz &amp; Certificate</h2>
+        <p style="color: var(--text-muted); text-align: center; margin-bottom: 2rem;" data-localize="quizSubtitle">Answer all database questions correctly to earn developer XP points and unlock your verified completion certificate!</p>
+
+        <!-- Quiz Playground -->
+        <div class="lesson-box" id="quizPlayground">
+          <div class="quiz-header-status">
+            <span style="font-weight: 700;" id="quizProgressLabel">Question 1 of 5</span>
+            <div class="timer-pill">
+              <i class="ti ti-alarm"></i>
+              <span id="quizTimer">20s</span>
+            </div>
+          </div>
+
+          <div class="quiz-question-container">
+            <h3 id="quizQuestionText">Which normal form forces columns to hold atomic, single-value cells?</h3>
+            <div class="quiz-options-list" id="quizOptionsContainer">
+              <!-- JS options -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Completion Certificate Panel -->
+        <div class="certificate-panel" id="certificateBox">
+          <div class="cert-frame">
+            <h2 data-localize="certHeader">CERTIFICATE OF COMPLETION</h2>
+            <div class="cert-divider"></div>
+            <p data-localize="certVerify">This is to certify that</p>
+            <div class="name-tag" id="certUserName">Your Name Here</div>
+            <p data-localize="certBody">has successfully completed all relational data design levels, SQL query examinations, and VBA automation modules to become a verified</p>
+            <h3 style="font-family: var(--header-font); font-size: 1.6rem; color: var(--accent-red); margin-bottom: 2rem;">MICROSOFT ACCESS DATABASE MASTER</h3>
+            <div class="cert-stamp">Verified Pro</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- App Footer consistent Template anchors -->
+    <footer class="ts-footer">
+      <div class="fl">
+        <a href="https://wondermayank.github.io/" target="_blank">
+          <i class="ti ti-home" style="font-size:13px;margin-right:6px"></i>WonderMayank
+        </a>
+        <a href="https://commercesehoga.github.io/dashboard" target="_blank">
+          <i class="ti ti-device-desktop" style="font-size:13px;margin-right:6px"></i>CBT Mock Platform
+        </a>
+        <a href="https://wondermayank.github.io/terms" target="_blank">Terms</a>
+        <a href="https://wondermayank.github.io/privacy" target="_blank">Privacy</a>
+        <a href="https://wondermayank.github.io/disclaimer" target="_blank">Disclaimer</a>
+        <a href="https://wondermayank.github.io/contact" target="_blank">
+          <i class="ti ti-mail" style="font-size:13px;margin-right:6px"></i>Contact Owner
+        </a>
+        <a href="https://commercesehoga.github.io/help" target="_blank">
+          <i class="ti ti-heart" style="font-size:13px;margin-right:6px"></i>Donation / Support
+        </a>
+      </div>
+      <div class="fc">© 2026 ThunderStudy · Made with ❤️ by WonderMayank · Access University blueprint portal</div>
+    </footer>
+
+  </div>
+
+  <!-- Dynamic Application Logic scripts -->
+  <script>
+    /* ==========================================================================
+       DUAL LOCALIZATION DICTIONARY (HINDI / ENGLISH)
+       ========================================================================== */
+    const dictionary = {
+      en: {
+        sidebarBrand: "Access Academy",
+        menuHome: "Home Page",
+        menuBeginner: "Beginner Course",
+        menuSimulator: "Database & SQL Lab",
+        menuTabs: "Ribbon Tabs Guide",
+        menuFund: "Fundamentals & Relationships",
+        menuTables: "Table Design Academy",
+        menuShortcuts: "Shortcut Keys",
+        menuVba: "VBA Automation",
+        menuTemplates: "Templates Pack",
+        menuErrors: "Error Solver",
+        menuQuiz: "MCQ & Certificate",
+        
+        xpTitle: "DB Developer Progress",
+        streakSuffix: "Day Streak",
+        
+        homeBadge: "⚡ Relational Database Blueprint",
+        homeHeroTitle: "Learn Access From Absolute Beginner to Expert Developer",
+        homeHeroDesc: "Unlock database normalization schemas, advanced SQL parameters queries, forms data entry flows, chevron reports, and VBA automation modules. Designed for inventory managers, analysts, and office workers.",
+        homeCta: "Start Learning",
+        homeFeaturesTitle: "📊 Relational Database Platform",
+        homeFeatSpread: "Interactive Relational Datasheet & SQL Simulator",
+        homeFeatLang: "Dual Language Curriculum (Hindi + English Mode)",
+        homeFeatShort: "Multi-OS Keyboard Shortcuts Console",
+        homeFeatCert: "Dynamic Timed Relational MCQ Quiz Certification Engine",
+        homeProgressTitle: "📈 Student Developer Dashboard",
+        homeProgressDesc: "Execute accurate SQL queries, normalize databases, and build relations to earn XP points!",
+        homeTrackerXP: "XP Points Earned",
+        homeTrackerStatus: "Active Rank",
+        homeVisualTitle: "Relational Database Graphic Maps",
+        homeVisualDesc: "Study table mappings, lookup controls, one-to-many relationship fields, and macros structures.",
+        
+        begTitle: "Access Absolute Beginner Blueprint",
+        begSubtitle: "Understand what relational databases are, differences between Excel and Access, navigation pane, and fields terminology.",
+        begL1Title: "1. Tables, Fields & Records",
+        begL1Li1: "Tables hold structured categories of objects (e.g. Customers)",
+        begL1Li2: "Fields are columns representing properties (e.g. PhoneNumber)",
+        begL1Li3: "Records represent single rows of entity entries (e.g. John Doe)",
+        begL2Title: "2. Primary & Foreign Keys",
+        begL2Li1: "Primary Key (PK) is a unique index identifying records strictly",
+        begL2Li2: "Foreign Key (FK) references a PK inside another table",
+        begL2Li3: "Keys establish relations and avoid data duplicates",
+        begL3Title: "3. Excel vs Access Databases",
+        begL3Li1: "Excel is a flat spreadsheet file for data formatting & math",
+        begL3Li2: "Access is a relational database for large linked ledgers",
+        begL3Li3: "Access prevents typos using validation rules and formats",
+        begTipLabel: "Pro-Tip:",
+        begTipText: "Always compact and repair your database (File > Compact & Repair) regularly! Relational tables gather ghost record bytes over time, and compacting cleans memory up to 80%!",
+        
+        simTitle: "Relational Database & SQL Playground Simulator",
+        simDesc: "Select tabs to view tables, insert new data rows, or write live SQL queries below to query relational metrics!",
+        simErTitle: "Active Entity Relationship (ER) diagram",
+        sqlBoxTitle: "Live SQL Query Practice Editor",
+        sqlRunBtn: "Run SQL Query",
+        sqlOutTitle: "SQL Query Output Datasheet",
+        
+        tabsTitle: "Full Access Tabs Blueprint",
+        tabsSubtitle: "Every command, design view group, and external tool in the Access Ribbon menu structure.",
+        
+        fundTitle: "Database Fundamentals & Modeling",
+        fundSubtitle: "Relational schemas, Normalizations (1NF/2NF/3NF), and Referential Integrity constraints.",
+        
+        tabTitle: "Table Design Academy",
+        tabSubtitle: "Field data types, validation syntax, input masks, and drop-down lookup fields.",
+        
+        keysTitle: "Keyboard Shortcuts database Console",
+        keysSubtitle: "Filter Access shortcuts instantly using the live search engine bar below.",
+        keysEmpty: "No matching shortcuts found. Try another keyword.",
+        
+        vbaTitle: "Access VBA & Database Automation",
+        vbaSubtitle: "Unlock MS Access developer tools. Write scripts to generate invoices and auto-backup tables.",
+        vbaProjTitle: "Automated Project: Auto-Audit Record Backups",
+        vbaProjDesc: "Copy the VBA script below, launch VBA Editor (Alt + F11), insert a new Module, and paste it. Running this macro automatically backs up active employee records to an audit ledger!",
+        
+        tempTitle: "Relational Database Templates Pack",
+        tempSubtitle: "Download templates with complete relational structures, lookups, and macros.",
+        tempCopyBtn: "Copy Template Pack",
+        tempInvTitle: "Inventory Management System Outline",
+        tempResTitle: "Student Management System Blueprint",
+        
+        errTitle: "Database Troubleshooting & Warning Fixes",
+        errSubtitle: "Quick resolutions for database corruptions, relationship conflicts, and SQL errors.",
+        
+        quizTitle: "Timed Developer Quiz & Certificate",
+        quizSubtitle: "Answer all database questions correctly to earn developer XP points and unlock your verified completion certificate!",
+        certHeader: "CERTIFICATE OF COMPLETION",
+        certVerify: "This is to certify that",
+        certBody: "has successfully completed all relational data design levels, SQL query examinations, and VBA automation modules to become a verified"
+      },
+      hi: {
+        sidebarBrand: "एक्सेस अकादमी",
+        menuHome: "मुख्य पृष्ठ",
+        menuBeginner: "शुरुआती कोर्स",
+        menuSimulator: "डेटाबेस और SQL लैब",
+        menuTabs: "रिबन टैब गाइड",
+        menuFund: "डेटाबेस संबंध एवं नियम",
+        menuTables: "टेबल डिजाइन अकादमी",
+        menuShortcuts: "शॉर्टकट कुंजी",
+        menuVba: "VBA ऑटोमेशन",
+        menuTemplates: "टेम्पलेट पैक",
+        menuErrors: "त्रुटि निवारण",
+        menuQuiz: "MCQ और प्रमाणपत्र",
+        
+        xpTitle: "डेटाबेस विकास प्रगति",
+        streakSuffix: "दिन की निरंतरता",
+        
+        homeBadge: "⚡ रिलेशनल डेटाबेस ब्लूप्रिंट",
+        homeHeroTitle: "MS Access को बेसिक से प्रोफेशनल स्तर तक सीखें",
+        homeHeroDesc: "डेटाबेस नॉर्मलाइज़ेशन स्कीमा, उन्नत SQL पैरामीटर क्वेरी, फॉर्म डेटा प्रविष्टि, और VBA ऑटोमेशन सीखें। प्रबंधकों और विश्लेषकों के लिए विशेष।",
+        homeCta: "सीखना शुरू करें",
+        homeFeaturesTitle: "📊 रिलेशनल डेटाबेस प्लेटफ़ॉर्म",
+        homeFeatSpread: "वास्तविक समय रिलेशनल डेटाशीट और SQL सिम्युलेटर",
+        homeFeatLang: "दोहरी भाषा पाठ्यक्रम (हिंदी + अंग्रेजी मोड)",
+        homeFeatShort: "मल्टी-ओएस कीबोर्ड शॉर्टकट कंसोल",
+        homeFeatCert: "समयबद्ध रिलेशनल एमसीक्यू परीक्षा प्रमाणन इंजन",
+        homeProgressTitle: "📈 छात्र डेवलपर डैशबोर्ड",
+        homeProgressDesc: "सटीक SQL क्वेरी चलाएं, डेटाबेस को सामान्य (Normalize) करें और XP अर्जित करें!",
+        homeTrackerXP: "कुल अर्जित XP",
+        homeTrackerStatus: "सक्रिय रैंक",
+        homeVisualTitle: "रिलेशनल डेटाबेस संरचना और घटक",
+        homeVisualDesc: "टेबल मैपिंग, लुकअप और वन-टू-मेनी रिलेशनशिप का दृश्य रूप से अध्ययन करें।",
+        
+        begTitle: "डेटाबेस बिगिनर ब्लूप्रिंट",
+        begSubtitle: "रिलेशनल डेटाबेस क्या है, एक्सेल और एक्सेस में अंतर, नेविगेशन फलक और शब्दावली को समझें।",
+        begL1Title: "1. टेबल, फ़ील्ड और रिकॉर्ड",
+        begL1Li1: "टेबल्स डेटा की विभिन्न श्रेणियों को रखते हैं (जैसे Customers)",
+        begL1Li2: "फ़ील्ड्स कॉलम हैं जो डेटा की विशेषताओं को दर्शाते हैं",
+        begL1Li3: "रिकॉर्ड्स प्रत्येक पंक्ति में प्रविष्टियों को दर्शाते हैं (जैसे ग्राहक का नाम)",
+        begL2Title: "2. प्राइमरी और फॉरेन की",
+        begL2Li1: "प्राइमरी की (PK) प्रत्येक रिकॉर्ड को विशिष्ट रूप से पहचानती है",
+        begL2Li2: "फॉरेन की (FK) किसी अन्य टेबल की प्राइमरी की को संदर्भित करती है",
+        begL2Li3: "कुंजियाँ (Keys) डेटा के दोहराव को रोकती हैं और संबंध बनाती हैं",
+        begL3Title: "3. एक्सेल बनाम एक्सेस डेटाबेस",
+        begL3Li1: "एक्सेल डेटा गणना और चार्ट के लिए एक फ्लैट फ़ाइल है",
+        begL3Li2: "एक्सेस आपस में जुड़े बड़े डेटा लेज़रों के लिए रिलेशनल डेटाबेस है",
+        begL3Li3: "एक्सेस त्रुटियों को रोकने के लिए प्रविष्टि नियम लागू करता है",
+        begTipLabel: "महत्वपूर्ण सुझाव:",
+        begTipText: "नियमित रूप से अपने डेटाबेस को कॉम्पैक्ट करें (File > Compact & Repair)! समय के साथ डेटाबेस में जंक डेटा जमा हो जाता है, कॉम्पैक्ट करने से मेमोरी 80% तक साफ हो जाती है!",
+        
+        simTitle: "रिलेशनल डेटाबेस और SQL सिम्युलेटर",
+        simDesc: "डेटा टेबल देखने के लिए टैब चुनें, नए रिकॉर्ड जोड़ें, या रिलेशनल रिकॉर्ड खोजने के लिए नीचे SQL टाइप करें!",
+        simErTitle: "सक्रिय एंटिटी रिलेशनशिप (ER) आरेख",
+        sqlBoxTitle: "लाइव SQL क्वेरी प्रैक्टिस एडिटर",
+        sqlRunBtn: "SQL क्वेरी चलाएं",
+        sqlOutTitle: "SQL क्वेरी आउटपुट डेटाशीट",
+        
+        tabsTitle: "संपूर्ण एक्सेस रिबन गाइड",
+        tabsSubtitle: "एक्सेस रिबन मेनू का एक-एक कमांड और पैनल, टैब-दर-टैब वर्गीकृत।",
+        
+        fundTitle: "डेटाबेस बुनियादी सिद्धांत और मॉडलिंग",
+        fundSubtitle: "रिलेशनल स्कीमा, नॉर्मलाइज़ेशन (1NF/2NF/3NF), और रेफरेंशियल इंटीग्रिटी नियम।",
+        
+        tabTitle: "टेबल डिजाइन अकादमी गाइड",
+        tabSubtitle: "फ़ील्ड डेटा प्रकार, प्रविष्टि सत्यापन सिंटैक्स, इनपुट मास्क और लुकअप फ़ील्ड।",
+        
+        keysTitle: "कीबोर्ड शॉर्टकट कंसोल",
+        keysSubtitle: "नीचे दिए गए सर्च बार का उपयोग करके कीबोर्ड शॉर्टकट खोजें।",
+        keysEmpty: "कोई मेल खाता शॉर्टकट नहीं मिला। दूसरा शब्द खोजें।",
+        
+        vbaTitle: "Access VBA और डेटाबेस ऑटोमेशन",
+        vbaSubtitle: "डेवलपर टूल्स अनलॉक करें। ऑडिट टेबल पर ऑटो-बैकअप रिकॉर्ड बनाने के लिए VBA स्क्रिप्ट लिखें।",
+        vbaProjTitle: "स्वचालित प्रोजेक्ट: ऑटो-ऑडिट रिकॉर्ड बैकअप",
+        vbaProjDesc: "नीचे दी गई VBA स्क्रिप्ट को कॉपी करें, VBA संपादक (Alt + F11) खोलें, नया मॉड्यूल डालें और पेस्ट करें। इसे रन करते ही बैकअप ऑडिट बन जाएगा!",
+        
+        tempTitle: "रिलेशनल डेटाबेस टेम्पलेट पैक",
+        tempSubtitle: "रिलेशनल संरचना, लुकअप और मैक्रोज़ के साथ तैयार डेटाबेस टेम्पलेट।",
+        tempCopyBtn: "टेम्पलेट कॉपी करें",
+        tempInvTitle: "इन्वेंटरी प्रबंधन प्रणाली की रूपरेखा",
+        tempResTitle: "छात्र प्रबंधन प्रणाली ब्लूप्रिंट",
+        
+        errTitle: "डेटाबेस त्रुटि निवारण गाइड",
+        errSubtitle: "डेटाबेस करप्शन, संबंध विरोधाभास और SQL सिंटैक्स समस्याओं के त्वरित समाधान।",
+        
+        quizTitle: "समयबद्ध डेवलपर क्विज़ और प्रमाणपत्र",
+        quizSubtitle: "प्रमाणपत्र अनलॉक करने और अपने प्रस्तुतकर्ता XP अंक बढ़ाने के लिए सभी प्रश्नों के सही उत्तर दें!",
+        certHeader: "प्रमाणपत्र",
+        certVerify: "यह प्रमाणित किया जाता है कि",
+        certBody: "ने रिलेशनल डेटा डिज़ाइन, SQL क्वेरी परीक्षाओं और VBA ऑटोमेशन के सभी स्तरों को सफलतापूर्वक पूरा किया है।"
+      }
+    };
+
+    /* ==========================================================================
+       SHORTCUTS DATABASE
+       ========================================================================== */
+    const shortcutsData = [
+      { category: "Navigation", win: ["F11"], mac: ["F11"], desc: "Toggle visual Navigation Pane drawer" },
+      { category: "Navigation", win: ["Ctrl", "G"], mac: ["Cmd", "G"], desc: "Show immediate VBA coding pane window" },
+      { category: "Table", win: ["Tab"], mac: ["Tab"], desc: "Navigate to the next field cell in datasheet grid" },
+      { category: "Table", win: ["Shift", "Tab"], mac: ["Shift", "Tab"], desc: "Move back to the previous datasheet cell" },
+      { category: "Table", win: ["Ctrl", "S"], mac: ["Cmd", "S"], desc: "Save the current active table layout changes" },
+      { category: "Query", win: ["Alt", "V"], mac: ["Option", "V"], desc: "Switch query output back to Design View" },
+      { category: "VBA", win: ["Alt", "F11"], mac: ["Fn", "Option", "F11"], desc: "Launch Visual Basic database script editor" },
+      { category: "VBA", win: ["F5"], mac: ["F5"], desc: "Execute active subroutine script from cursor points" }
+    ];
+
+    /* ==========================================================================
+       QUIZ CONFIGURATIONS & QUESTIONS
+       ========================================================================== */
+    const quizQuestions = [
+      {
+        q: "Which normal form states that every cell column must contain atomic, single values?",
+        o: ["1NF", "2NF", "3NF", "Boyce-Codd NF"],
+        a: 0
+      },
+      {
+        q: "Which keyword is used in SQL to join tables based on a matching key column?",
+        o: ["SELECT", "INNER JOIN", "WHERE", "ORDER BY"],
+        a: 1
+      },
+      {
+        q: "What properties block alphabetical typos from phone number fields in design view?",
+        o: ["Validation Rule", "Input Mask", "Lookup Wizard", "Indexed Field"],
+        a: 1
+      },
+      {
+        q: "Which tool fixes database slow-downs and ghost record bytes over time?",
+        o: ["Relationships Analyzer", "Compact and Repair", "Linked Table Manager", "VBA Editor"],
+        a: 1
+      },
+      {
+        q: "Which query type updates thousands of matching database table records in one click?",
+        o: ["Select Query", "Update Query", "Append Query", "Delete Query"],
+        a: 1
+      }
+    ];
+
+    /* ==========================================================================
+       APPLICATION RELATIONAL STATE MATRIX
+       ========================================================================== */
+    let currentLanguage = 'en';
+    let currentTheme = 'light';
+    let currentOS = 'win';
+    let activeShortcutCategory = 'all';
+
+    // Mock relational database state
+    let activeTableName = 'Employees';
+    let dbTables = {
+      Employees: {
+        fields: ['EmpId', 'Name', 'DeptId', 'Salary'],
+        pks: ['EmpId'],
+        rows: [
+          { EmpId: 1, Name: 'Mayank Sharma', DeptId: 1, Salary: 65000 },
+          { EmpId: 2, Name: 'Amit Patel', DeptId: 2, Salary: 58000 },
+          { EmpId: 3, Name: 'Neha Sen', DeptId: 1, Salary: 72000 },
+          { EmpId: 4, Name: 'Raj Kumar', DeptId: 3, Salary: 45000 },
+          { EmpId: 5, Name: 'Priya Das', DeptId: 2, Salary: 80000 }
+        ]
+      },
+      Departments: {
+        fields: ['DeptId', 'DeptName', 'Location'],
+        pks: ['DeptId'],
+        rows: [
+          { DeptId: 1, DeptName: 'Engineering', Location: 'Building A' },
+          { DeptId: 2, DeptName: 'Marketing', Location: 'Building B' },
+          { DeptId: 3, DeptName: 'Operations', Location: 'Building C' }
+        ]
+      },
+      Projects: {
+        fields: ['ProjId', 'ProjName', 'Budget'],
+        pks: ['ProjId'],
+        rows: [
+          { ProjId: 101, ProjName: 'Cloud Sync', Budget: 120000 },
+          { ProjId: 102, ProjName: 'Market Launch', Budget: 45000 },
+          { ProjId: 103, ProjName: 'Automation API', Budget: 85000 }
+        ]
+      }
+    };
+
+    // User progress stats (Saved in localStorage)
+    let userXP = parseInt(localStorage.getItem('accessXP')) || 0;
+    let userStreak = parseInt(localStorage.getItem('accessStreak')) || 1;
+    let lastVisitDate = localStorage.getItem('accessLastVisit') || '';
+
+    // Quiz Engine state
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let quizActive = true;
+    let questionTimer = 20;
+    let timerInterval = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Config
+      initTheme();
+      initLocalization();
+      initStats();
+      initSidebar();
+      initCurriculumTabs();
+      initRelationalDatabaseSimulator();
+      renderShortcuts();
+      initQuiz();
+
+      // Bind inputs
+      document.getElementById('shortcutSearch').addEventListener('input', e => {
+        renderShortcuts(e.target.value);
+      });
+
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
+      document.getElementById('osToggleBtn').addEventListener('click', toggleOSKeys);
+
+      // Mobile Menu binding
+      const sidebar = document.getElementById('appSidebar');
+      document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+      });
+    });
+
+    /* ==========================================================================
+       THEME & LOCALIZATION CONTROLLERS
+       ========================================================================== */
+    function initTheme() {
+      const savedTheme = localStorage.getItem('accessTheme') || 'light';
+      setTheme(savedTheme);
+    }
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('accessTheme', theme);
+      
+      const themeLabel = document.getElementById('themeLabel');
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (theme === 'dark') {
+        themeLabel.textContent = "Light Mode";
+        themeBtn.querySelector('i').className = 'ti ti-sun';
+      } else {
+        themeLabel.textContent = "Dark Mode";
+        themeBtn.querySelector('i').className = 'ti ti-moon';
+      }
+    }
+
+    function toggleTheme() {
+      setTheme(currentTheme === 'light' ? 'dark' : 'light');
+    }
+
+    function toggleLanguage() {
+      currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
+      initLocalization();
+      
+      const langLabel = document.getElementById('langLabel');
+      langLabel.textContent = currentLanguage === 'en' ? 'हिन्दी' : 'English';
+      
+      renderShortcuts();
+    }
+
+    function initLocalization() {
+      const dict = dictionary[currentLanguage];
+      document.querySelectorAll('[data-localize]').forEach(el => {
+        const key = el.getAttribute('data-localize');
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+    }
+
+    /* ==========================================================================
+       PROGRESS SAVES ENGINE
+       ========================================================================== */
+    function initStats() {
+      const today = new Date().toDateString();
+      if (lastVisitDate && lastVisitDate !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastVisitDate === yesterday.toDateString()) {
+          userStreak += 1;
+        } else {
+          userStreak = 1;
+        }
+        localStorage.setItem('accessStreak', userStreak);
+      }
+      localStorage.setItem('accessLastVisit', today);
+      updateStatDisplays();
+    }
+
+    function updateStatDisplays() {
+      document.getElementById('streakCount').textContent = userStreak;
+      document.getElementById('totalXpVal').textContent = `${userXP} XP`;
+      
+      const progressPercent = Math.min(100, (userXP % 100));
+      document.getElementById('xpBar').style.width = `${progressPercent}%`;
+      
+      if (userXP >= 30) {
+        document.getElementById('badgeExp').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "SQL Query Analyst";
+      }
+      if (userXP >= 100) {
+        document.getElementById('badgeMaster').style.opacity = '1';
+        document.getElementById('userRankVal').textContent = "Database Architect";
+      }
+    }
+
+    function earnXP(amount) {
+      userXP += amount;
+      localStorage.setItem('accessXP', userXP);
+      updateStatDisplays();
+    }
+
+    /* ==========================================================================
+       SIDEBAR & CLIENT ROUTER
+       ========================================================================== */
+    function initSidebar() {
+      const navItems = document.querySelectorAll('.nav-item');
+      const sidebar = document.getElementById('appSidebar');
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+
+          const target = item.getAttribute('data-target');
+          navigateToSection(target);
+          sidebar.classList.remove('open');
+        });
+      });
+    }
+
+    function navigateToSection(targetId) {
+      const sections = document.querySelectorAll('.portal-section');
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+        if (sec.id === `sec-${targetId}`) {
+          sec.classList.add('active');
+        }
+      });
+
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-target') === targetId) {
+          item.classList.add('active');
+        }
+      });
+      window.scrollTo(0, 0);
+    }
+
+    function initCurriculumTabs() {
+      const tabs = document.querySelectorAll('.bar-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const parent = tab.parentElement;
+          parent.querySelectorAll('.bar-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          if (tab.dataset.tabcontent) {
+            const container = parent.parentElement;
+            container.querySelectorAll('.level-content-box').forEach(box => {
+              box.classList.remove('active');
+              if (box.id === tab.dataset.tabcontent) {
+                box.classList.add('active');
+              }
+            });
+          }
+        });
+      });
+    }
+
+    /* ==========================================================================
+       INTERACTIVE RELATIONAL DATABASE SIMULATOR
+       ========================================================================== */
+    function initRelationalDatabaseSimulator() {
+      renderDatasheetTable();
+    }
+
+    function switchSimulatorTable(tableName) {
+      activeTableName = tableName;
+      
+      const tabButtons = document.querySelectorAll('#dbTableTabs button');
+      tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes(tableName)) {
+          btn.classList.add('active');
+        }
+      });
+
+      renderDatasheetTable();
+    }
+
+    function renderDatasheetTable() {
+      const grid = document.getElementById('dbDatasheetGrid');
+      grid.innerHTML = '';
+
+      const tableData = dbTables[activeTableName];
+      
+      // Render columns head
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      
+      // Action Column first
+      const thAction = document.createElement('th');
+      thAction.style.width = '50px';
+      headerRow.appendChild(thAction);
+
+      tableData.fields.forEach(field => {
+        const th = document.createElement('th');
+        const isPk = tableData.pks.includes(field);
+        th.innerHTML = `${isPk ? '<i class="ti ti-key db-pk-icon"></i>' : ''}${field}`;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      grid.appendChild(thead);
+
+      // Render rows
+      const tbody = document.createElement('tbody');
+      tableData.rows.forEach((row, rowIdx) => {
+        const tr = document.createElement('tr');
+        
+        // Trash Action Cell
+        const tdAction = document.createElement('td');
+        tdAction.style.textAlign = 'center';
+        tdAction.innerHTML = `<i class="ti ti-trash" style="color:#ff3b30; cursor:pointer;" onclick="deleteDatabaseRecord(${rowIdx})"></i>`;
+        tr.appendChild(tdAction);
+
+        tableData.fields.forEach(field => {
+          const td = document.createElement('td');
+          const val = row[field];
+          if (field === 'Salary' || field === 'Budget') {
+            td.textContent = `$${val.toLocaleString()}`;
+          } else {
+            td.textContent = val;
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      grid.appendChild(tbody);
+
+      renderAddRecordPanel();
+    }
+
+    function renderAddRecordPanel() {
+      const panel = document.getElementById('addRecordPanel');
+      panel.innerHTML = '';
+
+      const tableData = dbTables[activeTableName];
+      
+      tableData.fields.forEach(field => {
+        const isPk = tableData.pks.includes(field);
+        
+        const inputWrap = document.createElement('div');
+        inputWrap.style.display = 'inline-flex';
+        inputWrap.style.flexDirection = 'column';
+        inputWrap.style.gap = '4px';
+
+        const label = document.createElement('label');
+        label.style.fontSize = '0.72rem';
+        label.style.fontWeight = '800';
+        label.textContent = field;
+        inputWrap.appendChild(label);
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'db-input';
+        input.id = `add-${field}`;
+        input.style.width = '120px';
+        if (isPk) {
+          input.disabled = true;
+          input.placeholder = '(AutoNumber)';
+          if (field === 'ProjId') {
+            input.disabled = false;
+            input.placeholder = 'Proj ID (PK)';
+          }
+        }
+        inputWrap.appendChild(input);
+        panel.appendChild(inputWrap);
+      });
+
+      const btn = document.createElement('button');
+      btn.className = 'control-btn';
+      btn.style.background = 'var(--accent-red)';
+      btn.style.color = '#ffffff';
+      btn.style.marginTop = '16px';
+      btn.innerHTML = `<i class="ti ti-plus"></i> Add Record`;
+      btn.onclick = addDatabaseRecord;
+      panel.appendChild(btn);
+    }
+
+    function addDatabaseRecord() {
+      const tableData = dbTables[activeTableName];
+      const newRecord = {};
+
+      tableData.fields.forEach(field => {
+        const isPk = tableData.pks.includes(field);
+        if (isPk) {
+          if (field === 'EmpId' || field === 'DeptId') {
+            // Find max ID + 1
+            const ids = tableData.rows.map(r => r[field]);
+            newRecord[field] = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+          } else {
+            // Project string ID
+            newRecord[field] = parseInt(document.getElementById(`add-${field}`).value) || 999;
+          }
+        } else {
+          const val = document.getElementById(`add-${field}`).value;
+          if (field === 'Salary' || field === 'Budget' || field === 'DeptId') {
+            newRecord[field] = parseFloat(val) || 0;
+          } else {
+            newRecord[field] = val || 'Null Entry';
+          }
+        }
+      });
+
+      tableData.rows.push(newRecord);
+      renderDatasheetTable();
+      earnXP(10); // Earn 10 XP for inserting relational records!
+    }
+
+    function deleteDatabaseRecord(rowIdx) {
+      const tableData = dbTables[activeTableName];
+      tableData.rows.splice(rowIdx, 1);
+      renderDatasheetTable();
+    }
+
+    /* SQL Practice Editor Engine Parser (Lightweight Custom JS SQL parser) */
+    function executeSqlQuery() {
+      const rawQuery = document.getElementById('sqlQueryInput').value.trim();
+      const errorConsole = document.getElementById('sqlConsoleError');
+      const outputGrid = document.getElementById('sqlOutputGrid');
+      
+      errorConsole.style.display = 'none';
+      outputGrid.innerHTML = '';
+
+      if (!rawQuery) {
+        errorConsole.textContent = "Error: Input SQL is empty.";
+        errorConsole.style.display = 'block';
+        return;
+      }
+
+      // Format query parameters
+      const clean = rawQuery.replace(/[\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
+      
+      try {
+        // SQL matching select pattern
+        const selectMatch = clean.match(/^SELECT\s+(.+?)\s+FROM\s+(\w+)(?:\s+(?:INNER\s+)?JOIN\s+(\w+)\s+ON\s+([\w\.]+)\s*=\s*([\w\.]+))?(?:\s+WHERE\s+(.+?))?(?:\s+ORDER\s+BY\s+([\w\.]+)(?:\s+(ASC|DESC))?)?\s*;?$/i);
+        
+        if (!selectMatch) {
+          throw new Error("Syntax Error: Queries must match standard structure. E.g. SELECT column FROM table WHERE condition;");
+        }
+
+        const colsString = selectMatch[1].trim();
+        const mainTable = selectMatch[2].trim();
+        const joinTable = selectMatch[3] ? selectMatch[3].trim() : null;
+        const joinOnLeft = selectMatch[4] ? selectMatch[4].trim() : null;
+        const joinOnRight = selectMatch[5] ? selectMatch[5].trim() : null;
+        const whereClause = selectMatch[6] ? selectMatch[6].trim() : null;
+        const orderBy = selectMatch[7] ? selectMatch[7].trim() : null;
+        const orderDir = selectMatch[8] ? selectMatch[8].toUpperCase().trim() : 'ASC';
+
+        // Check if table exists
+        if (!dbTables[mainTable]) {
+          throw new Error(`Table Error: Table '${mainTable}' not found.`);
+        }
+
+        let dataset = JSON.parse(JSON.stringify(dbTables[mainTable].rows));
+
+        // Handle Inner Join logic
+        if (joinTable) {
+          if (!dbTables[joinTable]) {
+            throw new Error(`Table Join Error: Table '${joinTable}' not found.`);
+          }
+          const joinRows = dbTables[joinTable].rows;
+          const joinedDataset = [];
+
+          dataset.forEach(mainRow => {
+            joinRows.forEach(joinRow => {
+              // Resolve join properties
+              const leftVal = resolveObjectProp(mainRow, mainTable, joinOnLeft);
+              const rightVal = resolveObjectProp(joinRow, joinTable, joinOnRight);
+
+              if (leftVal !== undefined && rightVal !== undefined && leftVal === rightVal) {
+                // Merge rows
+                const merged = {};
+                for (const key in mainRow) merged[`${mainTable}.${key}`] = mainRow[key];
+                for (const key in joinRow) merged[`${joinTable}.${key}`] = joinRow[key];
+                joinedDataset.push(merged);
+              }
+            });
+          });
+          dataset = joinedDataset;
+        }
+
+        // Handle Where Clause evaluations
+        if (whereClause) {
+          const opsMatch = whereClause.match(/([\w\.]+)\s*(=|>|<|!=)\s*(.+)$/i);
+          if (!opsMatch) {
+            throw new Error("WHERE Clause Syntax Error: E.g. Salary > 60000");
+          }
+          
+          let filterCol = opsMatch[1].trim();
+          const op = opsMatch[2].trim();
+          let filterVal = opsMatch[3].replace(/['"]/g, '').trim();
+
+          dataset = dataset.filter(row => {
+            let rowVal = row[filterCol];
+            // If join is active, search merged prefix keys
+            if (joinTable && row[`${mainTable}.${filterCol}`] !== undefined) {
+              rowVal = row[`${mainTable}.${filterCol}`];
+            }
+
+            const compVal = isNaN(rowVal) ? filterVal : parseFloat(filterVal);
+            const rVal = isNaN(rowVal) ? rowVal : parseFloat(rowVal);
+
+            if (op === '=') return rVal === compVal;
+            if (op === '>') return rVal > compVal;
+            if (op === '<') return rVal < compVal;
+            if (op === '!=') return rVal !== compVal;
+            return false;
+          });
+        }
+
+        // Handle Order By
+        if (orderBy) {
+          dataset.sort((a, b) => {
+            let valA = a[orderBy];
+            let valB = b[orderBy];
+            if (joinTable) {
+              valA = a[`${mainTable}.${orderBy}`] !== undefined ? a[`${mainTable}.${orderBy}`] : a[orderBy];
+              valB = b[`${mainTable}.${orderBy}`] !== undefined ? b[`${mainTable}.${orderBy}`] : b[orderBy];
+            }
+            if (valA < valB) return orderDir === 'ASC' ? -1 : 1;
+            if (valA > valB) return orderDir === 'ASC' ? 1 : -1;
+            return 0;
+          });
+        }
+
+        // Project columns
+        let selectedCols = colsString.split(',').map(c => c.trim());
+        const isSelectAll = colsString === '*';
+
+        if (isSelectAll) {
+          if (joinTable) {
+            selectedCols = [];
+            for (const key in dataset[0]) selectedCols.push(key);
+          } else {
+            selectedCols = dbTables[mainTable].fields;
+          }
+        }
+
+        // Render Results Table
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        selectedCols.forEach(col => {
+          const th = document.createElement('th');
+          th.textContent = col;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        outputGrid.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        if (dataset.length === 0) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = selectedCols.length;
+          td.style.color = 'var(--text-muted)';
+          td.textContent = "(0 records returned)";
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        } else {
+          dataset.forEach(row => {
+            const tr = document.createElement('tr');
+            selectedCols.forEach(col => {
+              const td = document.createElement('td');
+              let val = row[col];
+              if (val === undefined && joinTable) {
+                // Try prefix search
+                val = row[`${mainTable}.${col}`] !== undefined ? row[`${mainTable}.${col}`] : row[`${joinTable}.${col}`];
+              }
+              if (col.includes('Salary') || col.includes('Budget') || col === 'Salary' || col === 'Budget') {
+                td.textContent = val !== undefined ? `$${parseFloat(val).toLocaleString()}` : 'NULL';
+              } else {
+                td.textContent = val !== undefined ? val : 'NULL';
+              }
+              tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+          });
+        }
+        outputGrid.appendChild(tbody);
+        earnXP(25); // Earn 25 XP for running correct SQL!
+
+      } catch (err) {
+        errorConsole.textContent = `Error: ${err.message}`;
+        errorConsole.style.display = 'block';
+        
+        outputGrid.innerHTML = '<thead><tr><th>Query Result</th></tr></thead><tbody><tr><td style="color:#ff3b30;">#SQL-ERROR? Double check your query syntax.</td></tr></tbody>';
+      }
+    }
+
+    function resolveObjectProp(row, tableName, param) {
+      if (!param) return undefined;
+      const cleanParam = param.replace(`${tableName}.`, '');
+      return row[cleanParam];
+    }
+
+    /* ==========================================================================
+       SHORTCUTS DICTIONARY ENGINE
+       ========================================================================== */
+    function renderShortcuts(filterText = '') {
+      const grid = document.getElementById('shortcutsGrid');
+      const empty = document.getElementById('noShortcuts');
+      const query = filterText.toLowerCase().trim();
+
+      grid.innerHTML = '';
+
+      const filtered = shortcutsData.filter(s => {
+        const matchCat = activeShortcutCategory === 'all' || s.category === activeShortcutCategory;
+        const matchText = !query ||
+          s.desc.toLowerCase().includes(query) ||
+          s.category.toLowerCase().includes(query) ||
+          s.win.some(k => k.toLowerCase().includes(query)) ||
+          s.mac.some(k => k.toLowerCase().includes(query));
+        return matchCat && matchText;
+      });
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        filtered.forEach(s => {
+          const item = document.createElement('div');
+          item.className = 'shortcut-card-item';
+
+          const keys = currentOS === 'win' ? s.win : s.mac;
+          let keysHtml = keys.map(k => `<kbd class="shortcut-kbd">${k}</kbd>`).join(' + ');
+
+          item.innerHTML = `
+            <div class="shortcut-card-details">
+              <h4>${s.desc}</h4>
+              <span>${s.category}</span>
+            </div>
+            <div class="shortcut-card-keys">
+              ${keysHtml}
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+      }
+    }
+
+    function toggleOSKeys() {
+      currentOS = currentOS === 'win' ? 'mac' : 'win';
+      const btn = document.getElementById('osToggleBtn');
+      const label = document.getElementById('osLabel');
+
+      if (currentOS === 'win') {
+        label.textContent = "Windows Keys";
+        btn.querySelector('i').className = 'ti ti-brand-windows';
+      } else {
+        label.textContent = "Mac Keys";
+        btn.querySelector('i').className = 'ti ti-brand-apple';
+      }
+      renderShortcuts(document.getElementById('shortcutSearch').value);
+    }
+
+    // Shortcut category pill filter binding
+    document.querySelectorAll('#shortcutCats button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#shortcutCats button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeShortcutCategory = btn.dataset.cat;
+        renderShortcuts(document.getElementById('shortcutSearch').value);
+      });
+    });
+
+    /* ==========================================================================
+       QUIZ ENGINE & TIMED MCQ TEST
+       ========================================================================== */
+    function initQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      quizActive = true;
+      document.getElementById('quizPlayground').style.display = 'block';
+      document.getElementById('certificateBox').style.display = 'none';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      clearInterval(timerInterval);
+      if (currentQuestionIdx >= quizQuestions.length) {
+        completeQuiz();
+        return;
+      }
+
+      const qData = quizQuestions[currentQuestionIdx];
+      document.getElementById('quizProgressLabel').textContent = `Question ${currentQuestionIdx + 1} of ${quizQuestions.length}`;
+      document.getElementById('quizQuestionText').textContent = qData.q;
+
+      const container = document.getElementById('quizOptionsContainer');
+      container.innerHTML = '';
+
+      qData.o.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleOptionClick(btn, idx, qData.a));
+        container.appendChild(btn);
+      });
+
+      // Reset question timer
+      questionTimer = 20;
+      document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+      timerInterval = setInterval(() => {
+        questionTimer -= 1;
+        document.getElementById('quizTimer').textContent = `${questionTimer}s`;
+        if (questionTimer <= 0) {
+          clearInterval(timerInterval);
+          moveToNextQuestion();
+        }
+      }, 1000);
+    }
+
+    function handleOptionClick(selectedBtn, selectedIdx, correctIdx) {
+      clearInterval(timerInterval);
+      
+      const options = document.querySelectorAll('.quiz-option-btn');
+      options.forEach(opt => opt.disabled = true);
+
+      if (selectedIdx === correctIdx) {
+        selectedBtn.classList.add('correct');
+        quizScore += 1;
+        earnXP(20);
+      } else {
+        selectedBtn.classList.add('incorrect');
+        options[correctIdx].classList.add('correct');
+      }
+
+      setTimeout(moveToNextQuestion, 1200);
+    }
+
+    function moveToNextQuestion() {
+      currentQuestionIdx += 1;
+      loadQuestion();
+    }
+
+    function completeQuiz() {
+      document.getElementById('quizPlayground').style.display = 'none';
+      
+      const certBox = document.getElementById('certificateBox');
+      certBox.style.display = 'block';
+
+      const userName = prompt("Congratulations on passing the database developer exam! Enter your full name for the certificate:") || "Access Student";
+      document.getElementById('certUserName').textContent = userName;
+      
+      earnXP(50);
+    }
+
+    /* Helper: Copy Templates */
+    function copyTemplateCode(btn) {
+      const code = btn.previousElementSibling.value;
+      navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = '<i class="ti ti-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = origText;
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
