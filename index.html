@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,53 +6,585 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ThunderStudy – Computer Learning Index</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif}
-.ts-wrap{background:linear-gradient(160deg,#e8f4fd 0%,#f0f8ff 50%,#ffffff 100%);min-height:100vh;padding:0 0 3rem}
-.ts-hero{background:linear-gradient(135deg,#1a6fc4 0%,#2196f3 60%,#42b0ff 100%);color:#fff;padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden}
-.ts-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.07);border-radius:50%}
-.ts-hero::after{content:'';position:absolute;bottom:-60px;left:-30px;width:160px;height:160px;background:rgba(255,255,255,0.05);border-radius:50%}
-.brand{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:0.8;margin-bottom:8px;font-weight:500}
-.ts-hero h1{font-size:2.6rem;font-weight:700;letter-spacing:-1px;margin-bottom:6px}
-.ts-hero p{opacity:0.85;font-size:1rem;margin-bottom:4px}
-.made-by{font-size:12px;opacity:0.65;margin-top:8px}
-.badge-count{display:inline-block;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 14px;font-size:13px;margin-top:12px;font-weight:500}
-.search-bar{max-width:520px;margin:1.5rem auto 0;position:relative;z-index:2}
-.search-bar input{width:100%;padding:12px 16px 12px 44px;border-radius:30px;border:none;font-size:15px;outline:none;box-shadow:0 4px 20px rgba(0,0,0,0.15);color:#1a3a5c}
-.search-bar .si{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#5a9fd4;font-size:18px}
+/* ══ PAGE BACKGROUND — Pure CSS Periwinkle & Lavender Mesh Gradient ══ */
+html, body{
+  font-family:'Inter','Segoe UI',sans-serif;
+  min-height:100%;
+  background-color:#0d1222;
+  background-image:
+    linear-gradient(180deg, rgba(13, 18, 34, 0.2) 0%, rgba(13, 18, 34, 0.75) 100%),
+    radial-gradient(circle at 15% 15%, rgba(221, 220, 237, 0.32) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(212, 221, 238, 0.35) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(196, 215, 238, 0.28) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(161, 187, 213, 0.32) 0%, transparent 55%),
+    radial-gradient(circle at 20% 85%, rgba(194, 214, 237, 0.28) 0%, transparent 50%),
+    linear-gradient(135deg, #1e2640 0%, #111627 50%, #0d111e 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position:center top;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+
+/* ── WRAP ── */
+.ts-wrap{background:transparent;min-height:100vh;padding:0 0 3rem}
+
+/* ══════════════════════════════════
+   HERO — now just a viewport-tall overlay frame
+══════════════════════════════════ */
+.ts-hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;  /* clip the video inside hero */
+  color:#fff;
+  display:flex;
+  align-items:stretch;
+}
+/* video fills hero only */
+#bg-video{
+  position:absolute;
+  inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+/* no .hero-video needed anymore */
+/* keep overlay as a lighter vignette just inside the hero area */
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(10,30,90,0.40) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(10,30,90,0.45) 0%, transparent 55%);
+  z-index:1;
+  pointer-events:none;
+}
+
+/* ── TOP-LEFT text block ── */
+.hero-top-left{
+  position:absolute;
+  top:28px;left:32px;
+  z-index:3;
+  max-width:480px;
+}
+.brand{
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  font-weight:700;color:rgba(255,255,255,0.75);
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.20);
+  border-radius:20px;padding:4px 14px;
+  backdrop-filter:blur(6px);
+  margin-bottom:14px;
+}
+/* ── BUBBLE FONT + RAINBOW ANIMATION for H1 ── */
+@keyframes rainbowShift {
+  0%   { background-position: 0%   50% }
+  50%  { background-position: 100% 50% }
+  100% { background-position: 0%   50% }
+}
+.ts-hero h1{
+  font-family:'Fredoka One','Inter',sans-serif;
+  font-size:clamp(2.4rem,5.5vw,4rem);
+  font-weight:400;            /* Fredoka One is naturally bold */
+  line-height:1.15;
+  letter-spacing:1px;
+  margin-bottom:12px;
+  /* animated rainbow gradient text */
+  background: linear-gradient(
+    270deg,
+    #ff6ec7, #ff9a3c, #ffe066,
+    #6ef7a7, #60d0ff, #a78bfa,
+    #f472b6, #ff6ec7
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbowShift 5s ease infinite;
+  /* subtle drop-shadow so it pops on video */
+  filter: drop-shadow(0 3px 14px rgba(0,0,0,0.50));
+}
+/* remove the old span highlight - whole h1 is rainbow now */
+.ts-hero h1 span{
+  background:none;
+  -webkit-background-clip:unset;
+  -webkit-text-fill-color:inherit;
+  background-clip:unset;
+}
+.hero-subtitle{
+  font-size:0.92rem;
+  font-weight:400;
+  color:rgba(255,255,255,0.80);
+  line-height:1.55;
+  max-width:360px;
+  text-shadow:0 1px 8px rgba(0,0,0,0.35);
+}
+
+/* ── BOTTOM-RIGHT block ── */
+.hero-bottom-right{
+  position:absolute;
+  bottom:28px;right:32px;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:12px;
+}
+.made-by{
+  font-size:11px;
+  color:rgba(255,255,255,0.60);
+  letter-spacing:0.5px;
+}
+.made-by strong{color:rgba(255,255,255,0.90);font-weight:600}
+.hero-badges{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+}
+.badge-count{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:20px;padding:5px 14px;
+  font-size:12px;font-weight:600;
+  backdrop-filter:blur(6px);
+  color:#fff;
+}
+.hero-btns{
+  display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:11px 22px;
+  background:linear-gradient(135deg,#2196f3,#60d0ff);
+  color:#fff;font-size:13px;font-weight:700;
+  border:none;border-radius:30px;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 4px 20px rgba(33,150,243,0.45);
+  transition:all 0.22s ease;
+  letter-spacing:0.3px;
+}
+.btn-primary:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 8px 28px rgba(33,150,243,0.55);
+}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 20px;
+  background:rgba(255,255,255,0.10);
+  color:#fff;font-size:13px;font-weight:600;
+  border:1.5px solid rgba(255,255,255,0.30);
+  border-radius:30px;
+  cursor:pointer;text-decoration:none;
+  backdrop-filter:blur(6px);
+  transition:all 0.22s ease;
+}
+.btn-ghost:hover{
+  background:rgba(255,255,255,0.20);
+  border-color:rgba(255,255,255,0.55);
+  transform:translateY(-2px);
+}
+
+/* ════════════════════════════════════════
+   SEARCH BAR — 3D Neumorphic Pill
+════════════════════════════════════════ */
+.search-wrap{
+  position:sticky;
+  top:0;
+  z-index:100;
+  /* background image panel */
+  background-image:
+    linear-gradient(135deg, rgba(13, 18, 34, 0.90) 0%, rgba(22, 30, 56, 0.85) 50%, rgba(13, 18, 34, 0.90) 100%),
+    radial-gradient(circle at 15% 15%, rgba(221, 220, 237, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(212, 221, 238, 0.28) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(196, 215, 238, 0.22) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(161, 187, 213, 0.25) 0%, transparent 55%),
+    radial-gradient(circle at 20% 85%, rgba(194, 214, 237, 0.22) 0%, transparent 50%),
+    linear-gradient(135deg, #1e2640 0%, #111627 50%, #0d111e 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position:center;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(196, 215, 238, 0.20);
+  padding:18px 28px;
+}
+
+/* inner container centers the pill */
+.search-inner{
+  max-width:700px;
+  margin:0 auto;
+  position:relative;
+}
+
+/* the pill */
+.search-bar{
+  display:flex;
+  align-items:center;
+  background:linear-gradient(145deg, #f0eeff, #ffffff);
+  border-radius:999px;
+  border:none;
+  padding:6px 8px 6px 6px;
+  gap:0;
+  /* neumorphic 3D shadow */
+  box-shadow:
+    6px 6px 18px rgba(80,50,160,0.25),
+    -4px -4px 12px rgba(255,255,255,0.95),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(180,150,255,0.20);
+  transition:box-shadow 0.25s ease;
+}
+.search-bar:focus-within{
+  box-shadow:
+    8px 8px 24px rgba(100,60,200,0.30),
+    -4px -4px 12px rgba(255,255,255,1),
+    inset 0 1px 0 rgba(255,255,255,1),
+    0 0 0 2.5px rgba(130,90,255,0.35);
+}
+
+/* circular search icon button */
+.search-icon-btn{
+  flex-shrink:0;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#7b5af0,#9b6bff);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  font-size:19px;
+  border:none;
+  cursor:pointer;
+  box-shadow:
+    3px 3px 10px rgba(100,60,200,0.40),
+    -2px -2px 6px rgba(255,255,255,0.80),
+    inset 0 1px 0 rgba(255,255,255,0.30);
+  transition:all 0.20s ease;
+  flex-shrink:0;
+}
+.search-icon-btn:hover{
+  background:linear-gradient(135deg,#6a48e0,#8a5aff);
+  transform:scale(1.06);
+  box-shadow:
+    4px 4px 14px rgba(100,60,200,0.50),
+    -2px -2px 6px rgba(255,255,255,0.90);
+}
+.search-icon-btn:active{
+  transform:scale(0.96);
+  box-shadow:
+    inset 2px 2px 6px rgba(80,40,180,0.35),
+    inset -1px -1px 4px rgba(255,255,255,0.60);
+}
+
+/* input field */
+.search-bar input{
+  flex:1;
+  border:none;
+  outline:none;
+  background:transparent;
+  font-size:15px;
+  font-family:inherit;
+  color:#2d1f6e;
+  padding:10px 16px;
+  font-weight:500;
+  letter-spacing:0.2px;
+  caret-color:#7b5af0;
+}
+.search-bar input::placeholder{
+  color:#b0a0d8;
+  font-weight:400;
+}
+
+/* text search button on right */
+.search-btn{
+  flex-shrink:0;
+  padding:10px 22px;
+  background:linear-gradient(135deg,#7b5af0,#a07bff);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  letter-spacing:0.4px;
+  box-shadow:
+    3px 3px 10px rgba(100,60,200,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  transition:all 0.20s ease;
+  white-space:nowrap;
+  margin-right:2px;
+}
+.search-btn:hover{
+  background:linear-gradient(135deg,#6a48e0,#9068f0);
+  transform:translateY(-1px);
+  box-shadow:4px 4px 14px rgba(100,60,200,0.45);
+}
+
+/* search hint label above pill */
+.search-label{
+  text-align:center;
+  color:rgba(220,200,255,0.75);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+/* ── Body ── */
 .ts-body{max-width:1100px;margin:0 auto;padding:0 1.5rem}
-.section{margin-top:2.2rem}
-.section-title{font-size:0.7rem;letter-spacing:2.5px;text-transform:uppercase;color:#1a6fc4;font-weight:700;margin-bottom:1rem;padding-bottom:6px;border-bottom:2px solid #c8e4f8;display:flex;align-items:center;gap:8px}
+.section{margin-top:2rem}
+.section-title{
+  font-size:0.68rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:#1a6fc4;font-weight:700;margin-bottom:1rem;
+  padding-bottom:8px;
+  border-bottom:2px solid #c8e4f8;
+  display:flex;align-items:center;gap:8px;
+}
 .section-title i{font-size:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
-.card{background:#fff;border:1px solid #d0e8f8;border-radius:12px;padding:14px 12px 12px;cursor:pointer;transition:all 0.18s ease;text-decoration:none;display:block;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#2196f3,#64c8ff);opacity:0;transition:opacity 0.2s}
-.card:hover{border-color:#2196f3;transform:translateY(-2px);box-shadow:0 6px 20px rgba(33,150,243,0.12)}
+
+/* ═══════════════════════════════════════
+   CARDS — 3D Glass Effect
+═══════════════════════════════════════ */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(158px,1fr));
+  gap:14px;
+  perspective:1000px;
+}
+
+/* wrapper for 3D tilt effect */
+.card-wrap{
+  perspective:800px;
+  transform-style:preserve-3d;
+}
+
+.card{
+  /* ── WHITE CARD UI ── */
+  background:linear-gradient(145deg, #ffffff, #f4f6fb);
+  border:1px solid rgba(200,215,240,0.80);
+  border-radius:16px;
+  padding:16px 14px 13px;
+  cursor:pointer;
+  text-decoration:none;
+  display:block;
+  position:relative;
+  overflow:hidden;
+  /* 3D base */
+  transform:translateZ(0) rotateX(0deg) rotateY(0deg);
+  transform-style:preserve-3d;
+  transition:
+    transform 0.08s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  /* clean white 3D neumorphic shadow */
+  box-shadow:
+    4px 4px 12px rgba(160,180,220,0.35),
+    -3px -3px 8px rgba(255,255,255,0.95),
+    0 1px 0 rgba(255,255,255,1) inset;
+  will-change:transform;
+}
+
+/* top prismatic accent bar */
+.card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#2196f3 0%,#60d0ff 40%,#a78bfa 70%,#f472b6 100%);
+  border-radius:16px 16px 0 0;
+  opacity:0;
+  transition:opacity 0.25s;
+}
+
+/* shine sweep on hover */
+.card::after{
+  content:'';
+  position:absolute;
+  top:-60%;left:-60%;
+  width:50%;height:200%;
+  background:linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255,255,255,0.45) 50%,
+    transparent 60%
+  );
+  transform:skewX(-15deg);
+  opacity:0;
+  transition:opacity 0.3s, left 0.5s ease;
+  pointer-events:none;
+}
+
+.card:hover{
+  background:linear-gradient(145deg, #ffffff, #eef2fd);
+  border-color:rgba(100,140,255,0.45);
+  box-shadow:
+    0 0 0 1.5px rgba(100,140,255,0.25),
+    6px 6px 20px rgba(140,160,220,0.30),
+    -3px -3px 10px rgba(255,255,255,1),
+    0 1px 0 rgba(255,255,255,1) inset;
+}
 .card:hover::before{opacity:1}
-.card-icon{width:34px;height:34px;background:#e8f4fd;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;color:#1a6fc4;font-size:18px}
-.card-num{font-size:10px;color:#90b8d8;font-weight:600;letter-spacing:1px;margin-bottom:2px}
-.card-title{font-size:13px;font-weight:600;color:#1a3a5c;line-height:1.35}
-.card-tag{font-size:10px;color:#5a9fd4;margin-top:5px}
-.ts-footer{background:#1a3a5c;color:#a8c8e8;text-align:center;padding:2.5rem 1.5rem 2rem;margin-top:3rem}
+.card:hover::after{
+  opacity:1;
+  left:130%;
+}
+
+/* icon 3D pop */
+.card:hover .card-icon{
+  background:linear-gradient(135deg,#4f8ef7,#7b5af0);
+  color:#fff;
+  border-color:transparent;
+  transform:translateZ(20px) scale(1.12) rotateY(-5deg);
+  box-shadow:0 6px 18px rgba(79,142,247,0.40);
+}
+
+.card-icon{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,#eef3ff,#dde8ff);
+  border:1px solid rgba(120,160,255,0.25);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:11px;
+  color:#3d6fd4;
+  font-size:19px;
+  transition:all 0.28s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 2px 6px rgba(100,140,255,0.15);
+  transform:translateZ(0);
+}
+
+.card-num{
+  font-size:9px;
+  color:rgba(100,120,160,0.60);
+  font-weight:700;
+  letter-spacing:1.5px;margin-bottom:3px;
+  text-transform:uppercase;
+}
+.card-title{
+  font-size:12.5px;font-weight:700;
+  color:#1a2a4a;
+  line-height:1.35;
+  transform:translateZ(0);
+  transition:transform 0.25s ease, color 0.2s;
+}
+.card:hover .card-title{
+  transform:translateZ(8px);
+  color:#0d1e3c;
+}
+.card-tag{
+  font-size:9.5px;font-weight:600;
+  color:#4f7fd4;
+  margin-top:7px;
+  display:inline-flex;align-items:center;gap:3px;
+  background:rgba(79,143,247,0.10);
+  border:1px solid rgba(79,143,247,0.22);
+  border-radius:20px;
+  padding:2px 8px;
+  letter-spacing:0.3px;
+  transition:all 0.2s;
+}
+.card:hover .card-tag{
+  background:rgba(79,143,247,0.15);
+  color:#2d5fc0;
+  border-color:rgba(79,143,247,0.35);
+}
+
+/* ── Section titles ── */
+.ts-body{
+  max-width:1100px;margin:0 auto;padding:0 1.5rem;
+}
+.section-title{
+  font-size:0.68rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.80);font-weight:700;margin-bottom:1rem;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;gap:8px;
+}
+.section-title i{font-size:16px}
+.section{margin-top:2rem}
+
+/* ── Footer ── */
+.ts-footer{
+  background:rgba(10,22,50,0.80);
+  backdrop-filter:blur(12px);
+  color:#a8c8e8;
+  text-align:center;
+  padding:2.5rem 1.5rem 2rem;
+  margin-top:3rem;
+  border-top:1px solid rgba(100,160,240,0.15);
+}
 .ts-footer .fl{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:1.2rem}
 .ts-footer a{color:#64b8f0;text-decoration:none;font-size:13px;padding:5px 10px;background:rgba(255,255,255,0.06);border-radius:6px;border:1px solid rgba(100,184,240,0.2);transition:background 0.15s}
 .ts-footer a:hover{background:rgba(100,184,240,0.12)}
 .ts-footer .fc{font-size:12px;opacity:0.5;margin-top:1rem}
-.no-result{text-align:center;padding:3rem;color:#5a9fd4;font-size:15px;display:none}
+.no-result{text-align:center;padding:3rem;color:#90caf9;font-size:15px;display:none}
+
+/* ── Body glass panel ── */
+.ts-body-panel{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  border-top:1px solid rgba(255,255,255,0.12);
+  padding-top:0.5rem;
+  padding-bottom:2rem;
+}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .ts-hero{height:100svh}
+  .hero-top-left{top:18px;left:16px;max-width:calc(100vw - 32px)}
+  .hero-bottom-right{bottom:18px;right:16px}
+  .ts-hero h1{font-size:1.7rem}
+  .hero-btns{gap:7px}
+  .btn-primary,.btn-ghost{font-size:12px;padding:9px 16px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+}
 </style>
 </head>
 <body>
 <div class="ts-wrap">
 <div class="ts-hero">
-  <div class="brand">⚡ ThunderStudy</div>
-  <h1>Computer</h1>
-  <p>Free learning resources — from basics to coding</p>
-  <div class="made-by">Made by <strong>WonderMayank</strong></div>
-  <div class="badge-count">200 Topics</div>
-  <div class="search-bar">
-    <i class="ti ti-search si"></i>
-    <input type="text" id="searchInput" placeholder="Search any topic..." oninput="filterCards()">
+  <!-- Video background — hero only -->
+  <video id="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="https://thunderstudycbt.github.io/video/2.mp4" type="video/mp4">
+  </video>
+  <!-- Hero overlay (light vignette only) -->
+  <div class="hero-overlay"></div>
+
+  <!-- TOP-LEFT: Brand + Title + Subtitle -->
+  <div class="hero-top-left">
+    <div class="brand">⚡ ThunderStudy CBT</div>
+    <h1>Learn <span>Computer</span><br>Like a Pro</h1>
+    <p class="hero-subtitle">Free, structured learning resources — from basics to advanced coding, all in one place.</p>
+  </div>
+
+  <!-- BOTTOM-RIGHT: Meta + Buttons -->
+  <div class="hero-bottom-right">
+    <div class="made-by">Made by <strong>WonderMayank</strong></div>
+    <div class="hero-badges">
+      <span class="badge-count"><i class="ti ti-books"></i> 200+ Topics</span>
+      <span class="badge-count"><i class="ti ti-bolt"></i> Free Access</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#mainBody" class="btn-primary" id="exploreBtn">
+        <i class="ti ti-compass"></i> Explore Topics
+      </a>
+      <a href="https://thunderstudycbt.github.io" target="_blank" class="btn-ghost" id="visitSiteBtn">
+        <i class="ti ti-external-link"></i> Visit Site
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Premium 3D Search Bar -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <p class="search-label">&#128269; Find any topic instantly</p>
+    <div class="search-bar">
+      <button class="search-icon-btn" onclick="filterCards()" title="Search">
+        <i class="ti ti-search"></i>
+      </button>
+      <input type="text" id="searchInput"
+        placeholder="Search any topic — Excel, Python, AI..."
+        oninput="filterCards()">
+      <button class="search-btn" onclick="filterCards()">Search</button>
+    </div>
   </div>
 </div>
 
@@ -376,6 +909,7 @@ body{font-family:'Segoe UI',sans-serif}
 </div>
 
 <script>
+/* ── Search filter ── */
 function filterCards(){
   var q=document.getElementById('searchInput').value.toLowerCase().trim();
   var sections=document.querySelectorAll('.section');
@@ -395,6 +929,60 @@ function filterCards(){
   });
   document.getElementById('noResult').style.display=total?'none':'block';
 }
+
+/* ── 3D Tilt Engine ── */
+(function(){
+  var MAX_TILT = 14;       // degrees max tilt
+  var MAX_LIFT = 28;       // px translateY on hover
+  var GLARE    = true;
+
+  function applyTilt(card, e){
+    var rect = card.getBoundingClientRect();
+    var cx = rect.left + rect.width  / 2;
+    var cy = rect.top  + rect.height / 2;
+    var dx = (e.clientX - cx) / (rect.width  / 2);  // -1 to 1
+    var dy = (e.clientY - cy) / (rect.height / 2);  // -1 to 1
+    var rotX = -dy * MAX_TILT;   // tilt toward cursor
+    var rotY =  dx * MAX_TILT;
+    card.style.transform =
+      'perspective(700px)' +
+      ' rotateX(' + rotX.toFixed(2) + 'deg)' +
+      ' rotateY(' + rotY.toFixed(2) + 'deg)' +
+      ' translateY(-' + MAX_LIFT + 'px)' +
+      ' scale3d(1.04,1.04,1.04)';
+    card.style.transition = 'transform 0.07s ease, box-shadow 0.25s ease, border-color 0.25s ease';
+    // dynamic shadow depth based on tilt
+    var sh1 = (MAX_LIFT + Math.abs(rotX)).toFixed(0);
+    var sh2 = (MAX_LIFT * 2).toFixed(0);
+    card.style.boxShadow =
+      '0 ' + sh1 + 'px 40px rgba(0,0,0,0.70),' +
+      '0 ' + sh2 + 'px 70px rgba(0,0,0,0.50),' +
+      '0 0 0 1.5px rgba(255,255,255,0.20),' +
+      '0 1px 0 rgba(255,255,255,0.08) inset';
+  }
+
+  function resetTilt(card){
+    card.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1,1,1)';
+    card.style.transition = 'transform 0.45s cubic-bezier(.23,1,.32,1), box-shadow 0.45s ease, border-color 0.25s ease';
+    card.style.boxShadow = '';
+  }
+
+  function initCards(){
+    document.querySelectorAll('.card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){ applyTilt(card, e); });
+      card.addEventListener('mouseleave', function(){ resetTilt(card); });
+      card.addEventListener('mouseenter', function(){
+        card.style.transition = 'transform 0.07s ease, box-shadow 0.25s ease';
+      });
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initCards);
+  } else {
+    initCards();
+  }
+})();
 </script>
 </body>
 </html>
